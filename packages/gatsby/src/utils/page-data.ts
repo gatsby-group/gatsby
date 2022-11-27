@@ -220,6 +220,16 @@ export async function flush(parentSpan?: Span): Promise<void> {
 
   let nodeManifestPagePathMap
 
+  // this is just for DEV purposes to "repro" cases where output of page-data files
+  // doesn't happen quickly enough after (re)compilation
+  await new Promise<void>(resolve => {
+    console.log(`[page-data] waiting 5 s`)
+    setTimeout(() => {
+      console.log(`[page-data] waited 5 s`)
+      resolve()
+    }, 5000)
+  })
+
   if (pagePaths.size > 0) {
     // we process node manifests in this location because we need to add the manifestId to the page data.
     // We use this manifestId to determine if the page data is up to date when routing. Here we create a map of "pagePath": "manifestId" while processing and writing node manifest files.
@@ -390,6 +400,10 @@ export async function flush(parentSpan?: Span): Promise<void> {
   }
 
   isFlushing = false
+
+  if (!isBuild) {
+    websocketManager.emitDataFilesDidRegenerate()
+  }
 
   return
 }

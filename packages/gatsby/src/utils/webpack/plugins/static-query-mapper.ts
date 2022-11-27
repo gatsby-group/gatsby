@@ -9,6 +9,7 @@ import {
   mergePreviouslyCollectedSlices,
 } from "../../babel/find-slices"
 import { slash } from "gatsby-core-utils/path"
+import { websocketManager } from "../../websocket-manager"
 
 /**
  * Remove the export query param from a path that can
@@ -77,6 +78,7 @@ export class StaticQueryMapper {
     } = this.store.getState()
 
     compiler.hooks.done.tap(this.name, stats => {
+      console.log(`[webpack hook] compiler.hooks.done`)
       // In dev mode we want to write page-data when compilation succeeds
       if (!stats.hasErrors() && compiler.watchMode) {
         enqueueFlush()
@@ -92,6 +94,8 @@ export class StaticQueryMapper {
         if (compilation.compiler.parentCompilation) {
           return
         }
+
+        console.log(`[webpack hook] compiler.hooks.finishMake`)
 
         const entryModules = new Set()
         const gatsbyBrowserPlugins = slash(
@@ -239,8 +243,18 @@ export class StaticQueryMapper {
           const incomingConnections =
             compilation.moduleGraph.getIncomingConnections(module)
           for (const connection of incomingConnections) {
-            if (connection.originModule instanceof NormalModule) {
-              traverseModule(connection.originModule, config, visitedModules)
+            if (
+              connection.originModule instanceof NormalModule ||
+              // @ts-ignore __proto__ is a hack. LazyCompilationProxyModule class is not
+              // exported from webpack at all, so we can't use instanceof for it
+              connection.originModule?.__proto__?.constructor?.name ===
+                `LazyCompilationProxyModule`
+            ) {
+              traverseModule(
+                connection.originModule as NormalModule,
+                config,
+                visitedModules
+              )
             }
           }
         }
@@ -299,6 +313,8 @@ export class StaticQueryMapper {
           })
         }
 
+        let mappingWillChange = false
+
         for (const component of components.values()) {
           const allStaticQueries = new Set([
             ...globalStaticQueries,
@@ -330,6 +346,8 @@ export class StaticQueryMapper {
           )
 
           if (didStaticQueriesChange || didSlicesChange) {
+            mappingWillChange = true
+
             if (component.isSlice) {
               this.store.dispatch({
                 type: `ADD_PENDING_SLICE_TEMPLATE_DATA_WRITE`,
@@ -368,6 +386,10 @@ export class StaticQueryMapper {
               },
             })
           }
+        }
+
+        if (process.env.NODE_ENV !== `production`) {
+          websocketManager.emitDataFilesWillRegenerate(mappingWillChange)
         }
       }
     )

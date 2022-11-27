@@ -260,6 +260,23 @@ export class WebsocketManager {
     }
     return false
   }
+
+  emitDataFilesWillRegenerate(didChange: boolean): void {
+    if (this.websocket) {
+      this.websocket.send({
+        type: `dataFilesWillRegenerate`,
+        payload: didChange,
+      })
+    }
+  }
+
+  emitDataFilesDidRegenerate(): void {
+    if (this.websocket) {
+      this.websocket.send({
+        type: `dataFilesDidRegenerate`,
+      })
+    }
+  }
 }
 
 export const websocketManager: WebsocketManager = new WebsocketManager()

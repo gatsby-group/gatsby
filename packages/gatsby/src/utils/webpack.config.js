@@ -1,19 +1,17 @@
-const crypto = require(`crypto`)
-const fs = require(`fs-extra`)
-const path = require(`path`)
-const dotenv = require(`dotenv`)
-const { CoreJSResolver } = require(`./webpack/plugins/corejs-resolver`)
-const {
-  CacheFolderResolver,
-} = require(`./webpack/plugins/cache-folder-resolver`)
-const { store } = require(`../redux`)
-const { actions } = require(`../redux/actions`)
-const { getPublicPath } = require(`./get-public-path`)
-const debug = require(`debug`)(`gatsby:webpack-config`)
-const reporter = require(`gatsby-cli/lib/reporter`)
+import crypto from "crypto"
+import * as fs from "fs-extra"
+import * as path from "path"
+import dotenv from "dotenv"
+import reporter from "gatsby-cli/lib/reporter"
+import debug from "debug"
+import { CoreJSResolver } from "./webpack/plugins/corejs-resolver"
+import { CacheFolderResolver } from "./webpack/plugins/cache-folder-resolver"
+import { store } from "../redux"
+import { actions } from "../redux/actions"
+import { getPublicPath } from "./get-public-path"
 import { withBasePath, withTrailingSlash } from "./path"
 import { getGatsbyDependents } from "./gatsby-dependents"
-const apiRunnerNode = require(`./api-runner-node`)
+import apiRunnerNode from "./api-runner-node"
 import { createWebpackUtils } from "./webpack-utils"
 import { hasLocalEslint } from "./local-eslint-config-finder"
 import { getAbsolutePathForVirtualModule } from "./gatsby-webpack-virtual-modules"
@@ -26,8 +24,8 @@ import { shouldGenerateEngines } from "./engines-helpers"
 import { ROUTES_DIRECTORY } from "../constants"
 import { BabelConfigItemsCacheInvalidatorPlugin } from "./babel-loader"
 import { PartialHydrationPlugin } from "./webpack/plugins/partial-hydration"
-import { satisfiesSemvers } from "./flags"
 
+const log = debug(`gatsby:webpack-config`)
 const FRAMEWORK_BUNDLES = [`react`, `react-dom`, `scheduler`, `prop-types`]
 
 // Four stages or modes:
@@ -61,7 +59,7 @@ module.exports = async (
     _CFLAGS_.GATSBY_MAJOR === `5`
 
   function processEnv(stage, defaultNodeEnv) {
-    debug(`Building env for "${stage}"`)
+    log(`Building env for "${stage}"`)
     // node env should be DEVELOPMENT | PRODUCTION as these are commonly used in node land
     // this variable is used inside webpack
     const nodeEnv = process.env.NODE_ENV || `${defaultNodeEnv}`
@@ -124,7 +122,7 @@ module.exports = async (
     )
   }
 
-  debug(`Loading webpack config for stage "${stage}"`)
+  log(`Loading webpack config for stage "${stage}"`)
   function getOutput() {
     switch (stage) {
       case `develop`:
@@ -534,7 +532,7 @@ module.exports = async (
         root.push(userLoaderDirectoryPath)
       }
     } catch (err) {
-      debug(`Error resolving user loaders directory`, err)
+      log(`Error resolving user loaders directory`, err)
     }
 
     return {
@@ -542,6 +540,9 @@ module.exports = async (
     }
   }
 
+  /**
+   * @type {import("webpack").Configuration}
+   */
   const config = {
     name: stage,
     // Context is the base directory for resolving the entry option.
@@ -565,7 +566,7 @@ module.exports = async (
   }
 
   if (stage === `build-html` || stage === `develop-html`) {
-    config.target = `node14.15`
+    config.target = `node18.0`
   } else {
     config.target = [`web`, `es5`]
   }
@@ -895,6 +896,19 @@ module.exports = async (
     }
 
     config.cache = cacheConfig
+  }
+
+  if (
+    stage === `develop` &&
+    process.env.GATSBY_EXPERIMENTAL_WEBPACK_LAZY_COMPILATION
+  ) {
+    config.experiments = {
+      lazyCompilation: {
+        entries: false,
+        imports: true,
+      },
+    }
+    config.cache.compression = `brotli`
   }
 
   store.dispatch(actions.replaceWebpackConfig(config))

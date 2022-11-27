@@ -84,7 +84,11 @@ const activeFlags: Array<IFlag> = [
     telemetryId: `FastDev`,
     experimental: false,
     description: `Enable all experiments aimed at improving develop server start time & develop DX.`,
-    includedFlags: [`DEV_SSR`, `PRESERVE_FILE_DOWNLOAD_CACHE`],
+    includedFlags: [
+      `DEV_SSR`,
+      `PRESERVE_FILE_DOWNLOAD_CACHE`,
+      `WEBPACK_LAZY_COMPILATION`,
+    ],
     testFitness: (): fitnessEnum => true,
   },
   {
@@ -151,6 +155,16 @@ const activeFlags: Array<IFlag> = [
       Number(_CFLAGS_.GATSBY_MAJOR) < 5
         ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
         : `Partial hydration requires React 18+ to work.`,
+  },
+  {
+    name: `WEBPACK_LAZY_COMPILATION`,
+    env: `GATSBY_EXPERIMENTAL_WEBPACK_LAZY_COMPILATION`,
+    command: `develop`,
+    telemetryId: `WebpackLazyCompilation`,
+    experimental: false,
+    description: `Compile entrypoints and dynamic imports only when they are in use. Leads to faster start of gatsby develop.`,
+    umbrellaIssue: `https://gatsby.dev/webpack-lazy-compilation-feedback`,
+    testFitness: (): fitnessEnum => true,
   },
 ]
 

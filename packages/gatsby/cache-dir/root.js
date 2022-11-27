@@ -33,6 +33,24 @@ const RouteHandler = props => (
   </BaseContext.Provider>
 )
 
+// module.hot.addStatusHandler(status => {
+//   console.log(`webpack hot status`, status)
+//   if (status === `check`) {
+//     window.isRecompiling = true
+//     console.log(`maybe recompiling`)
+//   } else if (status === `idle`) {
+//     window.isRecompiling = false
+//     console.log(`update was applied`)
+//   }
+//   // React to the current status...
+// })
+
+// window.delayApply = new Promise(resolve => {
+//   window.delayApplyResolve = resolve
+// })
+
+window.delayApply = Promise.resolve()
+
 class LocationHandler extends React.Component {
   render() {
     const { location } = this.props

@@ -340,12 +340,44 @@ export class BaseLoader {
     return findMatchPath(rawPath)
   }
 
+  loadStaticQueryResult(staticQueryHash) {
+    if (this.staticQueryDb[staticQueryHash]) {
+      const jsonPayload = this.staticQueryDb[staticQueryHash]
+      return { staticQueryHash, jsonPayload }
+    }
+
+    console.log(`[loader] loadStaticQueryResult memoizedGet start`, {
+      staticQueryHash,
+    })
+    return this.memoizedGet(
+      `${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json`
+    )
+      .then(req => {
+        const jsonPayload = JSON.parse(req.responseText)
+
+        this.staticQueryDb[staticQueryHash] = jsonPayload
+
+        console.log(`[loader] loadStaticQueryResult memoizedGet finish`, {
+          staticQueryHash,
+          jsonPayload,
+        })
+
+        return { staticQueryHash, jsonPayload }
+      })
+      .catch(() => {
+        throw new Error(
+          `We couldn't load "${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json"`
+        )
+      })
+  }
+
   // TODO check all uses of this and whether they use undefined for page resources not exist
   loadPage(rawPath) {
     const pagePath = findPath(rawPath)
     if (this.pageDb.has(pagePath)) {
       const page = this.pageDb.get(pagePath)
       if (process.env.BUILD_STAGE !== `develop` || !page.payload.stale) {
+        console.log(`using cached pagedata for ${pagePath}`, page)
         if (page.error) {
           return {
             error: page.error,
@@ -359,6 +391,16 @@ export class BaseLoader {
 
     if (this.inFlightDb.has(pagePath)) {
       return this.inFlightDb.get(pagePath)
+    }
+
+    return this._loadPage(pagePath)
+  }
+
+  _loadPage(pagePath) {
+    console.log(`actually running loadPage for ${pagePath}`)
+
+    const finalResult = {
+      createdAt: new Date(),
     }
 
     const loadDataPromises = [
@@ -390,8 +432,6 @@ export class BaseLoader {
         slicesMap = {},
       } = pageData
 
-      const finalResult = {}
-
       const dedupedSliceNames = Array.from(new Set(Object.values(slicesMap)))
 
       const loadSlice = slice => {
@@ -403,6 +443,8 @@ export class BaseLoader {
 
         const inFlight = this.loadComponent(slice.componentChunkName).then(
           component => {
+            // if this was rebuilt by webpack, trigger another page-data fetch to get fresh result with potentially updated static query hashes?
+
             return {
               component: preferDefault(component),
               sliceContext: slice.result.sliceContext,
@@ -453,8 +495,6 @@ export class BaseLoader {
         const componentChunkPromises = Promise.all(loadChunkPromises).then(
           components => {
             const [sliceComponents, headComponent, pageComponent] = components
-
-            finalResult.createdAt = new Date()
 
             for (const sliceComponent of sliceComponents) {
               if (!sliceComponent || sliceComponent instanceof Error) {
@@ -527,32 +567,12 @@ export class BaseLoader {
 
         // get list of static queries to get
         const staticQueryBatchPromise = Promise.all(
-          dedupedStaticQueryHashes.map(staticQueryHash => {
-            // Check for cache in case this static query result has already been loaded
-            if (this.staticQueryDb[staticQueryHash]) {
-              const jsonPayload = this.staticQueryDb[staticQueryHash]
-              return { staticQueryHash, jsonPayload }
-            }
-
-            return this.memoizedGet(
-              `${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json`
-            )
-              .then(req => {
-                const jsonPayload = JSON.parse(req.responseText)
-                return { staticQueryHash, jsonPayload }
-              })
-              .catch(() => {
-                throw new Error(
-                  `We couldn't load "${__PATH_PREFIX__}/page-data/sq/d/${staticQueryHash}.json"`
-                )
-              })
-          })
+          dedupedStaticQueryHashes.map(this.loadStaticQueryResult.bind(this))
         ).then(staticQueryResults => {
           const staticQueryResultsMap = {}
 
           staticQueryResults.forEach(({ staticQueryHash, jsonPayload }) => {
             staticQueryResultsMap[staticQueryHash] = jsonPayload
-            this.staticQueryDb[staticQueryHash] = jsonPayload
           })
 
           return staticQueryResultsMap
@@ -561,6 +581,16 @@ export class BaseLoader {
         return (
           Promise.all([componentChunkPromises, staticQueryBatchPromise])
             .then(([pageResources, staticQueryResults]) => {
+              if (this.shouldRestartLoadPage(finalResult.createdAt)) {
+                console.log(
+                  `Restarting loadPage for ${pagePath} because generating new one was scheduled after initial loadPage happened`
+                )
+
+                return this._loadPage(pagePath)
+              } else {
+                console.log(`Finishing loadPage for ${pagePath}`)
+              }
+
               let payload
               if (pageResources) {
                 payload = { ...pageResources, staticQueryResults }
@@ -605,6 +635,10 @@ export class BaseLoader {
     this.inFlightDb.set(pagePath, inFlightPromise)
 
     return inFlightPromise
+  }
+
+  shouldRestartLoadPage() {
+    return false
   }
 
   // returns undefined if the page does not exists in cache

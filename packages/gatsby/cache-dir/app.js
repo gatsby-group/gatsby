@@ -1,5 +1,5 @@
 // needed for fast refresh
-import "@gatsbyjs/webpack-hot-middleware/client"
+import { setOptionsAndConnect as webpackHotMiddlewareSetOptionsAndConnect } from "@gatsbyjs/webpack-hot-middleware/client?autoConnect=false"
 
 import React from "react"
 import ReactDOM from "react-dom"
@@ -21,6 +21,17 @@ import { init as navigationInit } from "./navigation"
 // this also make sure that if all css is removed in develop we are not left with stale commons.css that have stale content
 import "./blank.css"
 
+const loader = new DevLoader(asyncRequires, matchPaths)
+
+webpackHotMiddlewareSetOptionsAndConnect({
+  beforeUpdateApplyThenable() {
+    console.log(`maybe pausing before applying hot update`)
+    return loader.beforeUpdateHotUpdate().then(() => {
+      console.log(`after beforeUpdateHotUpdate() resolved`)
+    })
+  },
+})
+
 // Enable fast-refresh for virtual sync-requires, gatsby-browser & navigation
 // To ensure that our <Root /> component can hot reload in case anything below doesn't
 // satisfy fast-refresh constraints
@@ -35,7 +46,6 @@ module.hot.accept(
 
 window.___emitter = emitter
 
-const loader = new DevLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
