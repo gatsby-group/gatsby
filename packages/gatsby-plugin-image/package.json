@@ -63,7 +63,7 @@
     "prepend-directive": "^1.1.0",
     "semver": "^7.5.3",
     "terser": "^5.16.8",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "@babel/core": "^7.12.3",
