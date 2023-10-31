@@ -19,10 +19,10 @@
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.12",
     "babel-preset-gatsby-package": "^3.13.0-next.0",
-    "cpy-cli": "^4.2.0",
+    "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "gatsby-plugin-utils": "^4.13.0-next.0",
-    "rewire": "^6.0.0"
+    "rewire": "^7.0.0"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-offline#readme",
   "keywords": [
