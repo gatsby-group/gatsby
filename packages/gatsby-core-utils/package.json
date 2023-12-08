@@ -70,7 +70,7 @@
     "got": "^11.8.6",
     "hash-wasm": "^4.9.0",
     "import-from": "^4.0.0",
-    "lmdb": "2.5.3",
+    "lmdb": "2.9.1",
     "lock": "^1.1.0",
     "node-object-hash": "^2.3.10",
     "proper-lockfile": "^4.1.2",

@@ -120,7 +120,7 @@
     "json-loader": "^0.5.7",
     "latest-version": "^7.0.0",
     "linkfs": "^2.1.0",
-    "lmdb": "2.5.3",
+    "lmdb": "2.9.1",
     "lodash": "^4.17.21",
     "meant": "^1.0.3",
     "memoizee": "^0.4.15",
