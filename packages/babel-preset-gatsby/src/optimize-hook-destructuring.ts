@@ -1,4 +1,4 @@
-import { NodePath, PluginObj, Visitor } from "@babel/core"
+import { NodePath, PluginObj } from "@babel/core"
 import * as BabelTypes from "@babel/types"
 import { Program } from "@babel/types"
 
@@ -21,8 +21,11 @@ export default function ({
 }: {
   types: typeof BabelTypes
 }): PluginObj<Program> {
-  const visitor: Visitor = {
-    CallExpression(path, state: IState): void {
+  const visitor = {
+    CallExpression(
+      path: NodePath<BabelTypes.CallExpression>,
+      state: IState
+    ): void {
       const onlyBuiltIns = state.opts?.onlyBuiltIns || false
 
       // if specified, options.lib is a list of libraries that provide hook functions

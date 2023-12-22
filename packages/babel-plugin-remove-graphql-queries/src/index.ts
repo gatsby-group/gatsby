@@ -51,7 +51,7 @@ interface INestedHookVisitor {
   CallExpression: (path: NodePath<CallExpression>) => void
   queryHash: string
   query: string
-  templatePaath: NodePath<TaggedTemplateExpression>
+  templatePath: NodePath<TaggedTemplateExpression>
 }
 
 class StringInterpolationNotAllowedError extends Error {
@@ -443,12 +443,14 @@ export default function ({ types: t }): PluginObj {
 
           // modify StaticQuery elements and import data only if query is inside StaticQuery
           if (parent) {
+            // @ts-ignore - Weird type
             parent.traverse(nestedJSXVistor, {
               queryHash,
               query,
             })
 
             // modify useStaticQuery elements and import data only if query is inside useStaticQuery
+            // @ts-ignore - Weird type
             parent.traverse(nestedHookVisitor, {
               queryHash,
               query,
