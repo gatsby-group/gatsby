@@ -61,37 +61,95 @@ const readMatchPaths = async (
   return JSON.parse(rawJSON) as Array<IMatchPath>
 }
 
-const matchPathRouter =
-  (
-    matchPaths: Array<IMatchPath>,
-    options: {
-      root: string
-    }
-  ) =>
-  (
+interface IMatchPathMiddlewareOptions {
+  root: string
+  enableLogging?: boolean
+}
+
+const sanitizeUrl = (url: string): string => {
+  try {
+    // Decode URL and normalize slashes
+    const decoded = decodeURIComponent(url)
+    return decoded.replace(/\/+/g, '/').replace(/\/$/, '') || '/'
+  } catch (e) {
+    report.warn(`Failed to decode URL: ${url}`)
+    return url
+  }
+}
+
+const createMatchPathMiddleware = (
+  matchPaths: Array<IMatchPath>,
+  options: IMatchPathMiddlewareOptions
+) => {
+  // Cache commonly accessed paths
+  const pathCache = new Map<string, string | null>()
+  const { root, enableLogging = false } = options
+
+  return (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
   ): void => {
-    const { url } = req
-    if (req.accepts(`html`)) {
-      const matchPath = matchPaths.find(
-        ({ matchPath }) => reachMatch(matchPath, url) !== null
-      )
+    if (!req.accepts(`html`)) {
+      return next()
+    }
+
+    const startTime = enableLogging ? process.hrtime() : null
+    const originalUrl = req.url
+
+    try {
+      // Check cache first
+      if (pathCache.has(originalUrl)) {
+        const cachedPath = pathCache.get(originalUrl)
+        if (!cachedPath) return next()
+        return res.sendFile(path.join(cachedPath, `index.html`), { root })
+      }
+
+      const sanitizedUrl = sanitizeUrl(originalUrl)
+
+      const matchPath = matchPaths.find(({ matchPath }) => {
+        try {
+          return reachMatch(matchPath, sanitizedUrl) !== null
+        } catch (e) {
+          report.error(`Match path error for ${matchPath}: ${e.message}`)
+          return false
+        }
+      })
+
       if (matchPath) {
+        // Cache the result
+        pathCache.set(originalUrl, matchPath.path)
+
+        if (enableLogging) {
+          const [seconds, nanoseconds] = process.hrtime(startTime!)
+          const duration = seconds * 1000 + nanoseconds / 1e6
+          report.info(`Matched ${originalUrl} to ${matchPath.path} (${duration.toFixed(2)}ms)`)
+        }
+
         return res.sendFile(
           path.join(matchPath.path, `index.html`),
-          options,
-          err => {
+          { root },
+          (err: Error) => {
             if (err) {
+              pathCache.set(originalUrl, null)
+              res.status(404)
               next()
             }
           }
         )
       }
+
+      // Cache non-matches too
+      pathCache.set(originalUrl, null)
+      return next()
+
+    } catch (error) {
+      report.error(`Error processing ${originalUrl}: ${error.message}`)
+      res.status(500)
+      return next(error)
     }
-    return next()
   }
+}
 
 module.exports = async (program: IServeProgram): Promise<void> => {
   await initTracer(
@@ -318,7 +376,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   }
 
   const matchPaths = await readMatchPaths(program)
-  router.use(matchPathRouter(matchPaths, { root }))
+  router.use(createMatchPathMiddleware(matchPaths, {
+    root,
+    enableLogging: process.env.NODE_ENV !== 'production'
+  }))
 
   // TODO: Remove/merge with above same block
   router.use((req, res, next) => {
