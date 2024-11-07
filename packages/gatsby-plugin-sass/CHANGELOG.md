@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@6.14.0/packages/gatsby-plugin-sass) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Chores
+
+- update dependency autoprefixer to ^10.4.16 for gatsby-plugin-sass [#38500](https://github.com/gatsbyjs/gatsby/issues/38500) ([24afe95](https://github.com/gatsbyjs/gatsby/commit/24afe951fa538b69961670d5138c9ef3667fe7fe))
+
 ### [6.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-sass@6.13.1/packages/gatsby-plugin-sass) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-plugin-sass

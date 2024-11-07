@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.14.0/packages/gatsby-source-drupal) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-source-drupal [#39126](https://github.com/gatsbyjs/gatsby/issues/39126) ([0f8b101](https://github.com/gatsbyjs/gatsby/commit/0f8b1013ccbefdfdb16137ac1f10f367daf3012d))
+- update dependency agentkeepalive to ^4.5.0 for gatsby-source-drupal [#38511](https://github.com/gatsbyjs/gatsby/issues/38511) ([8bbaea8](https://github.com/gatsbyjs/gatsby/commit/8bbaea8d5230b915ca6261a1579e42f774312473))
+
 ### [6.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-drupal@6.13.1/packages/gatsby-source-drupal) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-source-drupal

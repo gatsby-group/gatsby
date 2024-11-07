@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.14.0/packages/gatsby-source-shopify) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Performance Improvements
+
+- don't load all shopify nodes into memory at once and avoid creating many temp objects [#39138](https://github.com/gatsbyjs/gatsby/issues/39138) ([41d8aef](https://github.com/gatsbyjs/gatsby/commit/41d8aef435e86b3130a0a0f82c669895ad866690))
+
 ### [8.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-shopify@8.13.2/packages/gatsby-source-shopify) (2024-10-25)
 
 #### Performance Improvements

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@5.14.0/packages/gatsby-transformer-screenshot) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- update dependency gatsby-core-utils to ^4.12.1 [#38512](https://github.com/gatsbyjs/gatsby/issues/38512) ([650ef16](https://github.com/gatsbyjs/gatsby/commit/650ef1697bfd839b4f9adab39ca32bad1f6001c0))
+
+#### Chores
+
+- upgrade axios [#38698](https://github.com/gatsbyjs/gatsby/issues/38698) ([e2b3ea3](https://github.com/gatsbyjs/gatsby/commit/e2b3ea3fbfa70b226f6c5c677efedc83f5386cce))
+
 ### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-screenshot@5.13.1/packages/gatsby-transformer-screenshot) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-transformer-screenshot

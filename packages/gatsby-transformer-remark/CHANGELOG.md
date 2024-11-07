@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.14.0/packages/gatsby-transformer-remark) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+**Note:** Version bump only for package gatsby-transformer-remark
+
 ### [6.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-transformer-remark@6.13.1/packages/gatsby-transformer-remark) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-transformer-remark

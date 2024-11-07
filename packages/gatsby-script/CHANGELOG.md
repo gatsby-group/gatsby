@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.14.0/packages/gatsby-script) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Chores
+
+- update dependency del-cli to ^5.1.0 for gatsby-script [#38504](https://github.com/gatsbyjs/gatsby/issues/38504) ([ddcc30b](https://github.com/gatsbyjs/gatsby/commit/ddcc30beba00f8a82280bb7f1ee0cea0b2eba4dd))
+
 ## [2.13.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-script@2.13.0/packages/gatsby-script) (2023-12-18)
 
 [🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.13)

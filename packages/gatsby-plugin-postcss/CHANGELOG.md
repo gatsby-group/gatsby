@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-postcss@6.14.0/packages/gatsby-plugin-postcss) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- update dependency postcss-loader to ^7.3.4 for gatsby-plugin-postcss [#38792](https://github.com/gatsbyjs/gatsby/issues/38792) ([dd0ae15](https://github.com/gatsbyjs/gatsby/commit/dd0ae154062949043e95276765581ddac2e72c30))
+
 ### [6.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-postcss@6.13.1/packages/gatsby-plugin-postcss) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-plugin-postcss

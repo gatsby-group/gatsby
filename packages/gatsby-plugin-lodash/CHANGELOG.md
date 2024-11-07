@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-lodash@6.14.0/packages/gatsby-plugin-lodash) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Chores
+
+- swap babel-plugin-lodash with updated version that doesn't use deprecated APIs [#38797](https://github.com/gatsbyjs/gatsby/issues/38797) ([3d4d6a6](https://github.com/gatsbyjs/gatsby/commit/3d4d6a6e222cf3bff3f2c2cdfb0cc539bad2403a))
+
 ### [6.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-lodash@6.13.1/packages/gatsby-plugin-lodash) (2024-01-23)
 
 #### Chores

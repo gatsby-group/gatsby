@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [8.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.14.0/packages/gatsby-source-contentful) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- update dependency fs-extra to ^11.2.0 [#38727](https://github.com/gatsbyjs/gatsby/issues/38727) ([cb33fe5](https://github.com/gatsbyjs/gatsby/commit/cb33fe5d02b3a42cf629baf948a7aae7a9e7dd0f))
+- remove outdated `forceFullSync` option from readme [#38787](https://github.com/gatsbyjs/gatsby/issues/38787) ([a39d374](https://github.com/gatsbyjs/gatsby/commit/a39d374232709ba310a8a2cc4a17f0469ebaa8d5))
+
+#### Chores
+
+- bump path-to-regexp from 0.1.7 to 0.1.10 [#39096](https://github.com/gatsbyjs/gatsby/issues/39096) ([67668c9](https://github.com/gatsbyjs/gatsby/commit/67668c9839358eedcae1c86aba380a40aea08993))
+- upgrade is-online [#38862](https://github.com/gatsbyjs/gatsby/issues/38862) ([89cb129](https://github.com/gatsbyjs/gatsby/commit/89cb1292f3c8524a53fdbb109f5c400b4a2a62e9))
+
 ### [8.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-contentful@8.13.2/packages/gatsby-source-contentful) (2024-05-06)
 
 #### Chores

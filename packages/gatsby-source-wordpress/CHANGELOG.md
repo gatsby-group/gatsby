@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.14.0/packages/gatsby-source-wordpress) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- pin cheerio [#39066](https://github.com/gatsbyjs/gatsby/issues/39066) ([e2c3a86](https://github.com/gatsbyjs/gatsby/commit/e2c3a866e438618275a5c2979cb20e47b84fe8dc))
+- only diff wpgraphql schema if the user opts in [#38856](https://github.com/gatsbyjs/gatsby/issues/38856) ([5bd4c25](https://github.com/gatsbyjs/gatsby/commit/5bd4c2568890b7aea88efc557d7ceba83c95728a))
+- update dependency node-fetch to ^2.7.0 for gatsby-source-wordpress [#38514](https://github.com/gatsbyjs/gatsby/issues/38514) ([a0dacfe](https://github.com/gatsbyjs/gatsby/commit/a0dacfe0d660d457a4e147b66d02b393ffe3b7a5))
+- update dependency fs-extra to ^11.2.0 [#38727](https://github.com/gatsbyjs/gatsby/issues/38727) ([cb33fe5](https://github.com/gatsbyjs/gatsby/commit/cb33fe5d02b3a42cf629baf948a7aae7a9e7dd0f))
+
+#### Chores
+
+- upgrade file-type [#38861](https://github.com/gatsbyjs/gatsby/issues/38861) ([7661bb9](https://github.com/gatsbyjs/gatsby/commit/7661bb92f2f21ea09399476579efe9fbb2fbb7db))
+- upgrade axios [#38698](https://github.com/gatsbyjs/gatsby/issues/38698) ([e2b3ea3](https://github.com/gatsbyjs/gatsby/commit/e2b3ea3fbfa70b226f6c5c677efedc83f5386cce))
+- bump clipboardy [#38775](https://github.com/gatsbyjs/gatsby/issues/38775) ([ee158d9](https://github.com/gatsbyjs/gatsby/commit/ee158d9f23854bd2ced46db3183de52f001f25a7))
+
 ### [7.13.5](https://github.com/gatsbyjs/gatsby/commits/gatsby-source-wordpress@7.13.5/packages/gatsby-source-wordpress) (2024-08-26)
 
 #### Bug Fixes
