@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.14.0/packages/gatsby-cli) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- handler generation on windows [#38900](https://github.com/gatsbyjs/gatsby/issues/38900) ([c91ed28](https://github.com/gatsbyjs/gatsby/commit/c91ed287fd319a345c2f27877e20656826767e92))
+- update dependency fs-extra to ^11.2.0 [#38727](https://github.com/gatsbyjs/gatsby/issues/38727) ([cb33fe5](https://github.com/gatsbyjs/gatsby/commit/cb33fe5d02b3a42cf629baf948a7aae7a9e7dd0f))
+
+#### Chores
+
+- disable telemetry [#39137](https://github.com/gatsbyjs/gatsby/issues/39137) ([1b1720b](https://github.com/gatsbyjs/gatsby/commit/1b1720bb75233661b30205000c4c3bff855d47c8))
+- update dependency rollup to ^2.79.2 for gatsby-cli [#39115](https://github.com/gatsbyjs/gatsby/issues/39115) ([d5ef4da](https://github.com/gatsbyjs/gatsby/commit/d5ef4dabc16109958200387706243bafdd67fec1))
+- swap babel-plugin-lodash with updated version that doesn't use deprecated APIs [#38797](https://github.com/gatsbyjs/gatsby/issues/38797) ([3d4d6a6](https://github.com/gatsbyjs/gatsby/commit/3d4d6a6e222cf3bff3f2c2cdfb0cc539bad2403a))
+- bump clipboardy [#38775](https://github.com/gatsbyjs/gatsby/issues/38775) ([ee158d9](https://github.com/gatsbyjs/gatsby/commit/ee158d9f23854bd2ced46db3183de52f001f25a7))
+
 ### [5.13.3](https://github.com/gatsbyjs/gatsby/commits/gatsby-cli@5.13.3/packages/gatsby-cli) (2024-04-10)
 
 #### Bug Fixes

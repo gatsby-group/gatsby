@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.14.0/packages/gatsby-dev-cli) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- fix webpack compilation when pnpm is used fix [#38757](https://github.com/gatsbyjs/gatsby/issues/38757) ([d2ffc2a](https://github.com/gatsbyjs/gatsby/commit/d2ffc2a348fd62f9b0f887f860d415c813f9cbac))
+- update dependency fs-extra to ^11.2.0 [#38727](https://github.com/gatsbyjs/gatsby/issues/38727) ([cb33fe5](https://github.com/gatsbyjs/gatsby/commit/cb33fe5d02b3a42cf629baf948a7aae7a9e7dd0f))
+
+#### Chores
+
+- disable telemetry [#39137](https://github.com/gatsbyjs/gatsby/issues/39137) ([1b1720b](https://github.com/gatsbyjs/gatsby/commit/1b1720bb75233661b30205000c4c3bff855d47c8))
+
 ### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-dev-cli@5.13.1/packages/gatsby-dev-cli) (2024-01-23)
 
 #### Bug Fixes

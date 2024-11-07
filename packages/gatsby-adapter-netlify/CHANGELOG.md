@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-adapter-netlify@1.2.0/packages/gatsby-adapter-netlify) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Features
+
+- allow dsg/ssr renders without access to datastore if it's not required [#38974](https://github.com/gatsbyjs/gatsby/issues/38974) ([884ecaf](https://github.com/gatsbyjs/gatsby/commit/884ecaf57ba67a453fe90ecdf9999cc3549384d5))
+
+#### Bug Fixes
+
+- support monorepos [#39005](https://github.com/gatsbyjs/gatsby/issues/39005) ([1a56c34](https://github.com/gatsbyjs/gatsby/commit/1a56c3433a4285220358a22a9d72facbc1ce59e0))
+- handler generation on windows [#38900](https://github.com/gatsbyjs/gatsby/issues/38900) ([c91ed28](https://github.com/gatsbyjs/gatsby/commit/c91ed287fd319a345c2f27877e20656826767e92))
+- add missing fs method rewrites to handle fetchRemoteFile in dsg/ssr engine [#38822](https://github.com/gatsbyjs/gatsby/issues/38822) ([bbdddd7](https://github.com/gatsbyjs/gatsby/commit/bbdddd74063161c838c652e49448301fef5987c9))
+- update dependency cookie to ^0.6.0 [#38725](https://github.com/gatsbyjs/gatsby/issues/38725) ([f3e617b](https://github.com/gatsbyjs/gatsby/commit/f3e617b370406342c8f5a001ce0ec05da01b80ab))
+- update dependency fs-extra to ^11.2.0 [#38727](https://github.com/gatsbyjs/gatsby/issues/38727) ([cb33fe5](https://github.com/gatsbyjs/gatsby/commit/cb33fe5d02b3a42cf629baf948a7aae7a9e7dd0f))
+- update remote url docs [#38768](https://github.com/gatsbyjs/gatsby/issues/38768) ([357e77f](https://github.com/gatsbyjs/gatsby/commit/357e77f88e19186bf6c39c0efc9d7ebca3e72e4f))
+
+#### Performance Improvements
+
+- improve adapt() performance [#38988](https://github.com/gatsbyjs/gatsby/issues/38988) ([ec77bed](https://github.com/gatsbyjs/gatsby/commit/ec77beded8ed28d8ec713f109673bd9c75d264d8))
+
+#### Other Changes
+
+- Fixing missing .default #38606 [#38606](https://github.com/gatsbyjs/gatsby/issues/38606) [#38816](https://github.com/gatsbyjs/gatsby/issues/38816) ([5d48a98](https://github.com/gatsbyjs/gatsby/commit/5d48a9877acab00100a2e280c1ce50e080246ee8))
+- add CHANGELOG.md [#38848](https://github.com/gatsbyjs/gatsby/issues/38848) ([7cea40b](https://github.com/gatsbyjs/gatsby/commit/7cea40b61a8cbb9272d2d5cb7d637ae2a22d80e3))
+
 ### [1.1.7](https://github.com/gatsbyjs/gatsby/commits/gatsby-adapter-netlify@1.1.7/packages/gatsby-adapter-netlify) (2024-07-12)
 
 #### Bug Fixes

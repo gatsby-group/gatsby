@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.14.0/packages/gatsby-link) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- navigate doesn't return anything [#38590](https://github.com/gatsbyjs/gatsby/issues/38590) ([6cb6ffb](https://github.com/gatsbyjs/gatsby/commit/6cb6ffb02f7080a1cfd02f88ebf34c18a51f54b3))
+
+#### Chores
+
+- update dependency del-cli to ^5.1.0 for gatsby-link [#38502](https://github.com/gatsbyjs/gatsby/issues/38502) ([a04af7c](https://github.com/gatsbyjs/gatsby/commit/a04af7c1000edaa7f8e06da02dec0f3d404465f7))
+
 ### [5.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-link@5.13.1/packages/gatsby-link) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-link

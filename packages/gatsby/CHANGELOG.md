@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.14.0/packages/gatsby) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Features
+
+- allow dsg/ssr renders without access to datastore if it's not required [#38974](https://github.com/gatsbyjs/gatsby/issues/38974) ([884ecaf](https://github.com/gatsbyjs/gatsby/commit/884ecaf57ba67a453fe90ecdf9999cc3549384d5))
+
+#### Bug Fixes
+
+- remove jsx tag from comment [#39051](https://github.com/gatsbyjs/gatsby/issues/39051) ([b86b00c](https://github.com/gatsbyjs/gatsby/commit/b86b00c0dcd8ffd7ba46e0de35130a0195f5d2d2))
+- support monorepos [#39005](https://github.com/gatsbyjs/gatsby/issues/39005) ([1a56c34](https://github.com/gatsbyjs/gatsby/commit/1a56c3433a4285220358a22a9d72facbc1ce59e0))
+- handler generation on windows [#38900](https://github.com/gatsbyjs/gatsby/issues/38900) ([c91ed28](https://github.com/gatsbyjs/gatsby/commit/c91ed287fd319a345c2f27877e20656826767e92))
+- resolve url file paths before reading resolve [#38854](https://github.com/gatsbyjs/gatsby/issues/38854) ([2410754](https://github.com/gatsbyjs/gatsby/commit/2410754a756d357c7fe9adcbc48f296685ca6fe5))
+- add missing fs method rewrites to handle fetchRemoteFile in dsg/ssr engine [#38822](https://github.com/gatsbyjs/gatsby/issues/38822) ([bbdddd7](https://github.com/gatsbyjs/gatsby/commit/bbdddd74063161c838c652e49448301fef5987c9))
+- fix webpack compilation when pnpm is used fix [#38757](https://github.com/gatsbyjs/gatsby/issues/38757) ([d2ffc2a](https://github.com/gatsbyjs/gatsby/commit/d2ffc2a348fd62f9b0f887f860d415c813f9cbac))
+- more robust adapter zero-conf handling [#38778](https://github.com/gatsbyjs/gatsby/issues/38778) ([7f08e7b](https://github.com/gatsbyjs/gatsby/commit/7f08e7bca918414c188e1654d21351ca3c274669))
+- try to automatically recover when parcel segfaults [#38773](https://github.com/gatsbyjs/gatsby/issues/38773) ([0a80cd6](https://github.com/gatsbyjs/gatsby/commit/0a80cd6d6194d82d5fa49d372f20aa25075841b6))
+- support builtin modules prefixed with `node:` on `build-html` fixed [#38516](https://github.com/gatsbyjs/gatsby/issues/38516) ([a08c8a0](https://github.com/gatsbyjs/gatsby/commit/a08c8a0424da388bc4b2d5c77265ff7970ab8160))
+- fix broken DevOverlay when there is no stack trace. fix [#38535](https://github.com/gatsbyjs/gatsby/issues/38535) ([c681a9e](https://github.com/gatsbyjs/gatsby/commit/c681a9eca9393292641a2185b6d07dfc93294e9e))
+- update dependency eslint-plugin-jsx-a11y to ^6.8.0 [#38726](https://github.com/gatsbyjs/gatsby/issues/38726) ([89fedf5](https://github.com/gatsbyjs/gatsby/commit/89fedf596b3fe3e6270a94b93e886144a29c4ea8))
+- update dependency fs-extra to ^11.2.0 [#38727](https://github.com/gatsbyjs/gatsby/issues/38727) ([cb33fe5](https://github.com/gatsbyjs/gatsby/commit/cb33fe5d02b3a42cf629baf948a7aae7a9e7dd0f))
+
+#### Performance Improvements
+
+- improve adapt() performance [#38988](https://github.com/gatsbyjs/gatsby/issues/38988) ([ec77bed](https://github.com/gatsbyjs/gatsby/commit/ec77beded8ed28d8ec713f109673bd9c75d264d8))
+- use must-revalidate cache-control header as common and only create header routes for routes with different cache-control [#38820](https://github.com/gatsbyjs/gatsby/issues/38820) ([fb77fe5](https://github.com/gatsbyjs/gatsby/commit/fb77fe54d70a7c1fd38393ae98cae01ae7344755))
+
+#### Chores
+
+- disable telemetry [#39137](https://github.com/gatsbyjs/gatsby/issues/39137) ([1b1720b](https://github.com/gatsbyjs/gatsby/commit/1b1720bb75233661b30205000c4c3bff855d47c8))
+- bump path-to-regexp from 0.1.7 to 0.1.10 [#39096](https://github.com/gatsbyjs/gatsby/issues/39096) ([67668c9](https://github.com/gatsbyjs/gatsby/commit/67668c9839358eedcae1c86aba380a40aea08993))
+- bump webpack-dev-middleware from 4.3.0 to 5.3.4 [#39106](https://github.com/gatsbyjs/gatsby/issues/39106) ([e0c32ff](https://github.com/gatsbyjs/gatsby/commit/e0c32ffc90353d561e189de030f675c79546e3c6))
+- bump body-parser from 1.20.1 to 1.20.3 [#39097](https://github.com/gatsbyjs/gatsby/issues/39097) ([9d987b7](https://github.com/gatsbyjs/gatsby/commit/9d987b7788549bcbfd734fe4607bdae6ce8b3278))
+- pin @vercel/webpack-asset-relocator-loader [#38981](https://github.com/gatsbyjs/gatsby/issues/38981) ([e4c51f2](https://github.com/gatsbyjs/gatsby/commit/e4c51f2aefd96e0ec799e03deeb89150a3e6b993))
+- swap babel-plugin-lodash with updated version that doesn't use deprecated APIs [#38797](https://github.com/gatsbyjs/gatsby/issues/38797) ([3d4d6a6](https://github.com/gatsbyjs/gatsby/commit/3d4d6a6e222cf3bff3f2c2cdfb0cc539bad2403a))
+- upgrade axios [#38698](https://github.com/gatsbyjs/gatsby/issues/38698) ([e2b3ea3](https://github.com/gatsbyjs/gatsby/commit/e2b3ea3fbfa70b226f6c5c677efedc83f5386cce))
+- update dependency graphql to ^16.8.1 [#38509](https://github.com/gatsbyjs/gatsby/issues/38509) ([2d8dc54](https://github.com/gatsbyjs/gatsby/commit/2d8dc5441cb24b764ad9508314e5cae1a09d2dfa))
+
+#### Other Changes
+
+- Fix getNodesByIds typo Fix [#39012](https://github.com/gatsbyjs/gatsby/issues/39012) ([4ba9652](https://github.com/gatsbyjs/gatsby/commit/4ba965272a87112b1ae805e2d311746ffff56339))
+
 ### [5.13.7](https://github.com/gatsbyjs/gatsby/commits/gatsby@5.13.7/packages/gatsby) (2024-07-12)
 
 #### Bug Fixes

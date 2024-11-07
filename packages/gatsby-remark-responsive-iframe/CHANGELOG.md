@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-responsive-iframe@6.14.0/packages/gatsby-remark-responsive-iframe) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- pin cheerio [#39066](https://github.com/gatsbyjs/gatsby/issues/39066) ([e2c3a86](https://github.com/gatsbyjs/gatsby/commit/e2c3a866e438618275a5c2979cb20e47b84fe8dc))
+
 ### [6.13.2](https://github.com/gatsbyjs/gatsby/commits/gatsby-remark-responsive-iframe@6.13.2/packages/gatsby-remark-responsive-iframe) (2024-08-26)
 
 #### Bug Fixes

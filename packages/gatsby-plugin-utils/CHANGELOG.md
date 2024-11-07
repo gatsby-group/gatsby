@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.14.0](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.14.0/packages/gatsby-plugin-utils) (2024-11-06)
+
+[🧾 Release notes](https://www.gatsbyjs.com/docs/reference/release-notes/v5.14)
+
+#### Bug Fixes
+
+- update minor and patch dependencies for gatsby-plugin-utils [#38513](https://github.com/gatsbyjs/gatsby/issues/38513) ([a2b2afd](https://github.com/gatsbyjs/gatsby/commit/a2b2afd7fd25db4d871e69c2083568af9ce054a1))
+- update dependency fs-extra to ^11.2.0 [#38727](https://github.com/gatsbyjs/gatsby/issues/38727) ([cb33fe5](https://github.com/gatsbyjs/gatsby/commit/cb33fe5d02b3a42cf629baf948a7aae7a9e7dd0f))
+
 ### [4.13.1](https://github.com/gatsbyjs/gatsby/commits/gatsby-plugin-utils@4.13.1/packages/gatsby-plugin-utils) (2024-01-23)
 
 **Note:** Version bump only for package gatsby-plugin-utils
