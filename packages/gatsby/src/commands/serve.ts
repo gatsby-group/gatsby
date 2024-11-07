@@ -70,7 +70,7 @@ const sanitizeUrl = (url: string): string => {
   try {
     // Decode URL and normalize slashes
     const decoded = decodeURIComponent(url)
-    return decoded.replace(/\/+/g, '/').replace(/\/$/, '') || '/'
+    return decoded.replace(/\/+/g, `/`).replace(/\/$/, ``) || `/`
   } catch (e) {
     report.warn(`Failed to decode URL: ${url}`)
     return url
