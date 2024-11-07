@@ -6,6 +6,8 @@ import express from 'express';
 import chalk from 'chalk';
 import { match as reachMatch } from '@gatsbyjs/reach-router';
 import report from 'gatsby-cli/lib/reporter';
+import http from 'http';
+import https from 'https';
 
 import { detectPortInUseAndPrompt } from '../utils/detect-port-in-use-and-prompt';
 import { getConfigFile } from '../bootstrap/get-config-file';
@@ -35,6 +37,7 @@ interface IMatchPathMiddlewareOptions {
   enableLogging?: boolean;
 }
 
+// Reads and parses match paths from the cache file
 const readMatchPaths = async (program: IServeProgram): Promise<Array<IMatchPath>> => {
   const filePath = path.join(program.directory, '.cache', 'match-paths.json');
   try {
@@ -47,6 +50,7 @@ const readMatchPaths = async (program: IServeProgram): Promise<Array<IMatchPath>
   }
 };
 
+// Decodes and normalizes URLs, handling edge cases
 const sanitizeUrl = (url: string): string => {
   try {
     let decodedUrl = url;
@@ -71,6 +75,7 @@ const sanitizeUrl = (url: string): string => {
   }
 };
 
+// Middleware to match paths with enhanced error handling, caching, and logging
 const createMatchPathMiddleware = (
   matchPaths: Array<IMatchPath>,
   options: IMatchPathMiddlewareOptions
@@ -125,6 +130,7 @@ const createMatchPathMiddleware = (
   };
 };
 
+// Finds a matching path using reachMatch while handling potential errors
 const findMatchPath = (matchPaths: Array<IMatchPath>, url: string): IMatchPath | undefined => {
   return matchPaths.find(({ matchPath }) => {
     try {
@@ -136,6 +142,7 @@ const findMatchPath = (matchPaths: Array<IMatchPath>, url: string): IMatchPath |
   });
 };
 
+// Logs path matching information if logging is enabled
 const logMatch = (
   url: string,
   matchedPath: string,
@@ -149,6 +156,7 @@ const logMatch = (
   }
 };
 
+// Error handling function for unexpected errors during request processing
 const handleError = (
   url: string,
   error: Error,
@@ -162,7 +170,7 @@ const handleError = (
 
 module.exports = async (program: IServeProgram): Promise<void> => {
   await initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile);
-  let { prefixPaths, port, open, host } = program;
+  let { prefixPaths, port, open, host, ssl } = program;
   port = typeof port === 'string' ? parseInt(port, 10) : port;
 
   const { configModule } = await getConfigFile(program.directory, 'gatsby-config');
@@ -216,8 +224,12 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   app.use(pathPrefix, router);
 
   const startListening = (): void => {
-    app.listen(port, host, () => {
-      const urls = prepareUrls(program.ssl ? 'https' : 'http', program.host, port);
+    const server = ssl
+      ? https.createServer(ssl, app)
+      : http.createServer(app);
+
+    server.listen(port, host, () => {
+      const urls = prepareUrls(ssl ? 'https' : 'http', program.host, port);
       printInstructions(program.sitePackageJson.name || '(Unnamed package)', urls);
       if (open) {
         report.info('Opening browser...');
