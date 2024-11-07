@@ -80,7 +80,7 @@ const sanitizeUrl = (url: string): string => {
 const createMatchPathMiddleware = (
   matchPaths: Array<IMatchPath>,
   options: IMatchPathMiddlewareOptions
-) => {
+): express.RequestHandler => {
   // Cache commonly accessed paths
   const pathCache = new Map<string, string | null>()
   const { root, enableLogging = false } = options
@@ -117,13 +117,17 @@ const createMatchPathMiddleware = (
       })
 
       if (matchPath) {
-        // Cache the result
         pathCache.set(originalUrl, matchPath.path)
 
-        if (enableLogging) {
-          const [seconds, nanoseconds] = process.hrtime(startTime!)
+        if (enableLogging && startTime) {
+          // Remove non-null assertion
+          const [seconds, nanoseconds] = process.hrtime(startTime)
           const duration = seconds * 1000 + nanoseconds / 1e6
-          report.info(`Matched ${originalUrl} to ${matchPath.path} (${duration.toFixed(2)}ms)`)
+          report.info(
+            `Matched ${originalUrl} to ${matchPath.path} (${duration.toFixed(
+              2
+            )}ms)`
+          )
         }
 
         return res.sendFile(
@@ -139,10 +143,8 @@ const createMatchPathMiddleware = (
         )
       }
 
-      // Cache non-matches too
       pathCache.set(originalUrl, null)
       return next()
-
     } catch (error) {
       report.error(`Error processing ${originalUrl}: ${error.message}`)
       res.status(500)
@@ -376,10 +378,12 @@ module.exports = async (program: IServeProgram): Promise<void> => {
   }
 
   const matchPaths = await readMatchPaths(program)
-  router.use(createMatchPathMiddleware(matchPaths, {
-    root,
-    enableLogging: process.env.NODE_ENV !== 'production'
-  }))
+  router.use(
+    createMatchPathMiddleware(matchPaths, {
+      root,
+      enableLogging: process.env.NODE_ENV !== `production`,
+    })
+  )
 
   // TODO: Remove/merge with above same block
   router.use((req, res, next) => {
