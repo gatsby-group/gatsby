@@ -12,21 +12,13 @@ import { getConfigFile } from '../bootstrap/get-config-file';
 import { preferDefault } from '../bootstrap/prefer-default';
 import { IProgram } from './types';
 import { IPreparedUrls, prepareUrls } from '../utils/prepare-urls';
-import {
-  IGatsbyConfig,
-  IGatsbyFunction,
-  IGatsbyPage,
-  IGatsbyState,
-} from '../redux/types';
+import { IGatsbyConfig, IGatsbyFunction, IGatsbyPage, IGatsbyState } from '../redux/types';
 import { reverseFixedPagePath } from '../utils/page-data';
 import { initTracer } from '../utils/tracer';
 import { configureTrailingSlash } from '../utils/express-middlewares';
 import { getDataStore } from '../datastore';
 import { functionMiddlewares } from '../internal-plugins/functions/middleware';
-import {
-  thirdPartyProxyPath,
-  partytownProxy,
-} from '../internal-plugins/partytown/proxy';
+import { thirdPartyProxyPath, partytownProxy } from '../internal-plugins/partytown/proxy';
 import { slash } from 'gatsby-core-utils/path';
 
 interface IMatchPath {
@@ -43,59 +35,42 @@ interface IMatchPathMiddlewareOptions {
   enableLogging?: boolean;
 }
 
-// Reads and parses match paths from the cache file
-const readMatchPaths = async (
-  program: IServeProgram
-): Promise<Array<IMatchPath>> => {
+const readMatchPaths = async (program: IServeProgram): Promise<Array<IMatchPath>> => {
   const filePath = path.join(program.directory, '.cache', 'match-paths.json');
   try {
     const rawJSON = await fs.readFile(filePath, 'utf8');
     return JSON.parse(rawJSON) as Array<IMatchPath>;
   } catch (error) {
-    report.warn(
-      `Could not read ${chalk.bold('match-paths.json')} from the .cache directory`
-    );
-    report.warn(
-      `Client-side routing may not work correctly. Try re-running ${chalk.bold(
-        'gatsby build'
-      )}.`
-    );
+    report.warn(`Could not read ${chalk.bold('match-paths.json')} from the .cache directory`);
+    report.warn(`Client-side routing may not work correctly. Try re-running ${chalk.bold('gatsby build')}.`);
     return [];
   }
 };
 
-// Decodes and normalizes URLs, handling edge cases
 const sanitizeUrl = (url: string): string => {
   try {
     let decodedUrl = url;
     let previousUrl;
 
-    // Handle nested encoding (e.g., %252F -> %2F -> /)
     do {
       previousUrl = decodedUrl;
       decodedUrl = decodeURIComponent(decodedUrl);
     } while (previousUrl !== decodedUrl);
 
-    // Strip query params and hash fragments, normalize slashes, and ensure leading slash
     decodedUrl = decodedUrl.split(/[?#]/)[0];
-    decodedUrl = decodedUrl.replace(/\/{2,}/g, '/'); // Collapse repeated slashes
+    decodedUrl = decodedUrl.replace(/\/{2,}/g, '/');
     decodedUrl = decodedUrl.startsWith('/') ? decodedUrl : `/${decodedUrl}`;
-    decodedUrl = decodedUrl !== '/' ? decodedUrl.replace(/\/$/, '') : decodedUrl; // Remove trailing slash unless root
-
-    // Protect against path traversal attempts by stripping '../' and './'
+    decodedUrl = decodedUrl !== '/' ? decodedUrl.replace(/\/$/, '') : decodedUrl;
     decodedUrl = decodedUrl.replace(/(^|\/)\.\.?(\/|$)/g, '/');
-
-    // Strip non-URL-safe characters, keeping only standard path symbols
     decodedUrl = decodedUrl.replace(/[^a-zA-Z0-9\-._~!$&'()*+,;=:@/]/g, '');
 
-    return decodedUrl || '/'; // Default to root if empty
+    return decodedUrl || '/';
   } catch (e) {
     report.warn(`Failed to sanitize URL: "${url}". Error: ${e.message}`);
     return url;
   }
 };
 
-// Middleware to match paths with enhanced error handling, caching, and logging
 const createMatchPathMiddleware = (
   matchPaths: Array<IMatchPath>,
   options: IMatchPathMiddlewareOptions
@@ -150,11 +125,7 @@ const createMatchPathMiddleware = (
   };
 };
 
-// Finds a matching path using reachMatch while handling potential errors
-const findMatchPath = (
-  matchPaths: Array<IMatchPath>,
-  url: string
-): IMatchPath | undefined => {
+const findMatchPath = (matchPaths: Array<IMatchPath>, url: string): IMatchPath | undefined => {
   return matchPaths.find(({ matchPath }) => {
     try {
       return reachMatch(matchPath, url) !== null;
@@ -165,7 +136,6 @@ const findMatchPath = (
   });
 };
 
-// Logs path matching information if logging is enabled
 const logMatch = (
   url: string,
   matchedPath: string,
@@ -175,13 +145,10 @@ const logMatch = (
   if (enableLogging && startTime) {
     const [seconds, nanoseconds] = process.hrtime(startTime);
     const duration = seconds * 1000 + nanoseconds / 1e6;
-    report.info(
-      `Matched ${url} to ${matchedPath} in ${duration.toFixed(2)}ms`
-    );
+    report.info(`Matched ${url} to ${matchedPath} in ${duration.toFixed(2)}ms`);
   }
 };
 
-// Error handling function for unexpected errors during request processing
 const handleError = (
   url: string,
   error: Error,
@@ -194,16 +161,11 @@ const handleError = (
 };
 
 module.exports = async (program: IServeProgram): Promise<void> => {
-  await initTracer(
-    process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile
-  );
+  await initTracer(process.env.GATSBY_OPEN_TRACING_CONFIG_FILE || program.openTracingConfigFile);
   let { prefixPaths, port, open, host } = program;
   port = typeof port === 'string' ? parseInt(port, 10) : port;
 
-  const { configModule } = await getConfigFile(
-    program.directory,
-    'gatsby-config'
-  );
+  const { configModule } = await getConfigFile(program.directory, 'gatsby-config');
   const config: IGatsbyConfig = preferDefault(configModule);
 
   const { pathPrefix: configPathPrefix, trailingSlash } = config || {};
@@ -223,14 +185,10 @@ module.exports = async (program: IServeProgram): Promise<void> => {
         ({
           pages: {
             get(pathName: string): IGatsbyPage | undefined {
-              return getDataStore().getNode(`SitePage ${pathName}`) as
-                | IGatsbyPage
-                | undefined;
+              return getDataStore().getNode(`SitePage ${pathName}`) as IGatsbyPage | undefined;
             },
             values(): Iterable<IGatsbyPage> {
-              return getDataStore().iterateNodesByType(
-                'SitePage'
-              ) as Iterable<IGatsbyPage>;
+              return getDataStore().iterateNodesByType('SitePage') as Iterable<IGatsbyPage>;
             },
           },
         } as unknown as IGatsbyState),
@@ -259,15 +217,8 @@ module.exports = async (program: IServeProgram): Promise<void> => {
 
   const startListening = (): void => {
     app.listen(port, host, () => {
-      const urls = prepareUrls(
-        program.ssl ? 'https' : 'http',
-        program.host,
-        port
-      );
-      printInstructions(
-        program.sitePackageJson.name || '(Unnamed package)',
-        urls
-      );
+      const urls = prepareUrls(program.ssl ? 'https' : 'http', program.host, port);
+      printInstructions(program.sitePackageJson.name || '(Unnamed package)', urls);
       if (open) {
         report.info('Opening browser...');
         Promise.resolve(openurl(urls.localUrlForBrowser)).catch(() =>
