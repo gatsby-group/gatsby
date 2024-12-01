@@ -7,7 +7,7 @@
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.26.0",
     "@rematch/core": "^2.2.0",
     "@rematch/immer": "^2.1.3",
     "async-retry": "^1.3.3",
@@ -46,8 +46,8 @@
     "valid-url": "^1.0.9"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@types/cache-manager": "^2.10.3",

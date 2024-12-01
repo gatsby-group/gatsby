@@ -21,7 +21,7 @@
     "directory": "packages/gatsby-plugin-no-sourcemaps"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13"
+    "@babel/runtime": "^7.26.0"
   },
   "peerDependencies": {
     "gatsby": "^5.0.0-next"

@@ -46,7 +46,7 @@
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-utils#readme",
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.26.0",
     "fastq": "^1.16.0",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.15.0-next.0",
@@ -57,8 +57,8 @@
     "mime": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
     "babel-preset-gatsby-package": "^3.15.0-next.0",
     "cross-env": "^7.0.3",
     "msw": "^1.2.2",

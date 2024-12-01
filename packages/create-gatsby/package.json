@@ -42,6 +42,6 @@
   },
   "author": "Matt Kane <matt@gatsbyjs.com>",
   "dependencies": {
-    "@babel/runtime": "^7.20.13"
+    "@babel/runtime": "^7.26.0"
   }
 }

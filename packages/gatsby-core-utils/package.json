@@ -61,7 +61,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.26.0",
     "ci-info": "2.0.0",
     "configstore": "^5.0.1",
     "fastq": "^1.15.0",
@@ -79,8 +79,8 @@
     "xdg-basedir": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.20.7",
-    "@babel/core": "^7.20.12",
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
     "@types/ci-info": "2.0.0",
     "babel-preset-gatsby-package": "^3.15.0-next.0",
     "cross-env": "^7.0.3",
