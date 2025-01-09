@@ -9,7 +9,7 @@ import { remarkMdxHtmlPlugin } from "./remark-mdx-html-plugin"
 import { remarkPathPlugin } from "./remark-path-prefix-plugin"
 
 export interface IMdxPluginOptions {
-  extensions: [string]
+  extensions: string[]
   mdxOptions: ProcessorOptions
   gatsbyRemarkPlugins?: [IPluginInfo]
 }
