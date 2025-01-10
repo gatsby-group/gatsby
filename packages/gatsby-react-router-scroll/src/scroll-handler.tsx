@@ -30,8 +30,9 @@ export class ScrollHandler extends React.Component<
   _latestKnownScrollY = 0
   scrollListener = (): void => {
     this._latestKnownScrollY = window.scrollY
+    const shouldSaveScrollPosition = false
 
-    if (!this._isTicking) {
+    if (!this._isTicking && shouldSaveScrollPosition) {
       this._isTicking = true
       requestAnimationFrame(this._saveScroll.bind(this))
     }
