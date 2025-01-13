@@ -20,7 +20,7 @@
     "directory": "packages/gatsby-plugin-mdx"
   },
   "peerDependencies": {
-    "@mdx-js/react": "^2.0.0",
+    "@mdx-js/react": "^3.0.0",
     "gatsby": "^5.0.0-next",
     "gatsby-source-filesystem": "^5.0.0-next",
     "react": "^18.0.0 || ^0.0.0",
