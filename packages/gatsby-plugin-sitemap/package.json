@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.20.13",
     "common-tags": "^1.8.2",
     "minimatch": "^3.1.2",
-    "sitemap": "^7.1.1"
+    "sitemap": "^7.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
