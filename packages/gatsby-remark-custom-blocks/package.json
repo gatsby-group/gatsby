@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "remark-custom-blocks": "^2.6.0"
+    "remark-custom-blocks": "^2.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

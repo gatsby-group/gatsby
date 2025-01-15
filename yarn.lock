@@ -21316,10 +21316,10 @@ relay-runtime@12.0.0:
     fbjs "^3.0.0"
     invariant "^2.2.4"
 
-remark-custom-blocks@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/remark-custom-blocks/-/remark-custom-blocks-2.6.0.tgz#487fa162016f9fc3a03e8d4ee3de7dbefc109ed6"
-  integrity sha512-8Lt1WKxOzAGmYH4VrZ9Cq0ZhFCMW2wBKwCxCv0XmmF8jTfWChXer9QYUe0fi9vW/eMbjXh8RLMed3Rst3SQ+KA==
+remark-custom-blocks@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/remark-custom-blocks/-/remark-custom-blocks-2.6.1.tgz#d3c27dcc0f9426fe1ea86a0ed46e05248d8f5cd8"
+  integrity sha512-XXVwANBZaHuBnhKQmhe8bbtoxpXFUTHxbgvU7azHT8jeZv2HLZ5Z4ggkn5khV5c6nDpH4xZU8KbT2fOadyTRoQ==
   dependencies:
     space-separated-tokens "^1.1.5"
 
