@@ -31,7 +31,7 @@
     "gatsby-cypress": "next",
     "is-ci": "^3.0.1",
     "prettier": "^2.8.8",
-    "start-server-and-test": "^2.0.3",
+    "start-server-and-test": "^2.0.9",
     "typescript": "^5.3.3"
   },
   "repository": {

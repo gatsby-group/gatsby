@@ -46,7 +46,7 @@
     "make-dir-cli": "^3.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
-    "start-server-and-test": "^2.0.3",
+    "start-server-and-test": "^2.0.9",
     "typescript": "^5.3.3",
     "wait-on": "^7.2.0"
   },
