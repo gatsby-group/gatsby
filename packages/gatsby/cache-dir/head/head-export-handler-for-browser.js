@@ -61,14 +61,19 @@ if (process.env.BUILD_STAGE === `develop`) {
   // https://github.com/facebook/react/blob/e2424f33b3ad727321fc12e75c5e94838e84c2b5/packages/react-dom-bindings/src/client/validateDOMNesting.js#L498-L520
   const originalConsoleError = console.error.bind(console)
   console.error = (...args) => {
-    if (
-      Array.isArray(args) &&
-      args.length >= 2 &&
-      args[0]?.includes?.(`validateDOMNesting(...): %s cannot appear as`) &&
-      (args[1] === `<html>` || args[1] === `<body>`)
-    ) {
-      return undefined
+    try {
+      if (
+        Array.isArray(args) &&
+        args.length >= 2 &&
+        args[0]?.includes?.(`validateDOMNesting(...): %s cannot appear as`) &&
+        (args[1] === `<html>` || args[1] === `<body>`)
+      ) {
+        return undefined
+      }
+    } catch (e) {
+      originalConsoleError(...args, e)
     }
+
     return originalConsoleError(...args)
   }
 
