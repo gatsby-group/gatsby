@@ -33,7 +33,7 @@
     "gatsby-core-utils": "^4.15.0-next.0",
     "glob": "^7.2.3",
     "lodash": "^4.17.21",
-    "micromatch": "^4.0.5"
+    "micromatch": "^4.0.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
