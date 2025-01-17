@@ -47,7 +47,7 @@
     "babel-preset-gatsby-package": "^3.15.0-next.0",
     "cross-env": "^7.0.3",
     "memfs": "^4.6.0",
-    "rimraf": "^5.0.5",
+    "rimraf": "^5.0.10",
     "typescript": "^5.1.6"
   },
   "peerDependencies": {
