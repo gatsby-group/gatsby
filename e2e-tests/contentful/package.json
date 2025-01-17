@@ -25,7 +25,7 @@
     "cypress": "^12.16.0",
     "gatsby-cypress": "next",
     "prettier": "^2.8.8",
-    "srcset": "^5.0.0",
+    "srcset": "^5.0.1",
     "start-server-and-test": "^2.0.3",
     "typescript": "^5.3.3"
   },
