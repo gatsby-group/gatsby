@@ -21,7 +21,7 @@
     "mdast-util-to-hast": "^10.2.0",
     "remark": "^13.0.0",
     "rimraf": "^3.0.2",
-    "unist-util-find": "1.0.2"
+    "unist-util-find": "1.0.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-graphviz#readme",
   "keywords": [
