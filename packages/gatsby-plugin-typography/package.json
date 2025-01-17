@@ -17,7 +17,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-typography": "^0.16.23",
-    "typography": "^0.16.21"
+    "typography": "^0.16.24"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-typography#readme",
   "keywords": [
