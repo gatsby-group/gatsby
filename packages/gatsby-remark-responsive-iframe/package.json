@@ -20,7 +20,7 @@
     "cross-env": "^7.0.3",
     "remark": "^13.0.0",
     "remark-mdx": "^1.6.22",
-    "unist-util-find": "1.0.2"
+    "unist-util-find": "1.0.4"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-remark-responsive-iframe#readme",
   "keywords": [

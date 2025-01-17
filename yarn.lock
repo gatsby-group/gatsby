@@ -16153,7 +16153,7 @@ lodash.isstring@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
 
-lodash.iteratee@^4.5.0:
+lodash.iteratee@^4.5.0, lodash.iteratee@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.iteratee/-/lodash.iteratee-4.7.0.tgz#be4177db289a8ccc3c0990f1db26b5b22fc1554c"
 
@@ -24689,6 +24689,14 @@ unist-util-find@1.0.2:
   dependencies:
     lodash.iteratee "^4.5.0"
     unist-util-visit "^1.1.0"
+
+unist-util-find@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/unist-util-find/-/unist-util-find-1.0.4.tgz#752e2c6fabf9d57e2c08e03d2f54aaee8c227ef3"
+  integrity sha512-T5vI7IkhroDj7KxAIy057VbIeGnCXfso4d4GoUsjbAmDLQUkzAeszlBtzx1+KHgdsYYBygaqUBvrbYCfePedZw==
+  dependencies:
+    lodash.iteratee "^4.7.0"
+    unist-util-visit "^2.0.0"
 
 unist-util-generated@^1.0.0:
   version "1.1.5"
