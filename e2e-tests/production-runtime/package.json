@@ -18,7 +18,7 @@
     "gatsby-source-filesystem": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.63.6",
+    "sass": "^1.69.5",
     "typeface-merriweather": "^1.1.13"
   },
   "keywords": [
