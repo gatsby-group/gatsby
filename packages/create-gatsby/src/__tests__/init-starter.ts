@@ -128,6 +128,29 @@ describe(`init-starter`, () => {
       })
     })
 
+    it(`process package installation with bun`, async () => {
+      process.env.npm_config_user_agent = `bun`
+      ;(path as any).join.mockImplementation(() => `/somewhere-here`)
+      ;(execa as any).mockImplementation(() => Promise.resolve())
+      ;(fs as any).readJSON.mockImplementation(() => {
+        return { name: `gatsby-project` }
+      })
+
+      await initStarter(
+        `gatsby-starter-hello-world`,
+        `./somewhere`,
+        [],
+        `A site`
+      )
+
+      expect(fs.remove).toBeCalledWith(`package-lock.json`)
+      expect(reporter.success).toBeCalledWith(`Installed plugins`)
+      expect(reporter.panic).not.toBeCalled()
+      expect(execa).toBeCalledWith(`bun`, [`install`, `--silent`], {
+        stderr: `inherit`,
+      })
+    })
+
     it(`process package installation with NPM`, async () => {
       process.env.npm_config_user_agent = `npm`
       ;(path as any).join.mockImplementation(() => `/somewhere-here`)
@@ -144,6 +167,7 @@ describe(`init-starter`, () => {
       )
 
       expect(fs.remove).toBeCalledWith(`yarn.lock`)
+      expect(fs.remove).toBeCalledWith(`bun.lockb`)
       expect(reporter.success).toBeCalledWith(`Installed Gatsby`)
       expect(reporter.success).toBeCalledWith(`Installed plugins`)
       expect(reporter.panic).not.toBeCalled()
@@ -196,6 +220,29 @@ describe(`init-starter`, () => {
 
       expect(reporter.info).toBeCalledWith(
         `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
+      )
+    })
+
+    it(`gently informs the user that bun is not available when trying to use it`, async () => {
+      process.env.npm_config_user_agent = `bun`
+      ;(execSync as any).mockImplementation(() => {
+        throw new Error(`Something wrong occurred when trying to use bun`)
+      })
+      ;(path as any).join.mockImplementation(() => `/somewhere-here`)
+      ;(execa as any).mockImplementation(() => Promise.resolve())
+      ;(fs as any).readJSON.mockImplementation(() => {
+        return { name: `gatsby-project` }
+      })
+
+      await initStarter(
+        `gatsby-starter-hello-world`,
+        `./somewhere`,
+        [`one-package`],
+        `A site`
+      )
+
+      expect(reporter.info).toBeCalledWith(
+        `Woops! You have chosen "bun" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://bun.sh or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
       )
     })
   })

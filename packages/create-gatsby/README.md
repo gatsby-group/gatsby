@@ -16,6 +16,12 @@ or
 yarn create gatsby
 ```
 
+or
+
+```shell
+bunx create-gatsby
+```
+
 It will ask you questions about what you're building, and set up a Gatsby project for you.
 
 _Note: This package is different from `gatsby-cli`, it is intended solely to create new sites._

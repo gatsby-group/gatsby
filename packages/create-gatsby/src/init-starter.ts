@@ -5,7 +5,7 @@ import path from "path"
 import { reporter } from "./utils/reporter"
 import { spin } from "tiny-spin"
 import { getConfigStore } from "./utils/get-config-store"
-type PackageManager = "yarn" | "npm"
+type PackageManager = "yarn" | "npm" | "bun"
 import colors from "ansi-colors"
 import { clearLine } from "./utils/clear-line"
 
@@ -26,6 +26,11 @@ export const getPackageManager = (
     return `yarn`
   }
 
+  if (npmConfigUserAgent?.includes(`bun`)) {
+    configStore.set(packageManagerConfigKey, `bun`)
+    return `bun`
+  }
+
   configStore.set(packageManagerConfigKey, `npm`)
   return `npm`
 }
@@ -40,6 +45,19 @@ const checkForYarn = (): boolean => {
   } catch (e) {
     reporter.info(
       `Woops! You have chosen "yarn" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://yarnpkg.com/getting-started/install or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
+    )
+    return false
+  }
+}
+
+// Checks the existence of bun bunary
+const checkForBun = (): boolean => {
+  try {
+    execSync(`bun --version`, { stdio: `ignore` })
+    return true
+  } catch (e) {
+    reporter.info(
+      `Woops! You have chosen "bun" as your package manager, but it doesn't seem be installed on your machine. You can install it from https://bun.sh or change your preferred package manager with the command "gatsby options set pm npm". As a fallback, we will run the next steps with npm.`
     )
     return false
   }
@@ -140,8 +158,16 @@ const install = async (
 
       await fs.remove(`package-lock.json`)
       await execa(`yarnpkg`, args, options)
+    } else if (pm === `bun` && checkForBun()) {
+      const args = packages.length
+        ? [`add`, `--silent`, ...packages]
+        : [`install`, `--silent`]
+
+      await fs.remove(`package-lock.json`)
+      await execa(`bun`, args, options)
     } else {
       await fs.remove(`yarn.lock`)
+      await fs.remove(`bun.lockb`)
       await execa(`npm`, [`install`, ...npmAdditionalCliArgs], options)
       await clearLine()
 

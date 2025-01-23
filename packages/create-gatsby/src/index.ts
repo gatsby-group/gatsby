@@ -296,7 +296,8 @@ ${colors.bold(`Thanks! Here's what we'll now do:`)}
   await gitSetup(answers.project)
 
   const pm = await getPackageManager()
-  const runCommand = pm === `npm` ? `npm run` : `yarn`
+  const runCommand =
+    pm === `npm` ? `npm run` : pm === `bun` ? `bun run` : `yarn`
 
   reporter.info(
     stripIndent`
