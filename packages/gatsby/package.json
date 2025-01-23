@@ -15,6 +15,7 @@
     "@babel/eslint-parser": "^7.19.1",
     "@babel/helper-plugin-utils": "^7.20.2",
     "@babel/parser": "^7.20.13",
+    "@babel/plugin-transform-react-jsx": "^7.22.15",
     "@babel/runtime": "^7.20.13",
     "@babel/traverse": "^7.20.13",
     "@babel/types": "^7.20.7",
