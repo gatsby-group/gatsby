@@ -6,7 +6,7 @@ title: Theme UI
 It allows you to style any component in your application with typographic, color, and layout values defined in a shared theme object.
 Theme UI is currently used in Gatsby's official themes,
 but it can be used in any Gatsby site or React application.
-It includes the [Emotion][] CSS-in-JS library along with additional utilities for styling [MDX][] and using configurations and themes from [Typography.js][].
+It includes the [Emotion][] CSS-in-JS library along with additional utilities for styling [MDX][] and using configurations and themes from [Typography.js](https://www.gatsbyjs.com/docs/using-typography-js/).
 
 ## Using Theme UI in Gatsby
 
