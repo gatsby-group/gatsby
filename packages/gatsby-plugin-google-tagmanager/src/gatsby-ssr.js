@@ -1,5 +1,6 @@
 import React from "react"
 import { oneLine, stripIndent } from "common-tags"
+import { Script } from "gatsby"
 
 const generateGTM = ({
   id,
@@ -75,8 +76,8 @@ exports.onRenderBody = (
       // web-vitals/polyfill (necessary for non chromium browsers)
       // @seehttps://www.npmjs.com/package/web-vitals#how-the-polyfill-works
       inlineScripts.push(
-        <script
-          key={`gatsby-plugin-google-tagmanager-web-vitals`}
+        <Script
+          id="gatsby-plugin-google-tagmanager-web-vitals"
           data-gatsby="web-vitals-polyfill"
           dangerouslySetInnerHTML={{
             __html: `
@@ -88,8 +89,8 @@ exports.onRenderBody = (
     }
 
     inlineScripts.push(
-      <script
-        key="plugin-google-tagmanager"
+      <Script
+        id="plugin-google-tagmanager"
         dangerouslySetInnerHTML={{
           __html: oneLine`
           ${defaultDataLayerCode}
