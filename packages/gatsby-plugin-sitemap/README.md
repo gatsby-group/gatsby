@@ -46,12 +46,14 @@ You probably do not want to use the defaults in this plugin. Here's an example o
 </urlset>
 ```
 
-See the `changefreq` and `priority` fields? Those will be the same for every page, no matter how important or how often it gets updated. They will most likely be wrong. But wait, there's more, in their [docs](https://support.google.com/webmasters/answer/183668?hl=en) Google says:
+See the `changefreq` and `priority` fields? Those will be the same for every page, no matter how important or how often it gets updated. They will most likely be wrong. In addition, all entries are missing a `lastmod` date.
+
+In their [docs](https://support.google.com/webmasters/answer/183668?hl=en) Google says:
 
 > - Google ignores `<priority>` and `<changefreq>` values, so don't bother adding them.
 > - Google reads the `<lastmod>` value, but if you misrepresent this value, Google will stop reading it.
 
-You really want to customize this plugin config to include an accurate `lastmod` date. Checkout the [example](#example) for an example of how to do this.
+You will really want to customize this plugin config! At minimum, you need a custom `query` and a custom `serialize` to include an accurate `lastmod` date. Check out the [example](#example) for an example of how to do this.
 
 ## Options
 
@@ -59,16 +61,16 @@ The [`default config`](https://github.com/gatsbyjs/gatsby/blob/master/packages/g
 
 The options are as follows:
 
-- `output` (string = `/`) Folder path where sitemaps are stored.
-- `createLinkInHead` (boolean = true) Whether to populate the `<head>` of your site with a link to the sitemap.
-- `entryLimit` (number = 45000) Number of entries per sitemap file. A sitemap index (as `sitemap-index.xml`) will always be created and multiple sitemaps are created for every `entryLimit` increment (e.g under 45000 entries only `sitemap-0.xml` will be created).
-- `excludes` (string[] = []) An array of paths to exclude from the sitemap. You can use glob matching using [minimatch](https://github.com/isaacs/minimatch). While `excludes` is usually an array of strings it is possible to enter other data types into this array for custom filtering, but doing so will require customization of the [`filterPages`](#filterPages) function.
-- `query` (GraphQL Query) The query for the data you need to generate the sitemap. It's required to get the site's URL, if you are not fetching it from `site.siteMetadata.siteUrl`, you will need to set a custom [`resolveSiteUrl`](#resolveSiteUrl) function. If you override the query, you may need to pass in a custom [`resolvePagePath`](#resolvePagePath), [`resolvePages`](#resolvePages) to keep everything working. If you fetch pages without using `allSitePage.nodes` query structure you will definitely need to customize the [`resolvePages`](#resolvePages) function.
-- [`resolveSiteUrl`](#resolveSiteUrl) (function) Takes the output of the data query and lets you return the site URL. Sync or async functions allowed.
-- [`resolvePagePath`](#resolvePagePath) (function) Takes a page object and returns the uri of the page (no domain or protocol).
-- [`resolvePages`](#resolvePagePath) (function) Takes the output of the data query and expects an array of page objects to be returned. Sync or async functions allowed.
-- [`filterPages`](#filterPages) (function) Takes the current page and a string (or other object) from the `exclude` array and expects a boolean to be returned. `true` excludes the path, `false` keeps it. Note that when the `excludes` array is undefined or empty this function will not be called.
-- [`serialize`](#serialize) (function) Takes the output of `filterPages` and lets you return a sitemap entry. Sync or async functions allowed.
+- `output` (string = `'/'`) Folder path where sitemaps are stored.
+- `createLinkInHead` (boolean = `true`) Whether to populate the `<head>` of your site with a link to the sitemap.
+- `entryLimit` (number = `45000`) Number of entries per sitemap file. A sitemap index (as `sitemap-index.xml`) will always be created and multiple sitemaps are created for every `entryLimit` increment (e.g under 45000 entries only `sitemap-0.xml` will be created).
+- `excludes` (string[] = `[]`) An array of paths to exclude from the sitemap. You can use glob matching using [minimatch](https://github.com/isaacs/minimatch). While `excludes` is usually an array of strings it is possible to enter other data types into this array for custom filtering, but doing so will require customization of the [`filterPages`](#filterPages) function.
+- `query` (GraphQL Query) The query for the data you need to generate the sitemap. By default this will fetch all pages at `allSitePage.nodes`; write a custom query to fetch specific pages as well as the site URL (unless that URL is defined in another scope, such as an environment variable in your project). If you write a custom query which has a different structure from the example below, you will likely need to also write a custom [`resolveSiteUrl`](#resolveSiteUrl) function, [`resolvePagePath`](#resolvePagePath) function, and [`resolvePages`](#resolvePages) function to prevent errors, as they all rely on the default query structure. In addition, the shape of the `queryData` and `pageData` types seen below will depend on the shape of your custom query.
+- [`resolveSiteUrl`](#resolveSiteUrl) (function = `(queryData: { site: { siteMetadata: { siteUrl: string } } }) => string`) Takes the output of the data [`query`](#query) and returns the site URL as a string.
+- [`resolvePagePath`](#resolvePagePath) (function = `(page: { path: string }) => string`) Takes a single page-data object and returns the path of the page (no domain or protocol).
+- [`resolvePages`](#resolvePages) (function = `({ data: { allSitePage: { nodes: PageData[] }) => PageData[]`) Takes the output of the data query and returns an array of page-data objects.
+- [`filterPages`](#filterPages) (function = `(page: PageData, exclude: string) => boolean`) Takes the current page and a string (or other object) from the `excludes` array and returns a boolean.
+- [`serialize`](#serialize) (function = `(page: pageData) => { path: string }`) Takes the output of `filterPages` (or `resolvePages` if `filterPages` is not called) and returns a sitemap entry.
 
 The following pages are **always** excluded: `/dev-404-page`,`/404` &`/offline-plugin-app-shell-fallback`, this cannot be changed even by customizing the [`filterPages`](#filterPages) function.
 
@@ -136,48 +138,61 @@ module.exports = {
 
 <a id=resolveSiteUrl></a>
 
-## resolveSiteUrl ⇒ <code>string</code>
+## resolveSiteUrl: `(QueryData) => string`
+
+Takes the output of the data query and returns the site URL as a string.
+
+If you are not using the default query or retrieving your site URL from `site.siteMetadata.siteUrl` in your custom query, you must define a custom `resolveSiteUrl` function which returns your site URL (perhaps from another part of your query data, from environment variables in your project, etc.).
 
 Sync or async functions allowed.
 
-**Returns**: <code>string</code> - - site URL, this can come from the graphql query or another scope.
-
 | Param | Type                | Description                  |
 | ----- | ------------------- | ---------------------------- |
-| data  | <code>object</code> | Results of the GraphQL query |
+| data  | `object`            | Results of the GraphQL query |
+
+| Return Value | Type                | Description                  |
+| ----- | ------------------- | ---------------------------- |
+| siteUrl  | `string`         | site URL, this can come from the graphql query or another scope. |
 
 <a id=resolvePagePath></a>
 
-## resolvePagePath ⇒ <code>string</code>
+## resolvePagePath: `(PageData) => string`
 
-If you don't want to place the URI in `path` then `resolvePagePath`
-is needed.
-
-**Returns**: <code>string</code> - - uri of the page without domain or protocol
+Takes a single page object and returns the path of the page (no domain or protocol). If your page object does not contain a `path` key you must define a custom `resolvePagePath` function (for example, if you are fetching pages with a `uri` property instead of a `path` property in your query).
 
 | Param | Type                | Description                           |
 | ----- | ------------------- | ------------------------------------- |
-| page  | <code>object</code> | Array Item returned from resolvePages |
+| page  | `object`            | Page Data array item returned from resolvePages |
+
+| Return Value | Type                | Description                           |
+| ----- | ------------------- | ------------------------------------- |
+| pagePath  | `string`            |  uri of the page without domain or protocol |
 
 <a id=resolvePages></a>
 
-## resolvePages ⇒ <code>Array</code>
+## resolvePages: `(QueryData) => PageData[]`
 
-This allows custom resolution of the array of pages.
-This also where users could merge multiple sources into
-a single array if needed. Sync or async functions allowed.
+This allows customizing the array of page objects.
 
-**Returns**: <code>object[]</code> - - Array of objects representing each page
+This also where users should merge multiple sources into a single array if needed.
+
+Sync or async functions allowed.
 
 | Param | Type                | Description                  |
 | ----- | ------------------- | ---------------------------- |
-| data  | <code>object</code> | results of the GraphQL query |
+| data  | `object`            | Query Data object returned by the GraphQL query |
+
+| Return Value | Type         | Description                  |
+| ----- | ------------------- | ---------------------------- |
+| AllPages  | `PageData[]`    | Array of page data objects. These can be modified from the results of the GraphQL query. |
 
 <a id="filterPages"></a>
 
-## filterPages ⇒ <code>boolean</code>
+## filterPages: `(PageData, string) => boolean`
 
-This allows filtering any data in any way.
+This allows filtering pages in any way.
+
+Note that when the `excludes` array is undefined or empty this function will not be called.
 
 This function is executed via:
 
@@ -187,19 +202,28 @@ allPages.filter(
 )
 ```
 
-`allPages` is the results of the [`resolvePages`](#resolvePages) function.
-
-**Returns**: <code>Boolean</code> - - `true` excludes the path, `false` keeps it.
+`allPages` is the return value of the [`resolvePages`](#resolvePages) function.
 
 | Param         | Type                | Description                                                                         |
 | ------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| page          | <code>object</code> | contains the path key `{ path }`                                                    |
-| excludedRoute | <code>string</code> | Element from `excludes` Array in plugin config                                      |
-| tools         | <code>object</code> | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
+| page          | `object`            | PageData object, contains the path key `{ path }`                                   |
+| excludedRoute | `string`            | Element from `excludes` Array in plugin config                                      |
+| tools         | `object`            | contains tools for filtering `{ minimatch, withoutTrailingSlash, resolvePagePath }` |
+
+| Return Value | Type         | Description                  |
+| ----- | ------------------- | ---------------------------- |
+| isExcluded  | `boolean`    | `true` excludes the path, `false` keeps it. |
 
 <a id="serialize"></a>
 
-## serialize ⇒ <code>object</code>
+## serialize: `(PageData, ToolsObject) => SitemapEntry`
+
+Takes the output of `filterPages` (or `resolvePages` if `filterPages` is not called) and returns a sitemap entry. Note that the sitemap entry must contain a `url` property at minimum, and that the value of `url` should only be a *path* string, not a complete URL. Domain and protocol will be prepended later automatically.
+
+It is **highly recommended** to overwrite this function, as the default return values contain useless `changefreq` and `priority` properties
+and do not contain the `lastmod` property which is important to SEO.
+
+Sync or async functions allowed.
 
 This function is executed by:
 
@@ -207,11 +231,13 @@ This function is executed by:
 allPages.map(page => thisFunc(page, tools))
 ```
 
-`allpages` is the result of the [`filterPages`](#filterPages) function. Sync or async functions allowed.
-
-**Kind**: global variable
+`allPages` is the return value of the [`filterPages`](#filterPages) function (or the [`resolvePages`](#resolvePages) function if filterPages is not called).
 
 | Param | Type                | Description                                                      |
 | ----- | ------------------- | ---------------------------------------------------------------- |
-| page  | <code>object</code> | A single element from the results of the `resolvePages` function |
-| tools | <code>object</code> | contains tools for serializing `{ resolvePagePath }`             |
+| page  | `object`            | A single PageData element from the results of the `resolvePages` function |
+| tools | `object`            | (opt) contains tools for serializing, such as `{ resolvePagePath }` by default |
+
+| Return Value | Type         | Description                  |
+| ----- | ------------------- | ---------------------------- |
+| sitemapEntry  | `object`    | should contain a `url` string and a `lastmod` string at least |
