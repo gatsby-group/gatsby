@@ -1,6 +1,5 @@
 const csv = require(`csvtojson`)
 const _ = require(`lodash`)
-
 const { typeNameFromFile } = require(`./index`)
 
 const convertToJson = (data, options) =>
@@ -14,6 +13,8 @@ function shouldOnCreateNode({ node }, pluginOptions = {}) {
 
   return extensions ? extensions.includes(extension) : extension === `csv`
 }
+
+const typeCache = new Map()
 
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
@@ -35,14 +36,20 @@ async function onCreateNode(
     if (pluginOptions && _.isFunction(typeName)) {
       return pluginOptions.typeName({ node, object })
     } else if (pluginOptions && _.isString(typeName)) {
-      return _.upperFirst(_.camelCase(typeName))
+      if (typeCache.has(node.internal.type)) {
+        return typeCache.get(node.internal.type)
+      } else {
+        const type = _.upperFirst(_.camelCase(typeName))
+        typeCache.set(node.internal.type, type)
+        return type
+      }
     } else {
       return typeNameFromFile({ node })
     }
   }
 
   // Generate the new node
-  async function transformObject(obj, i) {
+  function transformObject(obj, i) {
     const csvNode = {
       ...obj,
       id:
@@ -59,21 +66,35 @@ async function onCreateNode(
       },
     }
 
-    await createNode(csvNode)
+    createNode(csvNode)
     createParentChildLink({ parent: node, child: csvNode })
+  }
+
+  async function transformArrayChunk({ chunk, startCount }) {
+    for (let i = 0, l = chunk.length; i < l; i++) {
+      const obj = chunk[i]
+      transformObject(obj, i + startCount)
+      await new Promise(resolve =>
+        setImmediate(() => {
+          resolve()
+        })
+      )
+    }
   }
 
   if (_.isArray(parsedContent)) {
     if (pluginOptions && nodePerFile) {
       if (pluginOptions && _.isString(nodePerFile)) {
-        await transformObject({ [nodePerFile]: parsedContent }, 0)
+        transformObject({ [nodePerFile]: parsedContent }, 0)
       } else {
-        await transformObject({ items: parsedContent }, 0)
+        transformObject({ items: parsedContent }, 0)
       }
     } else {
-      for (let i = 0, l = parsedContent.length; i < l; i++) {
-        const obj = parsedContent[i]
-        await transformObject(obj, i)
+      const chunks = _.chunk(parsedContent, 100)
+      let count = 0
+      for (const chunk of chunks) {
+        await transformArrayChunk({ chunk, startCount: count })
+        count += chunk.length
       }
     }
   }

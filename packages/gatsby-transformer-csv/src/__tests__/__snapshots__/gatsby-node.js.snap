@@ -295,13 +295,11 @@ Array [
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWillBeThis",
         "parent": null,
@@ -327,13 +325,11 @@ c,23",
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWillBeThis",
         "parent": null,
@@ -359,13 +355,11 @@ c,23",
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWillBeThis",
         "parent": null,
@@ -438,13 +432,11 @@ Array [
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWillBeThis",
         "parent": null,
@@ -517,13 +509,11 @@ Array [
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWillBeThis",
         "parent": null,
@@ -734,13 +724,11 @@ Array [
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWontBeThis",
         "parent": null,
@@ -766,13 +754,11 @@ c,23",
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWontBeThis",
         "parent": null,
@@ -798,13 +784,11 @@ c,23",
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWontBeThis",
         "parent": null,
@@ -879,13 +863,11 @@ Array [
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWontBeThis",
         "parent": null,
@@ -911,13 +893,11 @@ c,23",
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWontBeThis",
         "parent": null,
@@ -943,13 +923,11 @@ c,23",
 a,65
 b,42
 c,23",
-        "dir": "<TEMP_DIR>/foo/",
         "extension": "csv",
         "id": "whatever",
         "internal": Object {
           "contentDigest": "whatever",
           "mediaType": "text/csv",
-          "type": "File",
         },
         "name": "theTypeWontBeThis",
         "parent": null,

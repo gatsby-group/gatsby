@@ -5,6 +5,7 @@ import { store } from "../redux"
 import { getDataStore, getNode } from "../datastore"
 import { actions } from "../redux/actions"
 import { IGatsbyState, IGatsbyNode } from "../redux/types"
+import { createParentChildLinkBatcher } from "../redux/actions/create-parent-child-link"
 import type { GatsbyIterable } from "../datastore/common/iterable"
 
 const { deleteNode } = actions
@@ -164,6 +165,9 @@ export default async ({
     webhookBody,
     pluginName,
   })
+
+  // Flush createParentChildLinkBatcher to ensure parent nodes are written with their children dependencies.
+  createParentChildLinkBatcher.flush()
 
   await getDataStore().ready()
 

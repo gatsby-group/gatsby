@@ -6,6 +6,8 @@ function shouldOnCreateNode({ node }) {
   return node.internal.mediaType === `application/json`
 }
 
+const typeCache = new Map()
+
 async function onCreateNode(
   { node, actions, loadNodeContent, createNodeId, createContentDigest },
   pluginOptions
@@ -16,15 +18,35 @@ async function onCreateNode(
     } else if (pluginOptions && _.isString(pluginOptions.typeName)) {
       return pluginOptions.typeName
     } else if (node.internal.type !== `File`) {
-      return _.upperFirst(_.camelCase(`${node.internal.type} Json`))
+      if (typeCache.has(node.internal.type)) {
+        return typeCache.get(node.internal.type)
+      } else {
+        const type = _.upperFirst(_.camelCase(`${node.internal.type} Json`))
+        typeCache.set(node.internal.type, type)
+        return type
+      }
     } else if (isArray) {
-      return _.upperFirst(_.camelCase(`${node.name} Json`))
+      if (typeCache.has(node.name)) {
+        return typeCache.get(node.name)
+      } else {
+        const type = _.upperFirst(_.camelCase(`${node.name} Json`))
+        typeCache.set(node.name, type)
+        return type
+      }
     } else {
-      return _.upperFirst(_.camelCase(`${path.basename(node.dir)} Json`))
+      if (typeCache.has(node.dir)) {
+        return typeCache.get(node.dir)
+      } else {
+        const type = _.upperFirst(
+          _.camelCase(`${path.basename(node.dir)} Json`)
+        )
+        typeCache.set(node.dir, type)
+        return type
+      }
     }
   }
 
-  async function transformObject(obj, id, type) {
+  function transformObject(obj, id, type) {
     const jsonNode = {
       ...obj,
       id,
@@ -38,7 +60,7 @@ async function onCreateNode(
     if (obj.id) {
       jsonNode[`jsonId`] = obj.id
     }
-    await createNode(jsonNode)
+    createNode(jsonNode)
     createParentChildLink({ parent: node, child: jsonNode })
   }
 
@@ -55,18 +77,35 @@ async function onCreateNode(
     throw new Error(`Unable to parse JSON: ${hint}`)
   }
 
-  if (_.isArray(parsedContent)) {
-    for (let i = 0, l = parsedContent.length; i < l; i++) {
-      const obj = parsedContent[i]
-
-      await transformObject(
+  async function transformArrayChunk({ chunk, startCount }) {
+    for (let i = 0, l = chunk.length; i < l; i++) {
+      const obj = chunk[i]
+      transformObject(
         obj,
-        createNodeId(`${node.id} [${i}] >>> JSON`),
-        getType({ node, object: obj, isArray: true })
+        createNodeId(`${node.id} [${i + startCount}] >>> JSON`),
+        getType({
+          node,
+          object: obj,
+          isArray: true,
+        })
+      )
+      await new Promise(resolve =>
+        setImmediate(() => {
+          resolve()
+        })
       )
     }
+  }
+
+  if (_.isArray(parsedContent)) {
+    const chunks = _.chunk(parsedContent, 100)
+    let count = 0
+    for (const chunk of chunks) {
+      await transformArrayChunk({ chunk, startCount: count })
+      count += chunk.length
+    }
   } else if (_.isPlainObject(parsedContent)) {
-    await transformObject(
+    transformObject(
       parsedContent,
       createNodeId(`${node.id} >>> JSON`),
       getType({ node, object: parsedContent, isArray: false })
