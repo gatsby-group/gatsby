@@ -60,7 +60,7 @@
     "common-tags": "^1.8.2",
     "compression": "^1.7.4",
     "cookie": "^0.5.0",
-    "core-js": "^3.31.0",
+    "core-js": "^3.39.0",
     "cors": "^2.8.5",
     "css-loader": "^5.2.7",
     "css-minimizer-webpack-plugin": "^2.0.0",
