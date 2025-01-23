@@ -51,6 +51,8 @@ export class ScrollHandler extends React.Component<
   }
 
   componentDidMount(): void {
+    // scrollRestoration can trigger scroll event before location has been updated (race condition)
+    history.scrollRestoration = `manual`
     window.addEventListener(`scroll`, this.scrollListener)
     let scrollPosition
     const { key, hash } = this.props.location
