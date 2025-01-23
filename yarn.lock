@@ -2099,6 +2099,11 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@iarna/toml@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
+  integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
+
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@isaacs/cliui/-/cliui-8.0.2.tgz#b37667b7bc181c168782259bab42474fbf52b550"
@@ -3282,11 +3287,12 @@
     path-exists "^5.0.0"
     readdirp "^3.4.0"
 
-"@netlify/config@^20.10.0":
-  version "20.10.0"
-  resolved "https://registry.yarnpkg.com/@netlify/config/-/config-20.10.0.tgz#df51f277c7eaa984105f4e90c3ea676b935c5df3"
-  integrity sha512-7CNoL5IPSRBzDVzxuQgltZ71D/vZ/oYR29sfN8EXjAFOZPSLtnZgborcPa9V9BXLN4N5h0hFp2A26lnnCttEFg==
+"@netlify/config@^20.19.1":
+  version "20.19.1"
+  resolved "https://registry.yarnpkg.com/@netlify/config/-/config-20.19.1.tgz#534bf981df0f5da41b6b644d95c8e2211611c560"
+  integrity sha512-GkN8IwHilIlusFuAW+DFjhtpghnaelNcHUoZwBDcJou8eyhIZYAj6B4STMyGUggIfMobYGM28kEY3gN4uUVq0g==
   dependencies:
+    "@iarna/toml" "^2.2.5"
     chalk "^5.0.0"
     cron-parser "^4.1.0"
     deepmerge "^4.2.2"
@@ -3300,14 +3306,13 @@
     is-plain-obj "^4.0.0"
     js-yaml "^4.0.0"
     map-obj "^5.0.0"
-    netlify "^13.1.11"
-    netlify-headers-parser "^7.1.2"
-    netlify-redirect-parser "^14.2.0"
+    netlify "^13.1.21"
+    netlify-headers-parser "^7.1.4"
+    netlify-redirect-parser "^14.3.0"
     node-fetch "^3.3.1"
     omit.js "^2.0.2"
     p-locate "^6.0.0"
     path-type "^5.0.0"
-    toml "^3.0.0"
     tomlify-j0.4 "^3.0.0"
     validate-npm-package-name "^4.0.0"
     yargs "^17.6.0"
@@ -3324,10 +3329,10 @@
   dependencies:
     is-promise "^4.0.0"
 
-"@netlify/open-api@^2.26.0":
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/@netlify/open-api/-/open-api-2.26.0.tgz#cdc8033371079955501f4b9a5323f2dcd76741c2"
-  integrity sha512-B7q+ySzQm6rJhaGbY0Pzqnb1p3FsBqwiPLnLtA17JgTsqmXgQ7j6OQImW9fRJy/Al1ob9M6Oxng/FA2c7aIW1g==
+"@netlify/open-api@^2.34.0":
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/@netlify/open-api/-/open-api-2.34.0.tgz#409e8d2d2e1755e0a01b38f3f0c48fe597999758"
+  integrity sha512-C4v7Od/vnGgZ1P4JK3Fn9uUi9HkTxeUqUtj4OLnGD+rGyaVrl4JY89xMCoVksijDtO8XylYFU59CSTnQNeNw7g==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
@@ -17926,35 +17931,35 @@ nested-error-stacks@^2.0.0, nested-error-stacks@^2.1.0:
   resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.1.0.tgz#0fbdcf3e13fe4994781280524f8b96b0cdff9c61"
   integrity sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==
 
-netlify-headers-parser@^7.1.2:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/netlify-headers-parser/-/netlify-headers-parser-7.1.2.tgz#5b2f76e030eb8ba423c370c4e4814ddcc9c65e3b"
-  integrity sha512-DfoboA8PrcLXMan3jIVyLsQtKS+nepKDx6WwZKk5EQDMr2AJoBPCtSHTOLuABzkde1UXdOITf3snmcAmzlNLqw==
+netlify-headers-parser@^7.1.4:
+  version "7.1.4"
+  resolved "https://registry.yarnpkg.com/netlify-headers-parser/-/netlify-headers-parser-7.1.4.tgz#ec692e9278f2d68b9a7176ee186b069d37bc1be5"
+  integrity sha512-fTVQf8u65vS4YTP2Qt1K6Np01q3yecRKXf6VMONMlWbfl5n3M/on7pZlZISNAXHNOtnVt+6Kpwfl+RIeALC8Kg==
   dependencies:
+    "@iarna/toml" "^2.2.5"
     escape-string-regexp "^5.0.0"
     fast-safe-stringify "^2.0.7"
     is-plain-obj "^4.0.0"
     map-obj "^5.0.0"
     path-exists "^5.0.0"
-    toml "^3.0.0"
 
-netlify-redirect-parser@^14.2.0:
-  version "14.2.0"
-  resolved "https://registry.yarnpkg.com/netlify-redirect-parser/-/netlify-redirect-parser-14.2.0.tgz#8da1b911b43ea51e0c5fa5dd1401157d1301a8f5"
-  integrity sha512-3Mi7sMH7XXZhjvXx/5RtJ/rU/E6zKkE4etcYQbEu8B3r872D0opoYyGdPW/MvaYQyVdfg23XEFaEI4zzQTupaw==
+netlify-redirect-parser@^14.3.0:
+  version "14.3.0"
+  resolved "https://registry.yarnpkg.com/netlify-redirect-parser/-/netlify-redirect-parser-14.3.0.tgz#9cf14a742fe9c446e624498a75e8d6b40d621bcc"
+  integrity sha512-/Oqq+SrTXk8hZqjCBy0AkWf5qAhsgcsdxQA09uYFdSSNG5w9rhh17a7dp77o5Q5XoHCahm8u4Kig/lbXkl4j2g==
   dependencies:
+    "@iarna/toml" "^2.2.5"
     fast-safe-stringify "^2.1.1"
     filter-obj "^5.0.0"
     is-plain-obj "^4.0.0"
     path-exists "^5.0.0"
-    toml "^3.0.0"
 
-netlify@^13.1.11:
-  version "13.1.11"
-  resolved "https://registry.yarnpkg.com/netlify/-/netlify-13.1.11.tgz#f5151bbd5e05cd5a67713f89c05a57dd6377b599"
-  integrity sha512-exrD6cqwo5avDNtU7YT9iuN0+yoW+aaEUxvr/39oP36wZRKreoPm6KNVisTR9d4lXrPeUG8XI+rERuLhwMQmdw==
+netlify@^13.1.21:
+  version "13.1.21"
+  resolved "https://registry.yarnpkg.com/netlify/-/netlify-13.1.21.tgz#f88eab0eea02aca3321aa813aa9fd01190e2dbf8"
+  integrity sha512-PLw+IskyiY+GZNvheR0JgBXIuwebKowY/JU1QBArnXT5Tza1cFbSRr2LJVdiAJCvtbYY73CapfJeSMp36nRjjQ==
   dependencies:
-    "@netlify/open-api" "^2.26.0"
+    "@netlify/open-api" "^2.34.0"
     lodash-es "^4.17.21"
     micro-api-client "^3.3.0"
     node-fetch "^3.0.0"
@@ -24077,11 +24082,6 @@ toml@^2.3.2, toml@^2.3.6:
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/toml/-/toml-2.3.6.tgz#25b0866483a9722474895559088b436fd11f861b"
   integrity sha512-gVweAectJU3ebq//Ferr2JUY4WKSDe5N+z0FvjDncLGyHmIDoxgY/2Ie4qfEIDm4IS7OA6Rmdm7pdEEdMcV/xQ==
-
-toml@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/toml/-/toml-3.0.0.tgz#342160f1af1904ec9d204d03a5d61222d762c5ee"
-  integrity sha512-y/mWCZinnvxjTKYhJ+pYxwD0mRLVvOtdS2Awbgxln6iEnt4rk0yBxeSBHkGJcPucRiG0e55mwWp+g/05rsrd6w==
 
 tomlify-j0.4@^3.0.0:
   version "3.0.0"
