@@ -17,7 +17,7 @@ In the interest of fostering an open and welcoming environment, we as contributo
 
 ### Gatsby news
 
-- Follow [Gatsby](https://twitter.com/gatsbyjs) and [Gatsby Changelog](https://twitter.com/GatsbyChangelog) on Twitter
+- Follow [Gatsby](https://twitter.com/gatsbyjs) and [Gatsby Changelog](https://twitter.com/GatsbyChangelog) on X (Twitter)
 - Read and discuss about [Request for Comment (RFC) proposals](/contributing/rfc-process)
 - Watch videos on [Gatsby's YouTube channel](https://www.youtube.com/c/Gatsbyjs/videos) to see past GatsbyConf presentations and tutorial walkthroughs
 - Follow the [official blog](/blog/)

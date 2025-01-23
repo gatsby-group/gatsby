@@ -52,7 +52,7 @@
   <span> · </span>
   <a href="https://www.gatsbyjs.com/contributing/how-to-contribute/">Contribute</a>
   <br />
-  Support: <a href="https://twitter.com/AskGatsbyJS">Twitter</a>, <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
+  Support: <a href="https://twitter.com/AskGatsbyJS">X (Twitter)</a>, <a href="https://github.com/gatsbyjs/gatsby/discussions">Discussions</a>
   <span> & </span>
   <a href="https://gatsby.dev/discord">Discord</a>
 </h2>
