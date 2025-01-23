@@ -575,9 +575,9 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
             describe: `Set the package manager \`gatsby new\` is using.`,
           })
           .positional(`value`, {
-            choices: [`npm`, `yarn`],
+            choices: [`npm`, `yarn`, `bun`],
             type: `string`,
-            describe: `Set package manager as \`npm\` or \`yarn\`.`,
+            describe: `Set package manager as \`npm\`, \`yarn\`, or \`bun\`.`,
           }),
 
       handler: handlerP(({ cmd, key, value }: yargs.Arguments) => {
@@ -587,8 +587,13 @@ export const createCli = (argv: Array<string>): yargs.Arguments => {
 
         if (cmd === `set`) {
           if (key === `pm` || key === `package-manager`) {
-            if (value && value !== `yarn` && value !== `npm`) {
-              report.panic(`Package manager must be yarn or npm.`)
+            if (
+              value &&
+              value !== `yarn` &&
+              value !== `npm` &&
+              value !== `bun`
+            ) {
+              report.panic(`Package manager must be yarn, npm, or bun.`)
             }
 
             if (value) {

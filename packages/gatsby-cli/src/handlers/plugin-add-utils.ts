@@ -113,6 +113,13 @@ const generateClientCommands = ({
     }
 
     return commands.concat(packageNames)
+  } else if (packageManager === `bun`) {
+    commands.push(`add`)
+    if (depType === `development`) {
+      commands.push(`--dev`)
+    }
+
+    return commands.concat(packageNames)
   } else if (packageManager === `npm`) {
     commands.push(`install`)
     if (depType === `development`) {

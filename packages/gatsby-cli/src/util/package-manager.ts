@@ -1,7 +1,7 @@
 import { getConfigStore } from "gatsby-core-utils"
 import report from "../reporter"
 
-type PackageManager = "yarn" | "npm"
+type PackageManager = "yarn" | "npm" | "bun"
 
 const packageMangerConfigKey = `cli.packageManager`
 export const getPackageManager = (): PackageManager =>

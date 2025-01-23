@@ -40,6 +40,16 @@ const checkForYarn = (): boolean => {
   }
 }
 
+// Checks the existence of bun binary
+const checkForBun = (): boolean => {
+  try {
+    execSync(`bun --version`, { stdio: `ignore` })
+    return true
+  } catch (e) {
+    return false
+  }
+}
+
 const isAlreadyGitRepository = async (): Promise<boolean> => {
   try {
     return await spawn(`git rev-parse --is-inside-work-tree`, {
@@ -93,7 +103,7 @@ const createInitialGitCommit = async (
   }
 }
 
-// Executes `npm install` or `yarn install` in rootPath.
+// Executes `npm install`, `yarn install`, or `bun install` in rootPath.
 const install = async (rootPath: string): Promise<void> => {
   const prevDir = process.cwd()
 
@@ -106,15 +116,23 @@ const install = async (rootPath: string): Promise<void> => {
     if (!getPackageManager()) {
       if (npmConfigUserAgent?.includes(`yarn`)) {
         setPackageManager(`yarn`)
+      } else if (npmConfigUserAgent?.includes(`bun`)) {
+        setPackageManager(`bun`)
       } else {
         setPackageManager(`npm`)
       }
     }
     if (getPackageManager() === `yarn` && checkForYarn()) {
       await fs.remove(`package-lock.json`)
+      await fs.remove(`bun.lockb`)
       await spawn(`yarnpkg`)
+    } else if (getPackageManager() === `bun` && checkForBun()) {
+      await fs.remove(`package-lock.json`)
+      await fs.remove(`yarn.lock`)
+      await spawn(`bun install`)
     } else {
       await fs.remove(`yarn.lock`)
+      await fs.remove(`bun.lockb`)
       await spawn(
         `npm install --loglevel error --color always --legacy-peer-deps --no-audit`
       )
