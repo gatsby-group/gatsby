@@ -914,7 +914,7 @@ export class ProdLoader extends BaseLoader {
         }
         // check if html file exist using HEAD request:
         // if it does we should navigate to it instead of showing 404
-        return doFetch(rawPath, `HEAD`).then(req => {
+        return doFetch(`${__PATH_PREFIX__}${rawPath}`, `HEAD`).then(req => {
           if (req.status === 200) {
             // page (.html file) actually exist (or we asked for 404 )
             // returning page resources status as errored to trigger

@@ -83,4 +83,14 @@ describe(`navigate`, () => {
 
     cy.get(`h1`).contains(`NOT FOUND`)
   })
+
+  it(`can load 404 page and react client side rendering success`, () => {
+    cy.visit(`/not-existing-page`, {
+      failOnStatusCode: false,
+    }).waitForRouteChange()
+
+    cy.getTestElement(`page-404-click`).click()
+
+    cy.get(`h2`).contains(`gatsby`)
+  })
 })
