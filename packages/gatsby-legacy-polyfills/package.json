@@ -31,20 +31,20 @@
     "dist/"
   ],
   "devDependencies": {
-    "@jridgewell/trace-mapping": "^0.3.18",
+    "@jridgewell/trace-mapping": "^0.3.25",
     "chokidar-cli": "^3.0.0",
     "codegen.macro": "^4.1.0",
     "core-js": "3.31.0",
     "cpy-cli": "^4.2.0",
     "cross-env": "^7.0.3",
-    "event-target-polyfill": "^0.0.3",
+    "event-target-polyfill": "^0.0.4",
     "execa": "^5.1.1",
     "fs-extra": "^11.2.0",
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
     "object-assign": "^4.1.1",
     "url-polyfill": "^1.1.12",
-    "whatwg-fetch": "^3.6.2",
+    "whatwg-fetch": "^3.6.20",
     "yet-another-abortcontroller-polyfill": "0.0.4"
   }
 }
