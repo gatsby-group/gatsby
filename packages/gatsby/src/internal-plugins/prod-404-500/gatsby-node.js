@@ -47,10 +47,14 @@ emitter.on(`DELETE_PAGE`, action => {
   const storedPage = originalStatusPageByPath[action.payload.path]
   if (storedPage) {
     store.dispatch(
-      actions.deletePage({
-        ...storedPage,
-        path: `/${storedPage.status}.html`,
-      })
+      actions.deletePage(
+        {
+          ...storedPage,
+          path: `/${storedPage.status}.html`,
+        },
+        action.plugin,
+        action
+      )
     )
     originalStatusPageByPath[action.payload.path] = null
     originalStatusPageByStatus[storedPage.status] = null

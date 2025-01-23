@@ -137,9 +137,11 @@ type PageDataRemove = {
  * @example
  * deletePage(page)
  */
-actions.deletePage = (page: IPageInput) => {
+actions.deletePage = (page: IPageInput, plugin, options) => {
   return {
+    ...options,
     type: `DELETE_PAGE`,
+    plugin,
     payload: page,
   }
 }
