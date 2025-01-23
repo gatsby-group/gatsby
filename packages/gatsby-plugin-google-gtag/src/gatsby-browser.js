@@ -1,9 +1,13 @@
 exports.onRouteUpdate = ({ location }, pluginOptions = {}) => {
-  if (process.env.NODE_ENV !== `production` || typeof gtag !== `function`) {
+  const pluginConfig = pluginOptions.pluginConfig || {}
+
+  if (
+    pluginConfig.disabled ||
+    process.env.NODE_ENV !== `production` ||
+    typeof gtag !== `function`
+  ) {
     return null
   }
-
-  const pluginConfig = pluginOptions.pluginConfig || {}
 
   const pathIsExcluded =
     location &&

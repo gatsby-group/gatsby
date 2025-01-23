@@ -49,6 +49,9 @@ exports.pluginOptionsSchema = ({ Joi }) =>
         delayOnRouteUpdate: Joi.number()
           .description(`Delay processing pageview events on route update`)
           .default(0),
+        disabled: Joi.boolean()
+          .description(`Prevents the tag to appear`)
+          .default(false),
       })
       .description(`Configure the plugin's behavior.`),
   })

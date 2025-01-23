@@ -53,6 +53,8 @@ module.exports = {
           origin: "YOUR_SELF_HOSTED_ORIGIN",
           // Delays processing pageview events on route update (in milliseconds)
           delayOnRouteUpdate: 0,
+          // Prevents the tag to appear
+          disabled: false,
         },
       },
     },
