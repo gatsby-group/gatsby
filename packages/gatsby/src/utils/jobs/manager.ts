@@ -53,7 +53,12 @@ function convertPathsToAbsolute(filePath: string): string {
  * Get contenthash of a file
  */
 function createFileHash(path: string): string {
-  return hasha.fromFileSync(path, { algorithm: `sha1` })
+  if (process.env.GATSBY_FAST_HASHING) {
+    const stats = fs.statSync(path)
+    return stats.mtimeMs.toString() + stats.ino.toString()
+  } else {
+    return hasha.fromFileSync(path, { algorithm: `sha1` })
+  }
 }
 
 let hasActiveJobs: pDefer.DeferredPromise<void> | null = null

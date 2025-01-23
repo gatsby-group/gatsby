@@ -152,6 +152,15 @@ const activeFlags: Array<IFlag> = [
         ? `Partial hydration is only available in Gatsby V5. Please upgrade Gatsby.`
         : `Partial hydration requires React 18+ to work.`,
   },
+  {
+    name: `FAST_HASHING`,
+    env: `GATSBY_FAST_HASHING`,
+    command: `all`,
+    telemetryId: `FastHashing`,
+    description: `Hashes file using a faster non-cryptographic method to improve build performance, particularly on sites sourcing large files.`,
+    experimental: false,
+    testFitness: (): fitnessEnum => true,
+  },
 ]
 
 export default activeFlags
