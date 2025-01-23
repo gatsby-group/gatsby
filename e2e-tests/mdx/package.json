@@ -19,7 +19,7 @@
     "react-dom": "^18.2.0",
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
-    "theme-ui": "^0.16.0"
+    "theme-ui": "^0.16.2"
   },
   "keywords": [
     "gatsby"
