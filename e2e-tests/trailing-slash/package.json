@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "LekoArts",
   "dependencies": {
-    "cypress": "^12.16.0",
+    "cypress": "^12.17.4",
     "gatsby": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
