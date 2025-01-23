@@ -356,6 +356,19 @@ describe(`gatsby-plugin-sharp`, () => {
       expect(actual.length).toEqual(expected.length)
       expect(actions.createJobV2).toMatchSnapshot()
     })
+
+    it(`calculates aspect ratio from the largest image possible`, async () => {
+      const maxWidth = 660
+      const args = {
+        maxWidth,
+      }
+      const result = await fluid({
+        file: getFileObject(path.join(__dirname, `images/padding-bytes.jpg`)),
+        args,
+      })
+
+      expect(result.aspectRatio).toEqual(0.746)
+    })
   })
 
   describe(`fixed`, () => {

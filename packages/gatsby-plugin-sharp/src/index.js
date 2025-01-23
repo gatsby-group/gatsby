@@ -544,13 +544,12 @@ async function fluid({ file, args = {}, reporter, cache }) {
     }
   }
 
+  const aspectRatio = images[images.length - 1].aspectRatio
+
   let base64Image
   if (options.base64 || (options.generateTracedSVG && options.tracedSVG)) {
     const base64Width = options.base64Width
-    const base64Height = Math.max(
-      1,
-      Math.round(base64Width / images[0].aspectRatio)
-    )
+    const base64Height = Math.max(1, Math.round(base64Width / aspectRatio))
     const base64Args = {
       background: options.background,
       duotone: options.duotone,
@@ -615,7 +614,7 @@ async function fluid({ file, args = {}, reporter, cache }) {
 
   return {
     base64: (options.base64 && base64Image && base64Image.src) || undefined,
-    aspectRatio: images[0].aspectRatio,
+    aspectRatio,
     src: fallbackSrc,
     srcSet,
     srcSetType,
@@ -696,13 +695,12 @@ async function fixed({ file, args = {}, reporter, cache }) {
     }
   }
 
+  const aspectRatio = images[images.length - 1].aspectRatio
+
   let base64Image
   if (options.base64 || (options.generateTracedSVG && options.tracedSVG)) {
     const base64Width = options.base64Width
-    const base64Height = Math.max(
-      1,
-      Math.round(base64Width / images[0].aspectRatio)
-    )
+    const base64Height = Math.max(1, Math.round(base64Width / aspectRatio))
     const base64Args = {
       background: options.background,
       duotone: options.duotone,
@@ -749,7 +747,7 @@ async function fixed({ file, args = {}, reporter, cache }) {
 
   return {
     base64: (options.base64 && base64Image && base64Image.src) || undefined,
-    aspectRatio: images[0].aspectRatio,
+    aspectRatio,
     width: images[0].width,
     height: images[0].height,
     src: fallbackSrc,
