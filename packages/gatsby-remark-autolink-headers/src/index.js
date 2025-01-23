@@ -23,6 +23,7 @@ module.exports = (
     enableCustomId = false,
     isIconAfterHeader = false,
     elements = null,
+    offsetY = 0,
   }
 ) => {
   slugs.reset()
@@ -61,8 +62,10 @@ module.exports = (
     patch(data.htmlAttributes, `id`, id)
     patch(data.hProperties, `id`, id)
 
+    let style = ``
+
     if (icon !== false) {
-      patch(data.hProperties, `style`, `position:relative;`)
+      style += `position:relative;`
       const label = id.split(`-`).join(` `)
       const method = isIconAfterHeader ? `push` : `unshift`
       node.children[method]({
@@ -84,6 +87,14 @@ module.exports = (
           ],
         },
       })
+    }
+
+    if (offsetY !== 0) {
+      style += `scroll-margin-top:${offsetY}px;`
+    }
+
+    if (style.length > 0) {
+      patch(data.hProperties, `style`, style)
     }
   })
 

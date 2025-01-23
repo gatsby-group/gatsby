@@ -247,9 +247,44 @@ describe(`gatsby-remark-autolink-headers`, () => {
     const transformed = plugin({ markdownAST }, { isIconAfterHeader })
 
     visit(transformed, `heading`, node => {
-      expect(node.data.hProperties.style).toContain(`position:relative`)
+      expect(node.data.hProperties.style).toInclude(`position:relative`)
       expect(node.children).toHaveLength(2)
       expect(node.children[1].data.hProperties.class).toContain(`after`)
+
+      expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`adds scroll-margin-top when offsetY prop is passed`, () => {
+    const markdownAST = remark.parse(`# Heading Uno`)
+
+    const offsetY = 32
+    const transformed = plugin({ markdownAST }, { offsetY })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.hProperties.style).toInclude(
+        `scroll-margin-top:${offsetY}px`
+      )
+
+      expect(node).toMatchSnapshot()
+    })
+  })
+
+  it(`adds anchor after header and scroll-margin-top when isIconAfterHeader and offsetY props are passed`, () => {
+    const markdownAST = remark.parse(`# Heading Uno`)
+
+    const isIconAfterHeader = true
+    const offsetY = 32
+    const transformed = plugin({ markdownAST }, { isIconAfterHeader, offsetY })
+
+    visit(transformed, `heading`, node => {
+      expect(node.data.hProperties.style).toInclude(`position:relative`)
+      expect(node.children).toHaveLength(2)
+      expect(node.children[1].data.hProperties.class).toContain(`after`)
+
+      expect(node.data.hProperties.style).toInclude(
+        `scroll-margin-top:${offsetY}px`
+      )
 
       expect(node).toMatchSnapshot()
     })

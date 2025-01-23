@@ -7,10 +7,7 @@ const pluginDefaults = {
 }
 
 exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
-  const { className, icon, offsetY } = Object.assign(
-    pluginDefaults,
-    pluginOptions
-  )
+  const { className, icon } = Object.assign(pluginDefaults, pluginOptions)
 
   const styles = `
     .${className}.before {
@@ -53,23 +50,23 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
   // older browsers (that do not implement `let`). See:
   //  - https://github.com/gatsbyjs/gatsby/issues/21058
   //  - https://github.com/gatsbyjs/gatsby/pull/21083
-  const script = `
-    document.addEventListener("DOMContentLoaded", function(event) {
-      var hash = window.decodeURI(location.hash.replace('#', ''))
-      if (hash !== '') {
-        var element = document.getElementById(hash)
-        if (element) {
-          var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-          var clientTop = document.documentElement.clientTop || document.body.clientTop || 0
-          var offset = element.getBoundingClientRect().top + scrollTop - clientTop
-          // Wait for the browser to finish rendering before scrolling.
-          setTimeout((function() {
-            window.scrollTo(0, offset - ${offsetY})
-          }), 0)
-        }
-      }
-    })
-  `
+  // const script = `
+  //   document.addEventListener("DOMContentLoaded", function(event) {
+  //     var hash = window.decodeURI(location.hash.replace('#', ''))
+  //     if (hash !== '') {
+  //       var element = document.getElementById(hash)
+  //       if (element) {
+  //         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+  //         var clientTop = document.documentElement.clientTop || document.body.clientTop || 0
+  //         var offset = element.getBoundingClientRect().top + scrollTop - clientTop
+  //         // Wait for the browser to finish rendering before scrolling.
+  //         setTimeout((function() {
+  //           window.scrollTo(0, offset - ${offsetY})
+  //         }), 0)
+  //       }
+  //     }
+  //   })
+  // `
 
   const style = icon ? (
     <style key={`gatsby-remark-autolink-headers-style`} type="text/css">
@@ -77,11 +74,5 @@ exports.onRenderBody = ({ setHeadComponents }, pluginOptions) => {
     </style>
   ) : undefined
 
-  return setHeadComponents([
-    style,
-    <script
-      key={`gatsby-remark-autolink-headers-script`}
-      dangerouslySetInnerHTML={{ __html: script }}
-    />,
-  ])
+  return setHeadComponents([style])
 }
