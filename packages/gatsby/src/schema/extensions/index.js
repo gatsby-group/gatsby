@@ -69,6 +69,21 @@ const typeExtensions = {
       `must also implement the Node interface.`,
     locations: [DirectiveLocation.INTERFACE],
   },
+  authorization: {
+    description: `Define authorization rules for this type.`,
+    args: {
+      labels: {
+        type: `[String!]!`,
+        defaultValue: [],
+        description: `A list of auth scopes that are allowed to access this type.`,
+      },
+    },
+    locations: [
+      DirectiveLocation.OBJECT,
+      DirectiveLocation.FIELD_DEFINITION,
+      DirectiveLocation.SCHEMA,
+    ],
+  },
 }
 
 const builtInFieldExtensions = {
