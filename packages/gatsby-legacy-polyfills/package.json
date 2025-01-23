@@ -34,7 +34,7 @@
     "@jridgewell/trace-mapping": "^0.3.18",
     "chokidar-cli": "^3.0.0",
     "codegen.macro": "^4.1.0",
-    "core-js": "3.31.0",
+    "core-js": "3.39.0",
     "cpy-cli": "^4.2.0",
     "cross-env": "^7.0.3",
     "event-target-polyfill": "^0.0.3",
