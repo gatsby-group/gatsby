@@ -222,9 +222,10 @@ export default {
   },
 }
 ```
-
 This provides a nice interface to extend an object if you want to change a couple values from the defaults.
 
 ## How much shadowing is too much shadowing?
 
 If you find yourself shadowing a large number of components in a particular theme, it might make sense to fork and modify the theme instead. The official Gatsby themes support this pattern using a set of `-core` themes. For example, `gatsby-theme-blog` relies on `gatsby-theme-blog-core` so you can fork `gatsby-theme-blog` (or skip it completely) to render your own components without having to worry about dealing with any of the page creation or data sourcing logic.
+___
+**Troubleshooting** - consider running `gatsby clean` after creating shaddow file before another `gatsby develop`
