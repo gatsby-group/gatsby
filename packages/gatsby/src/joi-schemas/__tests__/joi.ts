@@ -344,6 +344,16 @@ describe(`gatsby config`, () => {
     expect(result.value?.adapter).toEqual(config.adapter)
   })
 
+  it(`lets you disable adapters`, () => {
+    const config = {
+      adapter: false,
+    }
+
+    const result = gatsbyConfigSchema.validate(config)
+    expect(result.error).toBeNil()
+    expect(result.value?.adapter).toEqual(config.adapter)
+  })
+
   it(`throws on incorrect adapter setting`, () => {
     const configOne = {
       adapter: `gatsby-adapter-name`,
@@ -351,7 +361,7 @@ describe(`gatsby config`, () => {
 
     const resultOne = gatsbyConfigSchema.validate(configOne)
     expect(resultOne.error).toMatchInlineSnapshot(
-      `[ValidationError: "adapter" must be of type object]`
+      `[ValidationError: "adapter" must be one of [false, object]]`
     )
 
     const configTwo = {
@@ -363,6 +373,15 @@ describe(`gatsby config`, () => {
     const resultTwo = gatsbyConfigSchema.validate(configTwo)
     expect(resultTwo.error).toMatchInlineSnapshot(
       `[ValidationError: "adapter.adapt" is required]`
+    )
+
+    const configThree = {
+      adapter: true,
+    }
+
+    const resultThree = gatsbyConfigSchema.validate(configThree)
+    expect(resultThree.error).toMatchInlineSnapshot(
+      `[ValidationError: "adapter" must be one of [false, object]]`
     )
   })
 })

@@ -141,7 +141,7 @@ export interface IGatsbyConfig {
   trailingSlash?: TrailingSlash
   graphqlTypegen?: IGraphQLTypegenOptions
   headers?: Array<IHeader>
-  adapter?: IAdapter
+  adapter?: IAdapter | false
 }
 
 export interface IGatsbyNode {

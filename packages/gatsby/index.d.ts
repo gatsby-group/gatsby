@@ -398,7 +398,7 @@ export interface GatsbyConfig {
    * Adapters are responsible for taking the production output from Gatsby and turning it into something your deployment platform understands. They make it easier to build and deploy Gatsby on any deployment platform.
    * @see http://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/adapters/
    */
-  adapter?: IAdapter
+  adapter?: IAdapter | false
 }
 
 /**

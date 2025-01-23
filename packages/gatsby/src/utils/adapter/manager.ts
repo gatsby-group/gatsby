@@ -132,7 +132,8 @@ export async function initAdapterManager(): Promise<IAdapterManager> {
 
     reporter.verbose(`Using adapter ${adapter.name} from gatsby-config`)
   } else {
-    const adapterInit = await getAdapterInit()
+    const adapterInit =
+      adapterFromGatsbyConfig === false ? false : await getAdapterInit()
 
     // If we don't have adapter, use no-op adapter manager
     if (!adapterInit) {

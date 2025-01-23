@@ -230,7 +230,7 @@ By default, `graphqlTypegen` is only run during `gatsby develop`. Set this optio
 
 > Support added in `gatsby@5.12.0`
 
-You can set an [adapter](/docs/how-to/previews-deploys-hosting/adapters/) or configure [zero-configuration deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) through the `adapter` setting.
+You can set an [adapter](/docs/how-to/previews-deploys-hosting/adapters/), [disable adapters](/docs/how-to/previews-deploys-hosting/adapters/#disabling-adapters), or configure [zero-configuration deployments](/docs/how-to/previews-deploys-hosting/zero-configuration-deployments/) through the `adapter` setting.
 
 ```js:title=gatsby-config.js
 const adapter = require("gatsby-adapter-foo")
@@ -239,6 +239,14 @@ module.exports = {
   adapter: adapter({
     // adapter options if available
   })
+}
+```
+
+> Support added in `gatsby@5.12.5`
+
+```js:title=gatsby-config.js
+module.exports = {
+  adapter: false // disable adapters
 }
 ```
 

@@ -3,9 +3,12 @@ import {
   getRoutesManifest,
   getFunctionsManifest,
   setWebpackAssets,
+  initAdapterManager,
 } from "../manager"
 import { state as stateDefault } from "./fixtures/state"
 import { IGatsbyState } from "../../../internal"
+import { IAdapterManager, IAdapter } from "../types"
+import { getAdapterInit } from "../init"
 
 jest.mock(`../../../redux`, () => {
   return {
@@ -14,6 +17,7 @@ jest.mock(`../../../redux`, () => {
     },
     store: {
       getState: jest.fn(),
+      dispatch: jest.fn(),
     },
   }
 })
@@ -25,12 +29,46 @@ jest.mock(`../../engines-helpers`, () => {
   }
 })
 
+jest.mock(`../init`)
+
+const createAdapterMock = (): IAdapter => {
+  return {
+    name: `gatsby-adapter-mock`,
+    adapt: jest.fn(),
+    config: jest.fn().mockReturnValue({}),
+  }
+}
+
+const mockNoOpAdapterManager: IAdapterManager = {
+  adapt: jest.fn(),
+  restoreCache: jest.fn(),
+  storeCache: jest.fn(),
+  config: jest.fn().mockResolvedValue({
+    excludeDatastoreFromEngineFunction: false,
+    pluginsToDisable: [],
+  }),
+}
+
+jest.mock(`../no-op-manager`, () => {
+  return {
+    noOpAdapterManager: jest
+      .fn()
+      .mockImplementation(() => mockNoOpAdapterManager),
+  }
+})
+
 function mockStoreState(
   state: IGatsbyState,
   additionalState: Partial<IGatsbyState> = {}
 ): void {
   const mergedState = { ...state, ...additionalState }
   ;(store.getState as jest.Mock).mockReturnValue(mergedState)
+}
+
+function mockGetAdapterInit(adapter: IAdapter | undefined): void {
+  const mocked = getAdapterInit as jest.MockedFunction<typeof getAdapterInit>
+  mocked.mockClear()
+  mocked.mockResolvedValue(adapter ? (): IAdapter => adapter : undefined)
 }
 
 const fixturesDir = `${__dirname}/fixtures`
@@ -341,5 +379,63 @@ describe(`getFunctionsManifest`, () => {
         },
       ]
     `)
+  })
+})
+
+describe(`initAdapterManager`, () => {
+  beforeEach(() => {
+    ;(mockNoOpAdapterManager.config as jest.Mock).mockClear()
+  })
+
+  it(`should use noop manager when adapter config is false`, async () => {
+    const initAdapter = createAdapterMock()
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config, adapter: false },
+    })
+    mockGetAdapterInit(initAdapter)
+    const mgr = await initAdapterManager()
+
+    expect(mgr).not.toBeNull()
+    expect(mockNoOpAdapterManager.config).toHaveBeenCalledTimes(1)
+    expect(initAdapter.config).not.toHaveBeenCalled()
+  })
+
+  it(`should use noop manager when adapter config is undefined and no adapter resolved`, async () => {
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config, adapter: undefined },
+    })
+    mockGetAdapterInit(undefined)
+    const mgr = await initAdapterManager()
+
+    expect(mgr).not.toBeNull()
+    expect(mockNoOpAdapterManager.config).toHaveBeenCalledTimes(1)
+  })
+
+  it(`should use configured adapter`, async () => {
+    const configuredAdapter = createAdapterMock()
+    const initAdapter = createAdapterMock()
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config, adapter: configuredAdapter },
+    })
+    mockGetAdapterInit(initAdapter)
+    const mgr = await initAdapterManager()
+
+    expect(mgr).not.toBeNull()
+    expect(mockNoOpAdapterManager.config).not.toHaveBeenCalled()
+    expect(initAdapter.config).not.toHaveBeenCalled()
+    expect(configuredAdapter.config).toHaveBeenCalledTimes(1)
+  })
+
+  it(`should use resolved adapter when adapter config is undefined`, async () => {
+    const initAdapter = createAdapterMock()
+    mockStoreState(stateDefault, {
+      config: { ...stateDefault.config, adapter: undefined },
+    })
+    mockGetAdapterInit(initAdapter)
+    const mgr = await initAdapterManager()
+
+    expect(mgr).not.toBeNull()
+    expect(mockNoOpAdapterManager.config).not.toHaveBeenCalled()
+    expect(initAdapter.config).toBeCalled()
   })
 })

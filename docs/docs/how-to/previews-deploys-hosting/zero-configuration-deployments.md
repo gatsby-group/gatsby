@@ -16,11 +16,13 @@ Gatsby currently supports these platforms for zero-configuration deployments:
 
 ### Manually installing the adapter
 
-If you plan on staying on a specific deployment platform, consider installing the adapter to your `dependencies`. This will give you faster and more robust installs.
-
 If your adapter provides options that you can set, you must manually install the adapter to your `dependencies` to change any of the values. Read the [adapters guide](/docs/how-to/previews-deploys-hosting/adapters/) to learn how to use an adapter.
 
 If you plan on using a specific deployment platform for a long period of time, you may also want to install the adapter to your `dependencies`. This will give you faster and more robust installs.
+
+### Disabling adapters
+
+Zero-configuration deployments are intended to simplify and improve the build and deploy experience. However, if you find that you need more control over your process, you can [disable adapters](/docs/how-to/previews-deploys-hosting/adapters/#disabling-adapters).
 
 ## Adding additional adapters
 
