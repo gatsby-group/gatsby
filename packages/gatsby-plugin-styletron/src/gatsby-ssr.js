@@ -2,15 +2,17 @@ import * as React from "react"
 import { Server as Styletron } from "styletron-engine-atomic"
 import { Provider } from "styletron-react"
 
-let instance
+const instances = {}
 
 export function wrapRootElement({ element }, options) {
-  instance = new Styletron({ prefix: options.prefix })
+  const instance = new Styletron({ prefix: options.prefix })
+  instances[element.props.url] = instance
 
   return <Provider value={instance}>{element}</Provider>
 }
 
-export function onRenderBody({ setHeadComponents }) {
+export function onRenderBody({ pathname, setHeadComponents }) {
+  const instance = instances[pathname]
   if (!instance) {
     return
   }
