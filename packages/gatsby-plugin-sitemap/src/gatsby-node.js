@@ -1,7 +1,7 @@
 import path from "path"
 import { simpleSitemapAndIndex } from "sitemap"
+import { pageFilter, prefixPath, REPORTER_PREFIX } from "./internals"
 import { pluginOptionsSchema } from "./options-validation"
-import { prefixPath, pageFilter, REPORTER_PREFIX } from "./internals"
 
 exports.pluginOptionsSchema = pluginOptionsSchema
 
@@ -17,6 +17,7 @@ exports.onPostBuild = async (
     resolvePages,
     filterPages,
     serialize,
+    ignoreSitemapPathPrefix,
   }
 ) => {
   const { data: queryRecords, errors } = await graphql(query)
@@ -79,7 +80,10 @@ exports.onPostBuild = async (
   }
 
   const sitemapWritePath = path.join(`public`, output)
-  const sitemapPublicPath = path.posix.join(pathPrefix, output)
+  const sitemapPublicPath = path.posix.join(
+    ignoreSitemapPathPrefix ? basePath : pathPrefix,
+    output
+  )
 
   return simpleSitemapAndIndex({
     hostname: siteUrl,

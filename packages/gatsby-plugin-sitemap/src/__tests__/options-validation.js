@@ -1,5 +1,5 @@
+import { Joi, testPluginOptionsSchema } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../options-validation"
-import { testPluginOptionsSchema, Joi } from "gatsby-plugin-utils"
 
 describe(`pluginOptionsSchema`, () => {
   it(`should provide meaningful errors when fields are invalid`, async () => {
@@ -39,6 +39,7 @@ describe(`pluginOptionsSchema`, () => {
         "entryLimit": 45000,
         "excludes": Array [],
         "filterPages": [Function],
+        "ignoreSitemapPathPrefix": false,
         "output": "/",
         "query": "{ site { siteMetadata { siteUrl } } allSitePage { nodes { path } } }",
         "resolvePagePath": [Function],

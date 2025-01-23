@@ -1,7 +1,7 @@
+import { Joi } from "gatsby-plugin-utils"
 import path from "path"
 import sitemap from "sitemap"
 import { onPostBuild } from "../gatsby-node"
-import { Joi } from "gatsby-plugin-utils"
 import { pluginOptionsSchema } from "../options-validation"
 
 jest.mock(`sitemap`, () => {
@@ -116,7 +116,7 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
     expect(graphql).toBeCalledWith(customQuery)
   })
 
-  it(`should include path prefix when creating creating index sitemap`, async () => {
+  it(`should include path prefix when creating index sitemap`, async () => {
     const graphql = jest.fn()
     graphql.mockResolvedValue({
       data: {
@@ -153,10 +153,48 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       await schema.validateAsync(options)
     )
     const { sourceData } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
-    sourceData.forEach(page => {
-      expect(page.url).toEqual(expect.stringContaining(prefix))
-      expect(page.url).not.toEqual(expect.stringContaining(assetPrefix))
+    expect(sourceData).toMatchSnapshot()
+  })
+
+  it(`should ignore path prefix for sitemap public path when creating index sitemap with ignoreSitemapPathPrefix`, async () => {
+    const graphql = jest.fn()
+    graphql.mockResolvedValue({
+      data: {
+        site: {
+          siteMetadata: {
+            siteUrl: `http://dummy.url`,
+          },
+        },
+        allSitePage: {
+          nodes: [
+            {
+              path: `/page-1`,
+            },
+            {
+              path: `/page-2`,
+            },
+          ],
+        },
+      },
     })
+    const prefix = `/test`
+    const subdir = `/subdir`
+    const options = {
+      output: subdir,
+      ignoreSitemapPathPrefix: true,
+    }
+    const assetPrefix = `https://cdn.example.com`
+    await onPostBuild(
+      {
+        graphql,
+        basePath: prefix,
+        pathPrefix: `${assetPrefix}${prefix}`,
+        reporter,
+      },
+      await schema.validateAsync(options)
+    )
+    const { publicBasePath } = sitemap.simpleSitemapAndIndex.mock.calls[0][0]
+    expect(publicBasePath).toEqual(`${prefix}${subdir}`)
   })
 
   it(`should output modified paths to sitemap`, async () => {
@@ -186,11 +224,60 @@ describe(`gatsby-plugin-sitemap Node API`, () => {
       output: subdir,
     }
     await onPostBuild(
-      { graphql, pathPrefix: prefix, reporter },
+      {
+        graphql,
+        basePath: prefix,
+        pathPrefix: prefix,
+        reporter,
+      },
       await schema.validateAsync(options)
     )
     expect(sitemap.simpleSitemapAndIndex.mock.calls[0][0].publicBasePath).toBe(
       path.posix.join(prefix, subdir)
+    )
+    expect(sitemap.simpleSitemapAndIndex.mock.calls[0][0].destinationDir).toBe(
+      path.join(`public`, subdir)
+    )
+  })
+
+  it(`should output modified paths to sitemap with asset prefix`, async () => {
+    const graphql = jest.fn()
+    graphql.mockResolvedValue({
+      data: {
+        site: {
+          siteMetadata: {
+            siteUrl: `http://dummy.url`,
+          },
+        },
+        allSitePage: {
+          nodes: [
+            {
+              path: `/page-1`,
+            },
+            {
+              path: `/page-2`,
+            },
+          ],
+        },
+      },
+    })
+    const prefix = `/test`
+    const subdir = `/subdir`
+    const options = {
+      output: subdir,
+    }
+    const assetPrefix = `https://cdn.example.com`
+    await onPostBuild(
+      {
+        graphql,
+        basePath: prefix,
+        pathPrefix: `${assetPrefix}${prefix}`,
+        reporter,
+      },
+      await schema.validateAsync(options)
+    )
+    expect(sitemap.simpleSitemapAndIndex.mock.calls[0][0].publicBasePath).toBe(
+      path.posix.join(assetPrefix, prefix, subdir)
     )
     expect(sitemap.simpleSitemapAndIndex.mock.calls[0][0].destinationDir).toBe(
       path.join(`public`, subdir)

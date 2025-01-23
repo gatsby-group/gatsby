@@ -102,4 +102,9 @@ export const pluginOptionsSchema = ({ Joi }) =>
       .description(
         `Takes the output of \`filterPages\` and lets you return a sitemap entry.`
       ),
+    ignoreSitemapPathPrefix: Joi.boolean()
+      .default(false)
+      .description(
+        `Whether to ignores the path prefix when setting the sitemap public path.`
+      ),
   })

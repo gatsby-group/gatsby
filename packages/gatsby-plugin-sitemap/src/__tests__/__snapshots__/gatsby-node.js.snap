@@ -10,6 +10,21 @@ Array [
 ]
 `;
 
+exports[`gatsby-plugin-sitemap Node API should include path prefix when creating index sitemap 1`] = `
+Array [
+  Object {
+    "changefreq": "daily",
+    "priority": 0.7,
+    "url": "http://dummy.url/test/page-1",
+  },
+  Object {
+    "changefreq": "daily",
+    "priority": 0.7,
+    "url": "http://dummy.url/test/page-2",
+  },
+]
+`;
+
 exports[`gatsby-plugin-sitemap Node API should succeed with default options 1`] = `
 Array [
   Object {
