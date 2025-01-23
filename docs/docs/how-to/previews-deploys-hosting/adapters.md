@@ -23,6 +23,7 @@ This feature was added in `gatsby@5.12.0`.
 You can use these official adapters:
 
 - [gatsby-adapter-netlify](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-adapter-netlify) for [Netlify](https://www.netlify.com/)
+- [gatsby-adapter-gitlab-pages](https://github.com/whatwedo/gatsby-adapter-gitlab-pages) for [GitLab Pages]([https://www.netlify.com/](https://docs.gitlab.com/ee/user/project/pages/))
 
 To find additional community adapters, [search npm for `gatsby-adapter`](https://www.npmjs.com/search?q=gatsby-adapter-).
 
