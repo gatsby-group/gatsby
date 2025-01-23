@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@contentful/rich-text-types": "^16.2.0",
+    "@contentful/rich-text-types": "^16.8.5",
     "gatsby": "next",
     "gatsby-plugin-image": "next",
     "gatsby-plugin-sharp": "next",
