@@ -5,7 +5,7 @@
     "puppeteer-core": "^3.3.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.1407.0"
+    "aws-sdk": "^2.1692.0"
   },
   "keywords": [],
   "engines": {
