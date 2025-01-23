@@ -198,11 +198,37 @@ query MIME_TYPE_EXCLUDED {
 Since a Previewed post might have a lot less data attached to it than what you're testing with during development, you might get errors in previews when that data is missing. You can debug your previews by running Gatsby in preview mode locally.
 
 - Run Gatsby in refresh mode with `ENABLE_GATSBY_REFRESH_ENDPOINT=true gatsby develop`
+
+### Tunnelmole Setup
+
+[Tunnelmole](https://github.com/robbie-cahill/tunnelmole-client), an open source tunnelling tool, can be used to forward traffic to your local machine through a secure tunnel. 
+
+First, install Tunnelmole. For Linux, Mac and Windows Subsystem for Linux, copy and paste the following into a terminal:
+
+```sh
+curl -O https://install.tunnelmole.com/xHd45/install && sudo bash install
+```
+
+For Windows without WSL, [Download tmole.exe](https://tunnelmole.com/downloads/tmole.exe) and place it somewhere in your [PATH](https://www.wikihow.com/Change-the-PATH-Environment-Variable-on-Windows).
+
+Then run `tmole 8000`
+```sh
+➜  ~ tmole 8000
+http://bvdo5f-ip-49-183-170-144.tunnelmole.net is forwarding to localhost:8000
+https://bvdo5f-ip-49-183-170-144.tunnelmole.net is forwarding to localhost:8000
+```
+
+In your WP instances GatsbyJS settings, set your Preview instance URL to `https://your-tunnelmole-url.tunnelmole.net` and your preview refresh endpoint `https://your-tunnelmole-url.tunnelmole.net/__refresh`
+
+### ngrok Setup
+
+ngrok, a popular closed source tunnelling tool, can also be used.
+
 - Install ngrok with `npm i -g ngrok`
 - In a new terminal window run `ngrok http 8000`
 - In your WP instances GatsbyJS settings, set your Preview instance URL to `https://your-ngrok-url.ngrok.io` and your preview refresh endpoint `https://your-ngrok-url.ngrok.io/__refresh`
 
-Now when you click preview in `wp-admin` it will use your local instance of Gatsby. You can inspect the preview template to see which Gatsby path is being loaded in the preview iframe and open it directly to do further debugging.
+Whether you choose to use Tunnelmole or ngrok, when you click preview in `wp-admin`, it will use your local instance of Gatsby. You can inspect the preview template to see which Gatsby path is being loaded in the preview iframe and open it directly to do further debugging.
 
 You can proactively protect against broken Preview templates by using [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) to prevent trying to access properties on `undefined`.
 
