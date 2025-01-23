@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-example-no-plugins",
+  "name": "gatsby-example-feed",
   "private": true,
   "description": "Gatsby example demonstrating the RSS feed plugin.",
   "version": "1.0.0",
