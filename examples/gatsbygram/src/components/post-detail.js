@@ -3,6 +3,7 @@ import React from "react"
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
 import { graphql } from "gatsby"
+import avatar from '../../data/avatar.jpg'
 
 class PostDetail extends React.Component {
   render() {
@@ -13,7 +14,6 @@ class PostDetail extends React.Component {
       username,
       weeksAgo,
       text,
-      avatar,
     } = this.props.post
 
     const { big } = bigImage.childImageSharp
@@ -88,6 +88,7 @@ class PostDetail extends React.Component {
     )
 
     return (
+      /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
       <div
         onClick={e => e.stopPropagation()}
         css={{
@@ -153,6 +154,7 @@ class PostDetail extends React.Component {
                 margin: 0,
                 height: `100%`,
                 width: `100%`,
+                objectFit: `contain`,
                 verticalAlign: `baseline`,
                 position: `absolute`,
                 top: 0,

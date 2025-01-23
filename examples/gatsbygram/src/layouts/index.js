@@ -1,6 +1,6 @@
 import * as PropTypes from "prop-types"
 import React from "react"
-import CameraIcon from "react-icons/lib/fa/camera-retro"
+import { FaCameraRetro } from "react-icons/fa6"
 import { Link, PageRenderer } from "gatsby"
 
 // Load the css for the Space Mono font.
@@ -77,14 +77,13 @@ class Layout extends React.Component {
                 data-testid="site-title"
                 css={{
                   ...scale(4 / 5),
+                  display: `flex`,
                   lineHeight: 1,
                   margin: 0,
-                  overflow: `hidden`,
                 }}
               >
-                <CameraIcon
+                <FaCameraRetro
                   css={{
-                    top: -4,
                     display: `inline-block`,
                     position: `relative`,
                   }}

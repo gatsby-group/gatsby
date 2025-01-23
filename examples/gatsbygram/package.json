@@ -20,20 +20,20 @@
     "gatsby-transformer-sharp": "next",
     "glamor": "^2.20.40",
     "instagram-screen-scrape": "^2.0.0",
-    "lodash": "^4.17.20",
-    "mkdirp": "^0.5.1",
+    "lodash": "^4.17.21",
+    "mkdirp": "^3.0.1",
     "mousetrap": "^1.6.5",
     "progress": "^2.0.3",
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-gravatar": "^2.6.3",
-    "react-icons": "2",
-    "react-modal": "^3.11.2",
-    "react-typography": "^0.16.19",
+    "react-icons": "^4.10.1",
+    "react-modal": "^3.16.1",
+    "react-typography": "^0.16.23",
     "request": "^2.88.2",
     "typeface-space-mono": "1.1.13",
-    "typography": "^0.16.19"
+    "typography": "^0.16.24"
   },
   "keywords": [
     "gatsby"
@@ -52,8 +52,8 @@
     "cy:run": "cypress run --browser chrome --record"
   },
   "devDependencies": {
-    "cypress": "^3.8.3",
-    "gatsby-cypress": "^0.4.10",
-    "start-server-and-test": "^1.11.3"
+    "cypress": "^12.17.4",
+    "gatsby-cypress": "^3.11.0",
+    "start-server-and-test": "^2.0.0"
   }
 }

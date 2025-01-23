@@ -1,12 +1,11 @@
-import React from "react"
+import React, { useCallback, useEffect } from "react"
 import Modal from "react-modal"
-import CaretRight from "react-icons/lib/fa/caret-right"
-import CaretLeft from "react-icons/lib/fa/caret-left"
-import Close from "react-icons/lib/md/close"
+import { FaCaretLeft, FaCaretRight } from "react-icons/fa6"
+import { MdClose } from "react-icons/md"
 import findIndex from "lodash/findIndex"
 import mousetrap from "mousetrap"
 import * as PropTypes from "prop-types"
-import { navigate, StaticQuery, graphql } from "gatsby"
+import { navigate, useStaticQuery, graphql } from "gatsby"
 
 import { rhythm } from "../utils/typography"
 
@@ -14,40 +13,32 @@ let posts
 
 Modal.setAppElement(`#___gatsby`)
 
-// TODO(v6): Refactor this to a function component
-class GatsbyGramModal extends React.Component {
-  static propTypes = {
-    isOpen: PropTypes.bool,
-    location: PropTypes.object.isRequired,
-  }
+const propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  isOpen: PropTypes.bool,
+  location: PropTypes.object.isRequired,
+}
 
-  componentDidMount() {
-    mousetrap.bind(`left`, () => this.previous())
-    mousetrap.bind(`right`, () => this.next())
-    mousetrap.bind(`space`, () => this.next())
-  }
+const GatsbyGramModal = ({ children, isOpen, location }) => {
 
-  componentWillUnmount() {
-    mousetrap.unbind(`left`)
-    mousetrap.unbind(`right`)
-    mousetrap.unbind(`space`)
-  }
-
-  findCurrentIndex() {
+  const findCurrentIndex = useCallback(() => {
     let index
     index = findIndex(
       posts,
-      post => post.id === this.props.location.pathname.split(`/`)[1]
+      post => post.gatsbyPath === location.pathname
     )
 
     return index
-  }
+  }, [location.pathname])
 
-  next(e) {
+  const next = useCallback((e) => {
     if (e) {
       e.stopPropagation()
     }
-    const currentIndex = this.findCurrentIndex()
+    const currentIndex = findCurrentIndex()
     if (currentIndex || currentIndex === 0) {
       let nextPost
       // Wrap around if at end.
@@ -58,13 +49,13 @@ class GatsbyGramModal extends React.Component {
       }
       navigate(nextPost.gatsbyPath)
     }
-  }
+  }, [findCurrentIndex])
 
-  previous(e) {
+  const previous = useCallback((e) => {
     if (e) {
       e.stopPropagation()
     }
-    const currentIndex = this.findCurrentIndex()
+    const currentIndex = findCurrentIndex()
     if (currentIndex || currentIndex === 0) {
       let previousPost
       // Wrap around if at start.
@@ -75,114 +66,125 @@ class GatsbyGramModal extends React.Component {
       }
       navigate(previousPost.gatsbyPath)
     }
+  }, [findCurrentIndex])
+
+  useEffect(() => {
+    mousetrap.bind(`left`, previous)
+    mousetrap.bind(`right`, next)
+    mousetrap.bind(`space`, (e) => {
+      e.preventDefault()
+      next()
+    })
+
+    return () => {
+      mousetrap.unbind(`left`)
+      mousetrap.unbind(`right`)
+      mousetrap.unbind(`space`)
+    }
+  }, [next, previous])
+
+  const data = useStaticQuery(graphql`
+    query {
+      allPostsJson {
+        edges {
+          node {
+            gatsbyPath(filePath: "/{PostsJson.id}")
+          }
+        }
+      }
+    }
+  `)
+
+  if (!posts) {
+    posts = data.allPostsJson.edges.map(e => e.node)
   }
 
-  // TODO(v6): Refactor to use `useStaticQuery` instead of `StaticQuery`, `StaticQuery` will be removed in v6
-  render() {
-    return (
-      <StaticQuery
-        query={graphql`
-          query {
-            allPostsJson {
-              edges {
-                node {
-                  gatsbyPath(filePath: "/{PostsJson.id}")
-                }
-              }
-            }
-          }
-        `}
-        render={data => {
-          if (!posts) {
-            posts = data.allPostsJson.edges.map(e => e.node)
-          }
-          return (
-            <Modal
-              isOpen={this.props.isOpen}
-              onRequestClose={() => navigate(`/`)}
-              style={{
-                overlay: {
-                  position: `fixed`,
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: `rgba(0, 0, 0, 0.75)`,
-                },
-                content: {
-                  position: `absolute`,
-                  border: `none`,
-                  background: `none`,
-                  padding: 0,
-                  top: 0,
-                  bottom: 0,
-                  right: 0,
-                  left: 0,
-                  overflow: `auto`,
-                  WebkitOverflowScrolling: `touch`,
-                },
-              }}
-              contentLabel="Modal"
-            >
-              <div
-                onClick={() => navigate(`/`)}
-                css={{
-                  display: `flex`,
-                  position: `relative`,
-                  height: `100vh`,
-                }}
-              >
-                <div
-                  css={{
-                    display: `flex`,
-                    alignItems: `center`,
-                    justifyItems: `center`,
-                    maxWidth: rhythm(40.25), // Gets it right around Instagram's maxWidth.
-                    margin: `auto`,
-                    width: `100%`,
-                  }}
-                >
-                  <CaretLeft
-                    data-testid="previous-post"
-                    css={{
-                      cursor: `pointer`,
-                      fontSize: `50px`,
-                      color: `rgba(255,255,255,0.7)`,
-                      userSelect: `none`,
-                    }}
-                    onClick={e => this.previous(e)}
-                  />
-                  {this.props.children}
-                  <CaretRight
-                    data-testid="next-post"
-                    css={{
-                      cursor: `pointer`,
-                      fontSize: `50px`,
-                      color: `rgba(255,255,255,0.7)`,
-                      userSelect: `none`,
-                    }}
-                    onClick={e => this.next(e)}
-                  />
-                </div>
-                <Close
-                  data-testid="modal-close"
-                  onClick={() => navigate(`/`)}
-                  css={{
-                    cursor: `pointer`,
-                    color: `rgba(255,255,255,0.8)`,
-                    fontSize: `30px`,
-                    position: `absolute`,
-                    top: rhythm(1 / 4),
-                    right: rhythm(1 / 4),
-                  }}
-                />
-              </div>
-            </Modal>
-          )
+  return (
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={() => navigate(`/`)}
+      style={{
+        overlay: {
+          position: `fixed`,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: `rgba(0, 0, 0, 0.75)`,
+        },
+        content: {
+          position: `absolute`,
+          border: `none`,
+          background: `none`,
+          padding: 0,
+          top: 0,
+          bottom: 0,
+          right: 0,
+          left: 0,
+          overflow: `auto`,
+          WebkitOverflowScrolling: `touch`,
+        },
+      }}
+      contentLabel="Modal"
+    >
+      {/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+      <div
+        onClick={() => navigate(`/`)}
+        css={{
+          display: `flex`,
+          position: `relative`,
+          height: `100vh`,
         }}
-      />
-    )
-  }
+      >
+        <div
+          css={{
+            display: `flex`,
+            alignItems: `center`,
+            justifyItems: `center`,
+            maxWidth: rhythm(40.25), // Gets it right around Instagram's maxWidth.
+            margin: `auto`,
+            width: `100%`,
+          }}
+        >
+          <FaCaretLeft
+            data-testid="previous-post"
+            css={{
+              cursor: `pointer`,
+              fontSize: `50px`,
+              color: `rgba(255,255,255,0.7)`,
+              userSelect: `none`,
+            }}
+            onClick={e => previous(e)}
+          />
+          {children}
+          <FaCaretRight
+            data-testid="next-post"
+            css={{
+              cursor: `pointer`,
+              fontSize: `50px`,
+              color: `rgba(255,255,255,0.7)`,
+              userSelect: `none`,
+            }}
+            onClick={e => next(e)}
+          />
+        </div>
+        <MdClose
+          data-testid="modal-close"
+          onClick={() => navigate(`/`)}
+          css={{
+            cursor: `pointer`,
+            color: `rgba(255,255,255,0.8)`,
+            fontSize: `30px`,
+            position: `absolute`,
+            top: rhythm(1 / 4),
+            right: rhythm(1 / 4),
+          }}
+        />
+      </div>
+    </Modal>
+  )
 }
+
+GatsbyGramModal.propTypes = propTypes
 
 export default GatsbyGramModal

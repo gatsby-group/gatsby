@@ -153,7 +153,7 @@ class Index extends React.Component {
             </div>
           ))}
           {!this.state.showingMore && (
-            <a
+            <button
               data-testid="load-more"
               css={{
                 ...scale(-0.5),
@@ -189,7 +189,7 @@ class Index extends React.Component {
               }}
             >
               Load More
-            </a>
+            </button>
           )}
         </div>
       </Layout>

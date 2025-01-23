@@ -1,6 +1,6 @@
 import * as PropTypes from "prop-types"
 import React from "react"
-import HeartIcon from "react-icons/lib/fa/heart"
+import { FaHeart } from "react-icons/fa6"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
@@ -109,7 +109,7 @@ class Post extends React.Component {
               ...scale(2 / 5),
             }}
           >
-            <HeartIcon
+            <FaHeart
               css={{
                 fontSize: `90%`,
                 marginRight: rhythm(1 / 4),

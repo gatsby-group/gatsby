@@ -14,7 +14,7 @@ const propTypes = {
 function Avatar({ user }) {
   return (
     <StaticImage
-      src="https://via.placeholder.com/250"
+      src="../../data/avatar.jpg"
       alt={user.username}
       css={{
         display: `block`,
