@@ -75,6 +75,48 @@ const findReferencedImageNodeIds = ({ nodeString, pluginOptions, node }) => {
   return matchedIds
 }
 
+// Find Image IDs in this node's content using the regex set by the
+// createStaticFilesForImageIds plugin option.
+const findReferencedImageNodeIdsForCustomRegex = ({
+  nodeString,
+  pluginOptions,
+  node,
+}) => {
+  // Return if the option is not set
+  if (!pluginOptions.html.createStaticFilesForImageIds) {
+    return []
+  }
+
+  // if the lazyNodes plugin option is set we don't need to find
+  // image node id's because those nodes will be fetched lazily in resolvers.
+  if (
+    pluginOptions.type.MediaItem.lazyNodes &&
+    // but not in Gatsby v4+ because lazyNodes is no longer supported
+    !usingGatsbyV4OrGreater
+  ) {
+    return []
+  }
+
+  // If the plugin option is defined, get an array of all referenced media file database ID's matching the regex provided
+  // and convert the IDs to the graphQL IDs
+  const regex = new RegExp(
+    pluginOptions.html.createStaticFilesForImageIds,
+    `gm`
+  )
+  const matchedIds = []
+  execall(regex, nodeString).forEach(match => {
+    const dbId = match.subMatches[0]
+    if (dbId && !isNaN(dbId)) {
+      const nodeId = b64e(`post:${dbId}`)
+      if (nodeId !== node.id) {
+        matchedIds.push(nodeId)
+      }
+    }
+  })
+
+  return matchedIds
+}
+
 const getCheerioImgDbId = cheerioImg => {
   // try to get the db id from data attributes
   const dataAttributeId =
@@ -960,6 +1002,7 @@ const processNode = async ({
   referencedMediaItemNodeIds,
 }) => {
   const nodeString = stringify(node)
+  let extraNodeMediaItemIdReferences = []
 
   // find referenced node ids
   // here we're searching for node id strings in our node
@@ -967,15 +1010,35 @@ const processNode = async ({
   // that are being used in posts
   // this is important for downloading images nodes that are connected somewhere
   // on a node field
-  const nodeMediaItemIdReferences = findReferencedImageNodeIds({
-    nodeString,
-    pluginOptions,
-    node,
-  })
+  let nodeMediaItemIdReferences =
+    findReferencedImageNodeIds({
+      nodeString,
+      pluginOptions,
+      node,
+    }) || []
 
-  // push them to our store of referenced id's
-  if (nodeMediaItemIdReferences?.length && referencedMediaItemNodeIds) {
-    nodeMediaItemIdReferences.forEach(id => referencedMediaItemNodeIds.add(id))
+  // Find extra referenced image IDs for the option createStaticFilesForImageIds
+  if (node.contentTypeName === `post` || node.contentTypeName === `page`) {
+    extraNodeMediaItemIdReferences =
+      findReferencedImageNodeIdsForCustomRegex({
+        nodeString,
+        pluginOptions,
+        node,
+      }) || []
+  }
+
+  if (referencedMediaItemNodeIds) {
+    // Add the extra images found to the original array
+    nodeMediaItemIdReferences = nodeMediaItemIdReferences.concat(
+      extraNodeMediaItemIdReferences
+    )
+
+    // push them to our store of referenced id's
+    if (nodeMediaItemIdReferences?.length) {
+      nodeMediaItemIdReferences.forEach(id =>
+        referencedMediaItemNodeIds.add(id)
+      )
+    }
   }
 
   const processedNodeString = await processNodeString({

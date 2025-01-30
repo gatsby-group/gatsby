@@ -722,6 +722,19 @@ When using this option, be sure to gitignore the wordpress-cache directory in th
           }
         `)
         ),
+      createStaticFilesForImageIds: Joi.string()
+        .allow(null)
+        .default(null)
+        .description(
+          `This option is experimental. Set this to a regex that matches Media Item Ids in the content of your posts or page, to always create static files for them so they can be queried in GraphQL (even if the createStaticFiles option is false)`
+        )
+        .meta({
+          example: wrapOptions(`
+              html: {
+                createStaticFilesForImageIds: '"gatsby_image_source_[^"]*":(\\d*)',
+              },
+            `),
+        }),
     })
       .description(`Options related to html field processing.`)
       .meta({

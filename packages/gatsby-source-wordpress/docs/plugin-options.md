@@ -53,6 +53,7 @@
   - [html.generateWebpImages](#htmlgeneratewebpimages)
   - [html.generateAvifImages](#htmlgenerateavifimages)
   - [html.placeholderType](#htmlplaceholdertype)
+  - [html.createStaticFilesForImageIds](#htmlcreatestaticfilesforimageids)
 - [type](#type)
   - [type.\_\_all](#type__all)
     - [type.\_\_all.where](#type__allwhere)
@@ -1076,6 +1077,26 @@ This can be either "blurred" or "dominantColor". This is the type of placeholder
 **Field type**: `String`
 
 **Default value**: `dominantColor`
+
+### html.createStaticFilesForImageIds
+
+This option is experimental. Set this to a regex that matches Media Item Ids in the content of your posts or page, to always create static files for them so they can be queried in GraphQL (even if the createStaticFiles option is false).
+
+**Field type**: `String`
+
+**Default value**: `null`
+
+```js
+{
+  resolve: `gatsby-source-wordpress`,
+  options: {
+    html: {
+      createStaticFilesForImageIds: '"gatsby_image_source_[^"]*":(d*)',
+    },
+  },
+}
+
+```
 
 ## type
 
