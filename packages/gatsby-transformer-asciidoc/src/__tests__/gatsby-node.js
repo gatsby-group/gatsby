@@ -1,29 +1,23 @@
-const path = require(`path`)
+const fs = require('fs-extra')
+const path = require('path')
+const { createContentDigest } = require('gatsby-core-utils')
 const { onCreateNode, shouldOnCreateNode } = require(`../gatsby-node`)
 
-jest.mock(`asciidoctor`, () => () => {
-  return {
-    load: jest.fn(() => {
-      return {
-        hasRevisionInfo: jest.fn(),
-        getAuthor: jest.fn(),
-        getAttributes: jest.fn(() => {
-          return {}
-        }),
-        getAttribute: jest.fn(),
-        convert: jest.fn(() => `html generated`),
-        getDocumentTitle: jest.fn(() => {
-          return {
-            getCombined: jest.fn(() => `title`),
-            hasSubtitle: jest.fn(() => true),
-            getSubtitle: jest.fn(() => `subtitle`),
-            getMain: jest.fn(() => `main`),
-          }
-        }),
-      }
-    }),
-  }
-})
+jest.mock(`asciidoctor`, () => () => ({
+  load: jest.fn(() => ({
+    hasRevisionInfo: jest.fn(),
+    getAuthor: jest.fn(),
+    getAttributes: jest.fn(() => ({})),
+    getAttribute: jest.fn(),
+    convert: jest.fn(() => `html generated`),
+    getDocumentTitle: jest.fn(() => ({
+      getCombined: jest.fn(() => `title`),
+      hasSubtitle: jest.fn(() => true),
+      getSubtitle: jest.fn(() => `subtitle`),
+      getMain: jest.fn(() => `main`),
+    })),
+  })),
+}))
 
 describe(`gatsby-transformer-asciidoc`, () => {
   let node

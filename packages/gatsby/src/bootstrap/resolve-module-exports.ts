@@ -8,6 +8,7 @@ import { testImportError } from "../utils/test-import-error"
 import { resolveModule, ModuleResolver } from "../utils/module-resolver"
 import { maybeAddFileProtocol, resolveJSFilepath } from "./resolve-js-file-path"
 import { preferDefault } from "./prefer-default"
+import { match } from "@reach/router"
 
 const staticallyAnalyzeExports = (
   modulePath: string,
@@ -23,7 +24,7 @@ const staticallyAnalyzeExports = (
   }
   const code = fs.readFileSync(absPath, `utf8`) // get file contents
 
-  let ast
+  let ast: t.File
   try {
     ast = babelParseToAst(code, absPath)
   } catch (err) {
@@ -58,7 +59,7 @@ const staticallyAnalyzeExports = (
       isES6 = true
     },
 
-    ExportNamedDeclaration: function ExportNamedDeclaration(astPath) {
+    ExportNamedDeclaration: function ExportNamedDeclaration(astPath: t.NodePath<t.ExportNamedDeclaration>) {
       const declaration = astPath.node.declaration
 
       // get foo from `export const foo = bar`
@@ -82,7 +83,7 @@ const staticallyAnalyzeExports = (
 
     // get foo from `export { foo } from 'bar'`
     // get foo from `export { foo }`
-    ExportSpecifier: function ExportSpecifier(astPath) {
+    ExportSpecifier: function ExportSpecifier(astPath: t.NodePath<t.ExportSpecifier>) {
       isES6 = true
       const exp = astPath?.node?.exported
       if (!exp) {
@@ -100,7 +101,7 @@ const staticallyAnalyzeExports = (
     // export default function() {}
     // export default function foo() {}
     // const foo = () => {}; export default foo
-    ExportDefaultDeclaration: function ExportDefaultDeclaration(astPath) {
+    ExportDefaultDeclaration: function ExportDefaultDeclaration(astPath: t.NodePath<t.ExportDefaultDeclaration>) {
       const declaration = astPath.node.declaration
       if (
         !t.isIdentifier(declaration) &&
@@ -122,7 +123,7 @@ const staticallyAnalyzeExports = (
       exportNames.push(exportName)
     },
 
-    AssignmentExpression: function AssignmentExpression(astPath) {
+    AssignmentExpression: function AssignmentExpression(astPath: t.NodePath<t.AssignmentExpression>) {
       const nodeLeft = astPath.node.left
 
       if (!t.isMemberExpression(nodeLeft)) {
@@ -237,4 +238,21 @@ export async function resolveModuleExports(
   }
 
   return []
+}
+function matchPathParams(path: string, matchPath?: string) {
+  // Try original path
+  let result = match(matchPath || path, { path })
+
+  // Production SSR with encoded URL
+  if (!result && path.includes('%')) {
+    try {
+      const decoded = decodeURIComponent(path)
+      result = match(matchPath || decoded, { path: decoded })
+    } catch {
+      // Fallback to original on decode fail
+    }
+  }
+
+  // Never return null in SSR to prevent TypeError
+  return result?.params || {}
 }
