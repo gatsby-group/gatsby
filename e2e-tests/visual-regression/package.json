@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@simonsmith/cypress-image-snapshot": "^6.1.1",
+    "@simonsmith/cypress-image-snapshot": "^8.0.2",
     "cypress": "^12.16.0",
     "gatsby": "next",
     "gatsby-plugin-image": "next",
