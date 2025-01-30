@@ -8,8 +8,35 @@ import {
   createMemorySource,
   createHistory,
   LocationProvider,
+  NavigateOptions,
 } from "@reach/router"
 import { Link, navigate, withPrefix, withAssetPrefix } from "../"
+
+type IntersectionObserverType = jest.Mock<
+  {
+    observe: (ref: Record<string, unknown>) => void
+    unobserve: (ref: Record<string, unknown>) => void
+    disconnect: () => void
+    trigger: (ref: Record<string, unknown>) => void
+  },
+  [cb: any]
+>
+
+interface ICustomNodeJsGlobal extends NodeJS.Global {
+  __BASE_PATH__: string | undefined
+  __PATH_PREFIX__: string | undefined
+  ___navigate: (
+    to: string,
+    options?: NavigateOptions<Record<string, unknown>>
+  ) => void
+  ___loader: {
+    enqueue: (arg0: string) => Record<string, unknown>
+    hovering?: (arg0: string) => Record<string, unknown>
+  }
+  IntersectionObserver: IntersectionObserverType
+}
+
+declare const global: ICustomNodeJsGlobal
 
 beforeEach(() => {
   global.__BASE_PATH__ = ``
@@ -18,39 +45,44 @@ beforeEach(() => {
 
 afterEach(cleanup)
 
-const getInstance = (props, pathPrefix = ``) => {
-  getWithPrefix()(pathPrefix)
-  return <Link {...props} />
-}
-
-const getNavigate = () => {
-  global.___navigate = jest.fn()
-  return navigate
-}
-
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const getWithPrefix = (pathPrefix = ``) => {
   global.__BASE_PATH__ = pathPrefix
   return withPrefix
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const getInstance = (props, pathPrefix = ``) => {
+  getWithPrefix()(pathPrefix)
+  return <Link {...props} />
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const getNavigate = () => {
+  global.___navigate = jest.fn()
+  return navigate
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const getWithAssetPrefix = (prefix = ``) => {
   global.__PATH_PREFIX__ = prefix
   return withAssetPrefix
 }
 
-const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const setup = ({ sourcePath = `/`, pathPrefix = ``, linkProps = {} } = {}) => {
   const intersectionInstances = new WeakMap()
   // mock intersectionObserver
   global.IntersectionObserver = jest.fn(cb => {
     const instance = {
-      observe: ref => {
+      observe: (ref: Record<string, unknown>): void => {
         intersectionInstances.set(ref, instance)
       },
-      unobserve: ref => {
+      unobserve: (ref: Record<string, unknown>): void => {
         intersectionInstances.delete(ref)
       },
-      disconnect: () => {},
-      trigger: ref => {
+      disconnect: (): void => {},
+      trigger: (ref: Record<string, unknown>): void => {
         cb([
           {
             target: ref,
@@ -62,6 +94,7 @@ const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
 
     return instance
   })
+
   global.__BASE_PATH__ = pathPrefix
   const source = createMemorySource(sourcePath)
   const history = createHistory(source)
@@ -69,12 +102,12 @@ const setup = ({ sourcePath = `/`, linkProps, pathPrefix = `` } = {}) => {
   const utils = render(
     <LocationProvider history={history}>
       <Link
+        {...linkProps}
         to="/"
         className="link"
         style={{ color: `black` }}
         activeClassName="is-active"
         activeStyle={{ textDecoration: `underline` }}
-        {...linkProps}
       >
         link
       </Link>
@@ -386,7 +419,7 @@ describe(`ref forwarding`, () => {
   })
 
   it(`handles a RefObject (React >=16.4)`, () => {
-    const ref = React.createRef(null)
+    const ref = React.createRef()
     setup({ linkProps: { ref } })
 
     expect(ref.current).toEqual(expect.any(HTMLElement))

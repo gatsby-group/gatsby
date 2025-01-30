@@ -1,11 +1,23 @@
-import { rewriteLinkPath } from "../rewrite-link-path"
+import type { TrailingSlash } from "gatsby-page-utils"
+
+import { rewriteLinkPath, type rewriteLinkPathType } from "../rewrite-link-path"
+
+interface ICustomNodeJsGlobal extends NodeJS.Global {
+  __TRAILING_SLASH__: TrailingSlash | undefined | string
+  __PATH_PREFIX__: string | undefined
+}
+
+declare const global: ICustomNodeJsGlobal
 
 beforeEach(() => {
   global.__TRAILING_SLASH__ = ``
   global.__PATH_PREFIX__ = undefined
 })
 
-const getRewriteLinkPath = (option = `legacy`, pathPrefix = undefined) => {
+const getRewriteLinkPath = (
+  option: string = `legacy`,
+  pathPrefix: string | undefined = undefined
+): rewriteLinkPathType => {
   global.__TRAILING_SLASH__ = option
   global.__PATH_PREFIX__ = pathPrefix
   return rewriteLinkPath

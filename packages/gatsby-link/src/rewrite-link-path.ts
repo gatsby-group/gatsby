@@ -1,23 +1,28 @@
 import { resolve } from "@gatsbyjs/reach-router"
 // Specific import to treeshake Node.js stuff
-import { applyTrailingSlashOption } from "gatsby-page-utils/apply-trailing-slash-option"
+import { applyTrailingSlashOption, type TrailingSlash } from "gatsby-page-utils"
 import { parsePath } from "./parse-path"
 import { isLocalLink } from "./is-local-link"
 import { withPrefix } from "./prefix-helpers"
 
-const isAbsolutePath = path => path?.startsWith(`/`)
+declare const __TRAILING_SLASH__: TrailingSlash | undefined
 
-const getGlobalTrailingSlash = () =>
+const isAbsolutePath = (path: string): boolean => path?.startsWith(`/`)
+
+const getGlobalTrailingSlash = (): TrailingSlash | undefined =>
   typeof __TRAILING_SLASH__ !== `undefined` ? __TRAILING_SLASH__ : undefined
 
-function applyTrailingSlashOptionOnPathnameOnly(path, option) {
+function applyTrailingSlashOptionOnPathnameOnly(
+  path: string,
+  option: TrailingSlash
+): string {
   const { pathname, search, hash } = parsePath(path)
   const output = applyTrailingSlashOption(pathname, option)
 
   return `${output}${search}${hash}`
 }
 
-function absolutify(path, current) {
+function absolutify(path: string, current: string): string {
   // If it's already absolute, return as-is
   if (isAbsolutePath(path)) {
     return path
@@ -33,7 +38,7 @@ function absolutify(path, current) {
   return absolutePath
 }
 
-function applyPrefix(path) {
+function applyPrefix(path: string): string {
   const prefixed = withPrefix(path)
   const option = getGlobalTrailingSlash()
 
@@ -44,7 +49,9 @@ function applyPrefix(path) {
   return prefixed
 }
 
-export const rewriteLinkPath = (path, relativeTo) => {
+export type rewriteLinkPathType = (path: string, relativeTo: string) => string
+
+export const rewriteLinkPath: rewriteLinkPathType = (path, relativeTo) => {
   if (typeof path === `number`) {
     return path
   }

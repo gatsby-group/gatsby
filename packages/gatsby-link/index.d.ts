@@ -1,6 +1,17 @@
 import * as React from "react"
 import { NavigateOptions, LinkProps } from "@reach/router" // These come from `@types/reach__router`
 
+declare global {
+  /* eslint-disable @typescript-eslint/interface-name-prefix */
+  interface Window {
+    ___push: (to: string) => void
+    ___replace: (to: string) => void
+    ___navigate: (to: string, options?: NavigateOptions<{}>) => void
+    ___loader: { enqueue: (arg0: string) => {}, hovering: (arg0: string) => {} }
+  }
+  /* eslint-disable @typescript-eslint/interface-name-prefix */
+}
+
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export interface GatsbyLinkProps<TState> extends LinkProps<TState> {
   /** A class to apply when this Link is active */

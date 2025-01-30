@@ -1,4 +1,6 @@
-export function parsePath(path) {
+import { Path } from "history"
+
+export function parsePath(path?: string): Path {
   let pathname = path || `/`
   let search = ``
   let hash = ``

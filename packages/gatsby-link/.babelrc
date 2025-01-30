@@ -1,1 +1,8 @@
-{}
+{
+  "presets": [["babel-preset-gatsby-package"]],
+  "overrides": [
+    {
+      "presets": [["babel-preset-gatsby-package", { "browser": true }]]
+    }
+  ]
+}

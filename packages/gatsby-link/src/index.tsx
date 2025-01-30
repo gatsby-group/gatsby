@@ -1,6 +1,15 @@
 import PropTypes from "prop-types"
-import React from "react"
-import { Link as ReachRouterLink, Location } from "@gatsbyjs/reach-router"
+import React, {
+  MutableRefObject,
+  ReactElement,
+  HTMLAttributes,
+  CSSProperties,
+} from "react"
+import {
+  Link as ReachRouterLink,
+  Location,
+  NavigateOptions,
+} from "@gatsbyjs/reach-router"
 import { parsePath } from "./parse-path"
 import { isLocalLink } from "./is-local-link"
 import { rewriteLinkPath } from "./rewrite-link-path"
@@ -8,7 +17,7 @@ import { withPrefix, getGlobalPathPrefix } from "./prefix-helpers"
 
 export { parsePath, withPrefix }
 
-export function withAssetPrefix(path) {
+export function withAssetPrefix(path): string {
   return withPrefix(path, getGlobalPathPrefix())
 }
 
@@ -19,7 +28,10 @@ const NavLinkPropTypes = {
 }
 
 // Set up IntersectionObserver
-const createIntersectionObserver = (el, cb) => {
+const createIntersectionObserver = (
+  el: Element,
+  cb: (arg0: boolean) => void
+): { instance: IntersectionObserver; el: Element } => {
   const io = new window.IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (el === entry.target) {
@@ -36,30 +48,39 @@ const createIntersectionObserver = (el, cb) => {
   return { instance: io, el }
 }
 
-function GatsbyLinkLocationWrapper(props) {
-  return (
-    <Location>
-      {({ location }) => <GatsbyLink {...props} _location={location} />}
-    </Location>
-  )
+interface IGatsbyLinkProps extends HTMLAttributes<HTMLElement> {
+  _location: {
+    pathname: string
+    search: string
+  }
+  innerRef: MutableRefObject<HTMLElement>
+  to: string
+  target: string
+  partiallyActive: boolean
+  activeClassName: string
+  activeStyle: CSSProperties
+  getProps: (arg0: unknown) => HTMLAttributes<HTMLElement> | null
+  replace: boolean
+  state: Record<string, unknown>
 }
 
-class GatsbyLink extends React.Component {
-  constructor(props) {
-    super(props)
-    // Default to no support for IntersectionObserver
-    let IOSupported = false
-    if (typeof window !== `undefined` && window.IntersectionObserver) {
-      IOSupported = true
-    }
+interface IGatsbyLinkState {
+  IOSupported: boolean
+}
 
-    this.state = {
-      IOSupported,
-    }
-    this.abortPrefetch = null
-    this.handleRef = this.handleRef.bind(this)
+class GatsbyLink extends React.Component<IGatsbyLinkProps, IGatsbyLinkState> {
+  readonly state: IGatsbyLinkState = {
+    IOSupported:
+      // Default to no support for IntersectionObserver
+      typeof window !== `undefined` && window.IntersectionObserver
+        ? true
+        : false,
   }
 
+  abortPrefetch: { abort: () => void } | null = null
+  io: { instance: IntersectionObserver; el: Element } | undefined
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   _prefetch() {
     let currentPath = window.location.pathname + window.location.search
 
@@ -76,12 +97,13 @@ class GatsbyLink extends React.Component {
     // Prefetch is used to speed up next navigations. When you use it on the current navigation,
     // there could be a race-condition where Chrome uses the stale data instead of waiting for the network to complete
     if (currentPath !== newPathName) {
-      return ___loader.enqueue(newPathName)
+      return window.___loader.enqueue(newPathName)
     }
 
     return undefined
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   componentWillUnmount() {
     if (!this.io) {
       return
@@ -96,6 +118,7 @@ class GatsbyLink extends React.Component {
     instance.disconnect()
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   handleRef(ref) {
     if (
       this.props.innerRef &&
@@ -110,7 +133,7 @@ class GatsbyLink extends React.Component {
       // If IO supported and element reference found, setup Observer functionality
       this.io = createIntersectionObserver(ref, inViewPort => {
         if (inViewPort) {
-          this.abortPrefetch = this._prefetch()
+          this.abortPrefetch = this._prefetch() as { abort: () => void } | null
         } else {
           if (this.abortPrefetch) {
             this.abortPrefetch.abort()
@@ -120,7 +143,10 @@ class GatsbyLink extends React.Component {
     }
   }
 
-  defaultGetProps = ({ isPartiallyCurrent, isCurrent }) => {
+  defaultGetProps = ({
+    isPartiallyCurrent,
+    isCurrent,
+  }): HTMLAttributes<HTMLElement> | null => {
     if (this.props.partiallyActive ? isPartiallyCurrent : isCurrent) {
       return {
         className: [this.props.className, this.props.activeClassName]
@@ -132,6 +158,7 @@ class GatsbyLink extends React.Component {
     return null
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   render() {
     const {
       to,
@@ -167,14 +194,14 @@ class GatsbyLink extends React.Component {
         state={state}
         getProps={getProps}
         innerRef={this.handleRef}
-        onMouseEnter={e => {
+        onMouseEnter={(e): void => {
           if (onMouseEnter) {
             onMouseEnter(e)
           }
           const parsed = parsePath(prefixedTo)
-          ___loader.hovering(parsed.pathname + parsed.search)
+          window.___loader.hovering(parsed.pathname + parsed.search)
         }}
-        onClick={e => {
+        onClick={(e): boolean => {
           if (onClick) {
             onClick(e)
           }
@@ -212,18 +239,26 @@ class GatsbyLink extends React.Component {
   }
 }
 
-GatsbyLink.propTypes = {
-  ...NavLinkPropTypes,
-  onClick: PropTypes.func,
-  to: PropTypes.string.isRequired,
-  replace: PropTypes.bool,
-  state: PropTypes.object,
+function GatsbyLinkLocationWrapper(props): ReactElement {
+  return (
+    <Location>
+      {({ location }): ReactElement => (
+        <GatsbyLink {...props} _location={location} />
+      )}
+    </Location>
+  )
 }
 
-export const Link = React.forwardRef((props, ref) => (
+export interface ILinkProps extends React.HTMLProps<ILinkProps> {
+  to: string
+  activeClassName: string
+  activeStyle: CSSProperties
+}
+
+export const Link = React.forwardRef<ILinkProps, ILinkProps>((props, ref) => (
   <GatsbyLinkLocationWrapper innerRef={ref} {...props} />
 ))
 
-export const navigate = (to, options) => {
+export const navigate = (to: string, options?: NavigateOptions): void => {
   window.___navigate(rewriteLinkPath(to, window.location.pathname), options)
 }
