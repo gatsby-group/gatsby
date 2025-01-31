@@ -17,6 +17,7 @@ module.exports = (
     noInlineHighlight = false,
     showLineNumbers: showLineNumbersGlobal = false,
     showInvisibles = false,
+    showDiffHighlight = false,
     languageExtensions = [],
     prompt = {
       user: `root`,
@@ -78,7 +79,11 @@ module.exports = (
     //
     // @see https://github.com/gatsbyjs/gatsby/issues/1486
     const className = `${classPrefix}${languageName}${
-      diffLanguage ? `-${diffLanguage}` : ``
+      diffLanguage
+        ? showDiffHighlight
+          ? `-${diffLanguage} diff-highlight`
+          : `-${diffLanguage}`
+        : ``
     }`
 
     // Replace the node with the markup we need to make

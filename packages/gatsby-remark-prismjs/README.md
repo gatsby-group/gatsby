@@ -79,6 +79,13 @@ plugins: [
             // Add additional HTML escapes by providing a mapping
             // of HTML entities and their escape value IE: { '}': '&#123;' }
             escapeEntities: {},
+            // Enables full-line highlighting on diff-code-blocks (see below)
+            // Disabled by default
+            // To use it, add the following line in gatsby-browser.js (after
+            //   the selected color scheme):
+            //   require("prismjs/plugins/diff-highlight/prism-diff-highlight.css")
+            // Not currently enable-able on a per-block basis
+            showDiffHighlight: false,
           },
         },
       ],
@@ -392,11 +399,27 @@ unless explicitly overridden by the `promptUser` and `promptHost` options in the
 
 ### Diff code blocks
 
-You can specify language for `diff` code blocks by using `diff-[language]` to enable syntax highlighting in diffs:
+You can specify language for `diff` code blocks by using `diff-[language]` to enable syntax highlighting in diffs. Canonically, when writing code _diffs_, the code should be indented by two characters. If the code is being changed, the first character should be a `+`, `-`, or `!` otherwise left a space. The second character should always be a space. Git-style file-location coordinates need not be indented.
 
 ````
 ```diff-javascript
+@@ -4,6 +4,5 @@
+  const doTheThing = aParm => {
++   console.log(`Parm is: ${aParm}`)
+-   console.log('Hit this function')
+!   console.log('Rubber duck debugging anybody?')
+    return true
+  }
+```
 ````
+
+The default rendering style for diff code blocks will be a colored `+` or `-` symbol and _not_ full line-length highlighting. This is depicted in the **first** example here: https://prismjs.com/plugins/diff-highlight/
+
+This plugin supports a configuration parameter, `showDiffHighlight`, which will add full line-length highlighting to _all_ Diff code blocks used by your Gatsby site with the format: `+` -> Highlight green, `-` -> highlight red, and `!` -> bolded line. Simply pass the configuration parameter with `true` and add the following to your `gatsby-browser.js` (_after_ the require for your chosen theme):
+
+```js
+require("prismjs/plugins/diff-highlight/prism-diff-highlight.css")
+```
 
 ### Line hiding
 
@@ -519,6 +542,10 @@ With all of this in place, we can apply `float:left; min-width:100%` to `<pre>`,
 throw our overflow and background on `.gatsby-highlight`, and use
 `display:block` on `.gatsby-highlight-code-line` – all of this coming together
 to facilitate the desired line highlight behavior.
+
+**NOTE:** This is _not_ the same as the Diff code-block full line-length
+highlighting for diff'd lines. Those "line highlights" work great beyond
+the above.
 
 ### Line numbering
 
