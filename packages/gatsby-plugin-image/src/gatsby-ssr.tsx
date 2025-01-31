@@ -108,6 +108,31 @@ export function onRenderBody({ setHeadComponents }: RenderBodyArgs): void {
           }
         })
     }, true)
+
+    const gatsbyImages = document.querySelectorAll('img[data-main-image]');
+    for (let mainImage of gatsbyImages) {
+      if (mainImage.dataset.src) {
+        mainImage.setAttribute('src', mainImage.dataset.src)
+        mainImage.removeAttribute('data-src')
+      }
+      if (mainImage.dataset.srcset) {
+        mainImage.setAttribute('srcset', mainImage.dataset.srcset)
+        mainImage.removeAttribute('data-srcset')
+      }
+
+      const sources = mainImage.parentNode.querySelectorAll('source[data-srcset]');
+      for (let source of sources) {
+        source.setAttribute('srcset', source.dataset.srcset)
+        source.removeAttribute('data-srcset')
+      }
+
+      if (mainImage.complete) {
+        mainImage.style.opacity = 1;
+
+        // also hide the placeholder
+        mainImage.parentNode.parentNode.querySelector('[data-placeholder-image]').style.opacity = 0;
+      }
+    }
   }
     `)}
     />,

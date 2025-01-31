@@ -1,5 +1,4 @@
 import React, { Fragment, FunctionComponent, PropsWithChildren } from "react"
-import terserMacro from "../../macros/terser.macro"
 import { Layout } from "../image-utils"
 
 export interface ILayoutWrapperProps {
@@ -7,43 +6,6 @@ export interface ILayoutWrapperProps {
   width: number
   height: number
 }
-
-const NativeScriptLoading: FunctionComponent = () => (
-  <script
-    type="module"
-    dangerouslySetInnerHTML={{
-      __html: terserMacro`
-const hasNativeLazyLoadSupport = typeof HTMLImageElement !== "undefined" && "loading" in HTMLImageElement.prototype;
-if (hasNativeLazyLoadSupport) {
-  const gatsbyImages = document.querySelectorAll('img[data-main-image]');
-  for (let mainImage of gatsbyImages) {
-    if (mainImage.dataset.src) {
-      mainImage.setAttribute('src', mainImage.dataset.src)
-      mainImage.removeAttribute('data-src')
-    }
-    if (mainImage.dataset.srcset) {
-      mainImage.setAttribute('srcset', mainImage.dataset.srcset)
-      mainImage.removeAttribute('data-srcset')
-    }
-
-    const sources = mainImage.parentNode.querySelectorAll('source[data-srcset]');
-    for (let source of sources) {
-      source.setAttribute('srcset', source.dataset.srcset)
-      source.removeAttribute('data-srcset')
-    }
-
-    if (mainImage.complete) {
-      mainImage.style.opacity = 1;
-
-      // also hide the placeholder
-      mainImage.parentNode.parentNode.querySelector('[data-placeholder-image]').style.opacity = 0;
-    }
-  }
-}
-`,
-    }}
-  />
-)
 
 export function getSizer(
   layout: Layout,
@@ -103,8 +65,6 @@ export const LayoutWrapper: FunctionComponent<
     <Fragment>
       <Sizer {...props} />
       {children}
-
-      {SERVER ? <NativeScriptLoading /> : null}
     </Fragment>
   )
 }
