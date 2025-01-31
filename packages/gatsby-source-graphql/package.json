@@ -12,10 +12,10 @@
     "@graphql-tools/links": "^8.3.36",
     "@graphql-tools/utils": "^8.13.1",
     "@graphql-tools/wrap": "^8.5.1",
-    "dataloader": "^2.2.2",
+    "dataloader": "^2.2.3",
     "gatsby-core-utils": "^4.15.0-next.0",
     "invariant": "^2.2.4",
-    "node-fetch": "^2.6.11"
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
