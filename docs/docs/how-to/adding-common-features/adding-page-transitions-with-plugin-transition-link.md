@@ -9,6 +9,8 @@ This guide will cover how to use `gatsby-plugin-transition-link` to animate tran
 
 ## Overview
 
+**Note: This plugin is no longer maintained and is not compatible with Gatsby v2 or greater**
+
 The `TransitionLink` component provides a way of describing a page transition via props on a Link component. It works with many animation libraries, like [react-pose](https://popmotion.io/pose/), [GSAP](https://greensock.com/), [animejs](https://animejs.com/), and many others.
 
 Note that currently, as the plugin is based on link navigation, transitions when navigating with the browser buttons are not supported.
