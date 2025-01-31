@@ -59,7 +59,7 @@
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {
-    "@playwright/test": "^1.35.1",
+    "@playwright/test": "^1.49.1",
     "@simonsmith/cypress-image-snapshot": "^6.1.1",
     "@testing-library/cypress": "^9.0.0",
     "@types/simonsmith__cypress-image-snapshot": "npm:@types/cypress-image-snapshot",
