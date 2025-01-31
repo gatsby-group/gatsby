@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "async": "^3.2.5",
+    "async": "^3.2.6",
     "bluebird": "^3.7.2",
-    "debug": "^4.3.4",
+    "debug": "^4.4.0",
     "filenamify": "^4.3.0",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.15.0-next.0",
