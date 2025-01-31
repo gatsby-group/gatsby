@@ -1328,10 +1328,10 @@ export interface BuildArgs extends ParentSpanPluginArgs {
 }
 
 export interface Actions {
-  /** @see https://www.gatsbyjs.com/docs/actions/#deletePage */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#deletePage */
   deletePage(this: void, args: { path: string; component: string }): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createPage */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createPage */
   createPage<TContext = Record<string, unknown>>(
     this: void,
     args: Page<TContext>,
@@ -1347,10 +1347,10 @@ export interface Actions {
     option?: ActionOptions
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#deleteNode */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#deleteNode */
   deleteNode(node: NodeInput, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createNode */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createNode */
   createNode<TNode = Record<string, unknown>>(
     this: void,
     node: NodeInput & TNode,
@@ -1358,10 +1358,10 @@ export interface Actions {
     options?: ActionOptions
   ): void | Promise<void>
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#touchNode */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#touchNode */
   touchNode(node: NodeInput, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createNodeField */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createNodeField */
   createNodeField(
     this: void,
     args: {
@@ -1373,7 +1373,7 @@ export interface Actions {
     options?: ActionOptions
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createParentChildLink */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createParentChildLink */
   createParentChildLink(
     this: void,
     args: { parent: Node; child: NodeInput },
@@ -1391,44 +1391,44 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#setRequestHeaders */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#setRequestHeaders */
   setRequestHeaders(
     this: void,
     args: { domain: string; headers: Record<string, string> },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#setWebpackConfig */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#setWebpackConfig */
   setWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#replaceWebpackConfig */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#replaceWebpackConfig */
   replaceWebpackConfig(this: void, config: object, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#setBabelOptions */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#setBabelOptions */
   setBabelOptions(this: void, options: object, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPlugin */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#setBabelPlugin */
   setBabelPlugin(
     this: void,
     config: { name: string; options: object },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#setBabelPreset */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#setBabelPreset */
   setBabelPreset(
     this: void,
     config: { name: string; options: object },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createJob */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createJob */
   createJob(
     this: void,
     job: Record<string, unknown> & { id: string },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createJobV2 */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createJobV2 */
   createJobV2(
     this: void,
     job: {
@@ -1440,27 +1440,27 @@ export interface Actions {
     plugin?: ActionPlugin
   ): Promise<unknown>
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#addGatsbyImageSourceUrl */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#addGatsbyImageSourceUrl */
   addGatsbyImageSourceUrl(this: void, sourceUrl: string): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#setJob */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#setJob */
   setJob(
     this: void,
     job: Record<string, unknown> & { id: string },
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#endJob */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#endJob */
   endJob(this: void, job: { id: string }, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#setPluginStatus */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#setPluginStatus */
   setPluginStatus(
     this: void,
     status: Record<string, unknown>,
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createRedirect */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createRedirect */
   createRedirect(
     this: void,
     redirect: {
@@ -1476,7 +1476,7 @@ export interface Actions {
     plugin?: ActionPlugin
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#addThirdPartySchema */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#addThirdPartySchema */
   addThirdPartySchema(
     this: void,
     args: { schema: object },
@@ -1484,7 +1484,7 @@ export interface Actions {
     traceId?: string
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createTypes */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createTypes */
   createTypes(
     this: void,
     types:
@@ -1496,7 +1496,7 @@ export interface Actions {
     traceId?: string
   ): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#createFieldExtension */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#createFieldExtension */
   createFieldExtension(
     this: void,
     extension: object,
@@ -1521,7 +1521,7 @@ export interface Actions {
    */
   enableStatefulSourceNodes?(this: void, plugin?: ActionPlugin): void
 
-  /** @see https://www.gatsbyjs.com/docs/actions/#addRemoteFileAllowedUrl */
+  /** @see https://www.gatsbyjs.com/docs/reference/config-files/actions/#addRemoteFileAllowedUrl */
   addRemoteFileAllowedUrl?(
     this: void,
     url: string | Array<string>,

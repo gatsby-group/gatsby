@@ -1363,7 +1363,7 @@ If you have explicitly defined a type for those fields, you can safely ignore th
 Otherwise, Gatsby will omit those fields from the GraphQL schema.
 
 If you know all field types in advance, the best strategy is to explicitly define them with the \`createTypes\` action, and skip inference with the \`@dontInfer\` directive.
-See https://www.gatsbyjs.com/docs/actions/#createTypes",
+See https://www.gatsbyjs.com/docs/reference/config-files/actions/#createTypes",
     ],
   ],
   "results": Array [

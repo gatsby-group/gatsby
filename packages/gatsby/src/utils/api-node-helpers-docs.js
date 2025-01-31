@@ -192,7 +192,7 @@ module.exports.createContentDigest = true;
 /**
  * Collection of functions used to programmatically modify Gatsby’s internal state.
  *
- * See [`actions`](/docs/actions/) reference.
+ * See [`actions`](/docs/reference/config-files/actions/) reference.
  * @type {Actions}
  */
 module.exports.actions = true;

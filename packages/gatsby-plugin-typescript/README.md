@@ -11,7 +11,7 @@ This plugin is automatically included in Gatsby. The only reason you would need 
 1.  Run TypeScript directly or with a build tool.
 1.  You're good to go.
 
-> When [creating pages programmatically](/docs/programmatically-create-pages-from-data/#creating-pages), you can pass the `.tsx` filename directly as the `component` for [`createPage`](/docs/actions/#createPage).
+> When [creating pages programmatically](/docs/programmatically-create-pages-from-data/#creating-pages), you can pass the `.tsx` filename directly as the `component` for [`createPage`](/docs/reference/config-files/actions/#createPage).
 
 _**Please note**: If packages don't ship with TypeScript definitions you'll need to manually install those type definitions, e.g. for React. A typical Gatsby project would need: `npm install --save-dev @types/react @types/react-dom @types/node`_
 

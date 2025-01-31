@@ -12,11 +12,11 @@ export const resolvableExtensions = true
  *
  * You can also fetch data from remote or local sources to create pages.
  *
- * See also [the documentation for the action `createPage`](/docs/actions/#createPage).
+ * See also [the documentation for the action `createPage`](/docs/reference/config-files/actions/#createPage).
  *
  * @param {object} $0 See the [documentation for `Node API Helpers` for more details](/docs/node-api-helpers)
- * @param {Actions} $0.actions See the [list of documented actions](/docs/actions)
- * @param {function} $0.actions.createPage [Documentation for this action](/docs/actions/#createPage)
+ * @param {Actions} $0.actions See the [list of documented actions](/docs/reference/config-files/actions)
+ * @param {function} $0.actions.createPage [Documentation for this action](/docs/reference/config-files/actions/#createPage)
  * @param {function} $0.graphql: Query GraphQL API. See [examples here](/docs/creating-and-modifying-pages/#creating-pages-in-gatsby-nodejs)
  * @param {GatsbyReporter} $0.reporter Log issues. See [GatsbyReporter documentation](/docs/node-api-helpers/#GatsbyReporter) for more details
  * @returns {Promise<void>} No return value required, but the caller will `await` any promise that's returned
@@ -100,7 +100,7 @@ export const createPagesStatefully = true
  * Plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/) tutorial
  * demonstrates a way a plugin or site might use this API.
  *
- * See also the documentation for [`createNode`](/docs/actions/#createNode).
+ * See also the documentation for [`createNode`](/docs/reference/config-files/actions/#createNode).
  * @example
  * exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
  *   const { createNode } = actions
@@ -136,8 +136,8 @@ export const sourceNodes = true
  * Called when a new node is created. Plugins wishing to extend or
  * transform nodes created by other plugins should implement this API.
  *
- * See also the documentation for [`createNode`](/docs/actions/#createNode)
- * and [`createNodeField`](/docs/actions/#createNodeField)
+ * See also the documentation for [`createNode`](/docs/reference/config-files/actions/#createNode)
+ * and [`createNodeField`](/docs/reference/config-files/actions/#createNodeField)
  *
  * The [Creating a Source
  * Plugin](/docs/how-to/plugins-and-themes/creating-a-source-plugin/) tutorial
@@ -233,9 +233,9 @@ export const setFieldsOnGraphQLNodeType = true
  * Customize Gatsby's GraphQL schema by creating type definitions, field
  * extensions or adding third-party schemas.
  *
- * The [`createTypes`](/docs/actions/#createTypes),
- * [`createFieldExtension`](/docs/actions/#createFieldExtension) and
- * [`addThirdPartySchema`](/docs/actions/#addThirdPartySchema) actions
+ * The [`createTypes`](/docs/reference/config-files/actions/#createTypes),
+ * [`createFieldExtension`](/docs/reference/config-files/actions/#createFieldExtension) and
+ * [`addThirdPartySchema`](/docs/reference/config-files/actions/#addThirdPartySchema) actions
  * are only available in this API. For details on their usage please refer to
  * the actions documentation.
  *
@@ -353,8 +353,8 @@ export const preprocessSource = true
 
 /**
  * Let plugins extend/mutate the site's Babel configuration by calling
- * [`setBabelPlugin`](/docs/actions/#setBabelPlugin) or
- * [`setBabelPreset`](/docs/actions/#setBabelPreset).
+ * [`setBabelPlugin`](/docs/reference/config-files/actions/#setBabelPlugin) or
+ * [`setBabelPreset`](/docs/reference/config-files/actions/#setBabelPreset).
  * @param {object} $0
  * @param {string} $0.stage The current build stage. One of 'develop', 'develop-html',
  * 'build-javascript', or 'build-html'
@@ -373,7 +373,7 @@ export const onCreateBabelConfig = true
 /**
  * Let plugins extend/mutate the site's webpack configuration. This method can be used by any Gatsby site, app, or plugin, not just plugins.
  *
- * See also the documentation for [`setWebpackConfig`](/docs/actions/#setWebpackConfig).
+ * See also the documentation for [`setWebpackConfig`](/docs/reference/config-files/actions/#setWebpackConfig).
  *
  * @param {object} $0
  * @param {string} $0.stage The current build stage. One of 'develop', 'develop-html',

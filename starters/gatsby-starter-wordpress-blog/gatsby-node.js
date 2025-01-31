@@ -97,7 +97,7 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
       }
 
       // createPage is an action passed to createPages
-      // See https://www.gatsbyjs.com/docs/actions#createPage for more info
+      // See https://www.gatsbyjs.com/reference/config-files/actions/#createPage for more info
       await gatsbyUtilities.actions.createPage({
         path: getPagePath(pageNumber),
 

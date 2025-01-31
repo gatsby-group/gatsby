@@ -597,7 +597,7 @@ Add the following type definition to fix this:
     id: ID!
   }
 
-https://www.gatsbyjs.com/docs/actions/#createTypes
+https://www.gatsbyjs.com/docs/reference/config-files/actions/#createTypes
 ```
 
 If you don't see any warnings, you are safe to upgrade to v3.
@@ -647,7 +647,7 @@ Add the following type definition to fix this:
     bar: [Bar] @link(by: "id", from: "bar___NODE")
   }
 
-https://www.gatsbyjs.com/docs/actions/#createTypes
+https://www.gatsbyjs.com/docs/reference/config-files/actions/#createTypes
 ```
 
 If this warning is displayed for a type defined by some plugin, open an issue in the plugin repo

@@ -135,7 +135,7 @@ class TypeConflictReporter {
           `If you know all field types in advance, the best strategy is to ` +
           `explicitly define them with the \`createTypes\` action, and skip ` +
           `inference with the \`@dontInfer\` directive.\n` +
-          `See https://www.gatsbyjs.com/docs/actions/#createTypes`
+          `See https://www.gatsbyjs.com/docs/reference/config-files/actions/#createTypes`
       )
       this.entries.forEach(entry => entry.printEntry())
     }
