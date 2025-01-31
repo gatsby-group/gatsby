@@ -81,6 +81,14 @@ function getStaleNodes(
   })
 }
 
+const GatsbyManagedStatefulNodeTypes = new Set([
+  // Gatsby will create and delete SitePage nodes as pages are created and deleted.
+  // Additionally this node type is not even created at the time we delete stale nodes
+  // so cleanup would happen too early resulting in deleting each nodes from previous run
+  // and potentially recreating all of them on `createPages` that happens later.
+  `SitePage`,
+])
+
 /**
  * Find all stale nodes and delete them unless the node type has been opted out of stale node garbage collection.
  */
@@ -99,6 +107,11 @@ async function deleteStaleNodes(
   const { typeOwners, statefulSourcePlugins } = state
 
   for (const typeName of previouslyExistingNodeTypeNames) {
+    if (GatsbyManagedStatefulNodeTypes.has(typeName)) {
+      // skip any stateful node types that are managed by Gatsby
+      continue
+    }
+
     const pluginName = typeOwners.typesToPlugins.get(typeName)
 
     // no need to check this type if its owner has declared its a stateful source plugin

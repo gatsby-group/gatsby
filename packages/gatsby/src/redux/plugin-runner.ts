@@ -2,7 +2,7 @@ import { Span } from "opentracing"
 import { emitter, store } from "./index"
 import apiRunnerNode from "../utils/api-runner-node"
 import { ActivityTracker } from "../../"
-import { ICreateNodeAction } from "./types"
+import { ICreateNodeAction, ICreateNodeStagingAction } from "./types"
 
 type Plugin = any // TODO
 
@@ -39,7 +39,11 @@ interface ICreatePageAction {
     pluginCreatorId: string
     componentPath: string
   }
+  transactionId?: string
 }
+
+let hasOnCreatePage = false
+let hasOnCreateNode = false
 
 export const startPluginRunner = (): void => {
   const plugins = store.getState().flattenedPlugins
@@ -49,12 +53,21 @@ export const startPluginRunner = (): void => {
   const pluginsImplementingOnCreateNode = plugins.filter(plugin =>
     plugin.nodeAPIs.includes(`onCreateNode`)
   )
-  if (pluginsImplementingOnCreatePage.length > 0) {
+
+  hasOnCreatePage = pluginsImplementingOnCreatePage.length > 0
+  hasOnCreateNode = pluginsImplementingOnCreateNode.length > 0
+
+  if (hasOnCreatePage) {
     emitter.on(`CREATE_PAGE`, (action: ICreatePageAction) => {
       const page = action.payload
       apiRunnerNode(
         `onCreatePage`,
-        { page, traceId: action.traceId, parentSpan: action.parentSpan },
+        {
+          page,
+          traceId: action.traceId,
+          parentSpan: action.parentSpan,
+          transactionId: action.transactionId,
+        },
         { pluginSource: action.plugin.name, activity: action.activity }
       )
     })
@@ -62,16 +75,29 @@ export const startPluginRunner = (): void => {
 
   // We make page nodes outside of the normal action for speed so we manually
   // call onCreateNode here for SitePage nodes.
-  if (pluginsImplementingOnCreateNode.length > 0) {
-    emitter.on(`CREATE_NODE`, (action: ICreateNodeAction) => {
+  if (hasOnCreateNode) {
+    const createNodeMiddleware = (
+      action: ICreateNodeStagingAction | ICreateNodeAction
+    ): void => {
       const node = action.payload
       if (node.internal.type === `SitePage`) {
+        const transactionId =
+          action.type === `CREATE_NODE` ? undefined : action.transactionId
         apiRunnerNode(`onCreateNode`, {
           node,
           parentSpan: action.parentSpan,
           traceTags: { nodeId: node.id, nodeType: node.internal.type },
+          traceId: transactionId,
+          transactionId,
+          waitForCascadingActions: true,
         })
       }
-    })
+    }
+    emitter.on(`CREATE_NODE`, createNodeMiddleware)
+    emitter.on(`CREATE_NODE_STAGING`, createNodeMiddleware)
   }
 }
+
+export const shouldRunOnCreateNode = (): boolean => hasOnCreateNode
+
+export const shouldRunOnCreatePage = (): boolean => hasOnCreatePage

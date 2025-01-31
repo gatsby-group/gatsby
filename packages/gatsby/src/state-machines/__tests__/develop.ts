@@ -56,6 +56,10 @@ describe(`the top-level develop state machine`, () => {
     resetAllMocks()
   })
 
+  afterEach(async () => {
+    await tick()
+  })
+
   it(`initialises`, async () => {
     const service = interpret(machine)
     service.start()

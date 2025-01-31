@@ -39,6 +39,7 @@ import { componentsUsingSlicesReducer } from "./components-using-slices"
 import { slicesByTemplateReducer } from "./slices-by-template"
 import { adapterReducer } from "./adapter"
 import { remoteFileAllowedUrlsReducer } from "./remote-file-allowed-urls"
+import { nodesStagingReducer } from "./nodes-staging"
 
 /**
  * @property exports.nodesTouched Set<string>
@@ -85,4 +86,5 @@ export {
   telemetryReducer as telemetry,
   adapterReducer as adapter,
   remoteFileAllowedUrlsReducer as remoteFileAllowedUrls,
+  nodesStagingReducer as nodesStaging,
 }

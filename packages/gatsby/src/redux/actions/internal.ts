@@ -1,4 +1,5 @@
 import reporter from "gatsby-cli/lib/reporter"
+import _ from "lodash"
 
 import {
   IGatsbyConfig,
@@ -27,8 +28,12 @@ import {
   ICreatePageDependencyActionPayloadType,
   IDeleteNodeManifests,
   IClearGatsbyImageSourceUrlAction,
+  ActionsUnion,
+  IGatsbyNode,
+  IDeleteNodeAction,
 } from "../types"
 
+import { store } from "../index"
 import { gatsbyConfigSchema } from "../../joi-schemas/joi"
 import { didYouMean } from "../../utils/did-you-mean"
 import {
@@ -38,6 +43,8 @@ import {
   getInProcessJobPromise,
 } from "../../utils/jobs/manager"
 import { getEngineContext } from "../../utils/engine-context"
+import { getNode } from "../../datastore"
+import { hasNodeChanged } from "../../utils/nodes"
 
 /**
  * Create a dependency between a page and data. Probably for
@@ -445,3 +452,99 @@ export const clearGatsbyImageSourceUrls =
       type: `CLEAR_GATSBY_IMAGE_SOURCE_URL`,
     }
   }
+
+// We add a counter to node.internal for fast comparisons/intersections
+// of various node slices. The counter must increase even across builds.
+export function getNextNodeCounter(): number {
+  const lastNodeCounter = store.getState().status.LAST_NODE_COUNTER ?? 0
+  if (lastNodeCounter >= Number.MAX_SAFE_INTEGER) {
+    throw new Error(
+      `Could not create more nodes. Maximum node count is reached: ${lastNodeCounter}`
+    )
+  }
+  return lastNodeCounter + 1
+}
+
+export const findChildren = (initialChildren: Array<string>): Array<string> => {
+  const children = [...initialChildren]
+  const queue = [...initialChildren]
+  const traversedNodes = new Set()
+
+  while (queue.length > 0) {
+    const currentChild = getNode(queue.pop()!)
+    if (!currentChild || traversedNodes.has(currentChild.id)) {
+      continue
+    }
+    traversedNodes.add(currentChild.id)
+    const newChildren = currentChild.children
+    if (_.isArray(newChildren) && newChildren.length > 0) {
+      children.push(...newChildren)
+      queue.push(...newChildren)
+    }
+  }
+  return children
+}
+
+function isNode(node: any): node is IGatsbyNode {
+  return Boolean(node)
+}
+
+export function internalCreateNodeWithoutValidation(
+  node: IGatsbyNode,
+  plugin?: IGatsbyPlugin,
+  actionOptions?: any
+): Array<ActionsUnion> {
+  let deleteActions: Array<IDeleteNodeAction> | undefined
+  let updateNodeAction
+
+  const oldNode = getNode(node.id)
+
+  // marking internal-data-bridge as owner of SitePage instead of plugin that calls createPage
+  if (oldNode && !hasNodeChanged(node.id, node.internal.contentDigest)) {
+    updateNodeAction = {
+      ...actionOptions,
+      plugin,
+      type: `TOUCH_NODE`,
+      typeName: node.internal.type,
+      payload: node.id,
+    }
+  } else {
+    // Remove any previously created descendant nodes as they're all due
+    // to be recreated.
+    if (oldNode) {
+      const createDeleteAction = (node: IGatsbyNode): IDeleteNodeAction => {
+        return {
+          ...actionOptions,
+          type: `DELETE_NODE`,
+          plugin,
+          payload: node,
+          isRecursiveChildrenDelete: true,
+        }
+      }
+      deleteActions = findChildren(oldNode.children)
+        .map(getNode)
+        .filter(isNode)
+        .map(createDeleteAction)
+    }
+
+    node.internal.counter = getNextNodeCounter()
+
+    updateNodeAction = {
+      ...actionOptions,
+      type: `CREATE_NODE`,
+      plugin,
+      oldNode,
+      payload: node,
+    }
+  }
+
+  const actions: Array<ActionsUnion> = []
+
+  if (deleteActions && deleteActions.length) {
+    actions.push(...deleteActions)
+  }
+
+  actions.push(updateNodeAction)
+
+  return actions
+}
