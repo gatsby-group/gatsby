@@ -22,7 +22,7 @@
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.12",
-    "semver": "^7.5.3",
+    "semver": "^7.6.3",
     "url": "^0.11.1"
   },
   "devDependencies": {

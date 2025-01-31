@@ -22,7 +22,7 @@
     "@types/node-fetch": "^2.6.4",
     "@types/normalize-path": "^3.0.0",
     "@types/react": "^18.2.14",
-    "@types/semver": "^7.5.0",
+    "@types/semver": "^7.5.8",
     "@types/signal-exit": "^3.0.1",
     "@types/stack-trace": "^0.0.30",
     "@types/webpack-merge": "^4.1.5",

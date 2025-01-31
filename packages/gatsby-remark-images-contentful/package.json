@@ -21,7 +21,7 @@
     "cheerio": "1.0.0-rc.12",
     "is-relative-url": "^3.0.0",
     "lodash": "^4.17.21",
-    "semver": "^7.5.3",
+    "semver": "^7.6.3",
     "sharp": "^0.32.6",
     "unist-util-select": "^3.0.4"
   },
