@@ -1,5 +1,9 @@
+/**
+ * 
+ * @param {Array<{ path: string; status: number; destinationPath?: string }>} pages 
+ */
 export function assertPageVisits(pages) {
-  for (let i = 0; i < pages; i++) {
+  for (let i = 0; i < pages.length; i++) {
     const page = pages[i]
 
     cy.intercept(new RegExp(`^${page.path}$`), req => {
@@ -8,7 +12,7 @@ export function assertPageVisits(pages) {
         if (page.destinationPath) {
           expect(res.headers.location).to.equal(page.destinationPath)
         } else {
-          expect(res.headers.location).toBeUndefined()
+          expect(res.headers.location).to.be.undefined
         }
       })
     })
