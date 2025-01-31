@@ -6,6 +6,9 @@ export const onRenderBody = (
   pluginOptions
 ) => {
   if (pluginOptions && pluginOptions.siteUrl) {
+    if (pluginOptions.excludes?.includes(pathname)) {
+      return
+    }
     const siteUrl = pluginOptions.siteUrl.replace(/\/$/, ``)
     const parsed = url.parse(`${siteUrl}${pathname}`)
     const stripQueryString =

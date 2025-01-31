@@ -70,3 +70,5 @@ exports[`gatsby-plugin-canonical-urls strips search parameters if option stripQu
   ],
 }
 `;
+
+exports[`gatsby-plugin-canonical-urls does not create a canonical link if siteUrl is set but path is excluded 1`] = `[MockFunction]`;

@@ -1,7 +1,10 @@
 export const onRouteUpdate = (
   { location },
-  pluginOptions = { stripQueryString: false }
+  pluginOptions = { stripQueryString: false, excludes: [] }
 ) => {
+  if (pluginOptions.excludes?.includes(location.pathname)) {
+    return
+  }
   const domElem = document.querySelector(`link[rel='canonical']`)
   const existingValue = domElem.getAttribute(`href`)
   const baseProtocol = domElem.getAttribute(`data-baseProtocol`)
