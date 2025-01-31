@@ -13,7 +13,7 @@
     "@vercel/fetch-retry": "^5.1.3",
     "chalk": "^4.1.2",
     "common-tags": "^1.8.2",
-    "contentful": "^11.2.5",
+    "contentful": "^11.3.4",
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "^4.15.0-next.0",
     "gatsby-plugin-utils": "^4.15.0-next.0",
@@ -21,9 +21,9 @@
     "is-online": "^10.0.0",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
-    "node-fetch": "^2.6.12",
+    "node-fetch": "^2.7.0",
     "semver": "^7.5.3",
-    "url": "^0.11.1"
+    "url": "^0.11.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

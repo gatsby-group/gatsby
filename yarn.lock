@@ -1414,7 +1414,7 @@
   resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.7.5.tgz#f501e3db37a5ac659f21ba0c2e61b278e58b64b9"
   integrity sha512-Zbr2Eo0AQ4yzmQr/36/h+6LKjmdVBB3Q5cGzO6rtlIKB/IOpbQVUZW+XAnhpJmJr9sIF97OZjgbhG9k7Sjn4yw==
 
-"@contentful/content-source-maps@^0.11.6":
+"@contentful/content-source-maps@^0.11.7":
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/@contentful/content-source-maps/-/content-source-maps-0.11.7.tgz#ddb494bdfeeab74169f95eca1dff2a1e7b88c2b6"
   integrity sha512-f+AVIM/Z+AmCagM+9hDUhhT63WVFJurbqHhzul8KVyPNIJLaUHAfMns+nxgEKCPRtef+rCk7ufaZ3HEUS1ssYQ==
@@ -8419,12 +8419,12 @@ contentful-sdk-core@^9.0.1:
   optionalDependencies:
     "@rollup/rollup-linux-x64-gnu" "^4.18.0"
 
-contentful@^11.2.5:
-  version "11.3.1"
-  resolved "https://registry.yarnpkg.com/contentful/-/contentful-11.3.1.tgz#c477183cbd4de7decfed5992e96f0ef7455cb52d"
-  integrity sha512-9kVP4yZPbd9bfGZyvGdmztiHQ1pzZi/sK1uscM65kAYMpQgt0XNrxfO8JyiSrHGA6D+r/wyIxWeEQaEvoyi9GQ==
+contentful@^11.3.4:
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/contentful/-/contentful-11.4.0.tgz#367469ec09aad6283ef1d67e21b0c898c4bc8d53"
+  integrity sha512-4OfyXogyKcM48WfAYMekalT3vt5nP1oWaSOF/fJveYCPu0uXTZ7njKPYUt88lvOl+CSCEEJ6immf/o2YT0Z4Fg==
   dependencies:
-    "@contentful/content-source-maps" "^0.11.6"
+    "@contentful/content-source-maps" "^0.11.7"
     "@contentful/rich-text-types" "^16.6.1"
     axios "^1.7.4"
     contentful-resolve-response "^1.9.0"
@@ -18072,7 +18072,7 @@ node-fetch@2.6.7, node-fetch@cjs:
   dependencies:
     whatwg-url "^5.0.0"
 
-node-fetch@^2.5.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.11, node-fetch@^2.6.12, node-fetch@^2.6.5, node-fetch@^2.6.7, node-fetch@^2.7.0:
+node-fetch@^2.5.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.11, node-fetch@^2.6.5, node-fetch@^2.6.7, node-fetch@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.7.0.tgz#d0f0fa6e3e2dc1d27efcd8ad99d550bda94d187d"
   integrity sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==
@@ -20560,7 +20560,7 @@ qs@6.13.0:
   dependencies:
     side-channel "^1.0.6"
 
-qs@^6.1.0, qs@^6.11.0, qs@^6.12.3, qs@^6.4.0, qs@^6.5.2, qs@^6.9.6:
+qs@^6.1.0, qs@^6.12.3, qs@^6.4.0, qs@^6.5.2, qs@^6.9.6:
   version "6.13.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.13.1.tgz#3ce5fc72bd3a8171b85c99b93c65dd20b7d1b16e"
   integrity sha512-EJPeIn0CYrGu+hli1xilKAPXODtJ12T0sP63Ijx2/khC2JtuaN3JyNIpvmnkmaEtha9ocbG4A4cMcr+TvqvwQg==
@@ -25023,13 +25023,13 @@ url-polyfill@^1.1.12:
   resolved "https://registry.yarnpkg.com/url-polyfill/-/url-polyfill-1.1.12.tgz#6cdaa17f6b022841b3aec0bf8dbd87ac0cd33331"
   integrity sha512-mYFmBHCapZjtcNHW0MDq9967t+z4Dmg5CJ0KqysK3+ZbyoNOWQHksGCTWwDhxGXllkWlOc10Xfko6v4a3ucM6A==
 
-url@^0.11.0, url@^0.11.1:
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/url/-/url-0.11.1.tgz#26f90f615427eca1b9f4d6a28288c147e2302a32"
-  integrity sha512-rWS3H04/+mzzJkv0eZ7vEDGiQbgquI1fGfOad6zKvgYQi1SzMmhl7c/DdRGxhaWrVH6z0qWITo8rpnxK/RfEhA==
+url@^0.11.0, url@^0.11.4:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/url/-/url-0.11.4.tgz#adca77b3562d56b72746e76b330b7f27b6721f3c"
+  integrity sha512-oCwdVC7mTuWiPyjLUz/COz5TLk6wgp0RCsN+wHZ2Ekneac9w8uuV0njcbbie2ME+Vs+d6duwmYuR3HgQXs1fOg==
   dependencies:
     punycode "^1.4.1"
-    qs "^6.11.0"
+    qs "^6.12.3"
 
 urltools@^0.4.1:
   version "0.4.1"
