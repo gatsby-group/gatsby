@@ -18,13 +18,14 @@ function applyTrailingSlashOptionOnPathnameOnly(path, option) {
 }
 
 function absolutify(path, current) {
+  const prefixed = withPrefix(path)
   // If it's already absolute, return as-is
   if (isAbsolutePath(path)) {
-    return path
+    return prefixed
   }
 
   const option = getGlobalTrailingSlash()
-  const absolutePath = resolve(path, current)
+  const absolutePath = resolve(prefixed, current)
 
   if (option === `always` || option === `never`) {
     return applyTrailingSlashOptionOnPathnameOnly(absolutePath, option)
