@@ -12,16 +12,16 @@ export function urlBuilder({
   baseUrl,
   format,
 }: IUrlBuilderArgs<unknown>): string {
+  let [basename, version] = baseUrl.split(`?`)
+  
   if (!validFormats.has(format)) {
     console.warn(
-      `${format} is not a valid format. Valid formats are: ${[
+      `gatsby-source-shopify: ${format} is not a valid format for image ${basename}. Valid formats are: ${[
         ...validFormats,
       ].join(`, `)}`
     )
     format = `auto`
   }
-
-  let [basename, version] = baseUrl.split(`?`)
 
   const dot = basename.lastIndexOf(`.`)
   let ext = ``
