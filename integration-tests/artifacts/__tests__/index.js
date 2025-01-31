@@ -230,7 +230,7 @@ function assertHTMLCorrectness(runNumber) {
       // cause this html file to rebuild
       expect(pageDataContent.result).toEqual({
         data: { depPageQuery: { label: `Stable (always created)` } },
-        pageContext: { id: `page-query-template-change` },
+        pageContext: { id: `page-query-template-change`, manifestId: `` },
       })
     })
   })
@@ -265,6 +265,7 @@ function assertHTMLCorrectness(runNumber) {
     it(`page-data is correctly generated using fresh page context`, () => {
       expect(pageDataContent.result.pageContext).toEqual({
         dummyId: `runNumber: ${runNumber}`,
+        manifestId: ``,
       })
     })
   })

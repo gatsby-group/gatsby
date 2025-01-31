@@ -35,8 +35,13 @@ export function findChangedPages(
 } {
   const changedPages: Array<string> = []
 
-  const compareWithoutUpdated: IsEqualCustomizer = (_left, _right, key) =>
-    key === `updatedAt` || undefined
+  const compareWithoutUpdated: IsEqualCustomizer = (_left, _right, key) => {
+    if ([`updatedAt`, `manifestId`].includes(key as string)) {
+      return true
+    } else {
+      return undefined
+    }
+  }
 
   currentPages.forEach((newPage, path) => {
     const oldPage = oldPages.get(path)
