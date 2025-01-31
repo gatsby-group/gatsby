@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "axios": "^1.6.2",
-    "fastq": "^1.15.0"
+    "axios": "^1.7.9",
+    "fastq": "^1.18.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
