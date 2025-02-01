@@ -37,7 +37,7 @@
     "cypress": "^12.14.0",
     "dotenv": "^8.6.0",
     "execa": "^6.1.0",
-    "gatsby-cypress": "^3.13.1",
+    "gatsby-cypress": "^3.14.0",
     "netlify-cli": "^17.25.0",
     "npm-run-all": "^4.1.5",
     "start-server-and-test": "^2.0.3",
