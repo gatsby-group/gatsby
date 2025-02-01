@@ -42,8 +42,8 @@ theme.overrideThemeStyles = ({ rhythm, scale }, options) => {
       borderRadius: `2px`,
       margin: `0`,
     },
-    // borrowed from https://github.com/comfusion/after-dark/
-    // @see https://github.com/comfusion/after-dark/blob/8fdbe2f480ac40315cf0e01cece785d2b5c4b0c3/layouts/partials/critical-theme.css#L36-L39
+    // Borrowed from https://github.com/comfusion/after-dark/
+    // See https://github.com/comfusion/after-dark/blob/8fdbe2f480ac40315cf0e01cece785d2b5c4b0c3/layouts/partials/critical-theme.css#L36-L39
     "a[href*='//']:after": {
       content: `" " url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20class='i-external'%20viewBox='0%200%2032%2032'%20width='14'%20height='14'%20fill='none'%20stroke='%23cdecf9'%20stroke-linecap='round'%20stroke-linejoin='round'%20stroke-width='9.38%'%3E%3Cpath%20d='M14%209%20L3%209%203%2029%2023%2029%2023%2018%20M18%204%20L28%204%2028%2014%20M28%204%20L14%2018'/%3E%3C/svg%3E")`,
     },
@@ -55,7 +55,7 @@ theme.overrideThemeStyles = ({ rhythm, scale }, options) => {
 
 const typography = new Typography(theme)
 
-// Back out the below once Typography is upgraded for es6
+// Remove the below once Typography is upgraded for ES6
 export default typography
 
 export const rhythm = typography.rhythm
