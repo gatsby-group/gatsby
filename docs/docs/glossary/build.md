@@ -1,33 +1,34 @@
----
-title: Build
-disableTableOfContents: true
----
+# Build
 
-Learn what _build_ means and how to set up a build process for your Gatsby project.
+Learn what **build** means and how to set up a build for your Gatsby project.
 
-## What is a build?
+## What is a Build?
 
-_Build_ refers to the process of compiling your site. During a build, or at _build time_, your project gets transformed from component files to optimized HTML, CSS, and JavaScript files that you can [deploy](/docs/glossary#deploy) to your hosting provider.
+A **build** is like making a finished product from parts. When you **build** your site, it changes from lots of small files into a nice, clean website with HTML, CSS, and JavaScript that you can put online.
 
-There are a few ways to create a build. You can build your site locally on your computer using the [Gatsby CLI](/docs/reference/gatsby-cli/#build), and then deploy changes to your [host](/docs/glossary#hosting). If you use [Gatsby Cloud](https://www.gatsbyjs.com/), you can take advantage of [Gatsby Builds](/blog/2020-01-27-announcing-gatsby-builds-and-reports/), a feature available with every Gatsby Cloud account. You can also use a [continuous deployment](/docs/glossary/continuous-deployment/) service such as [AWS Amplify](/docs/how-to/previews-deploys-hosting/deploying-to-aws-amplify/) or [Netlify](/docs/how-to/previews-deploys-hosting/deploying-to-netlify/).
+There are a few ways to create a build:
 
-For larger teams or larger projects, you may want to use a continuous deployment approach to create builds. Each CD/CI service works slightly differently. Almost all of them, however, use the contents of a Git repository to build your site.
+- **On Your Computer**: You can build your site on your computer using a tool called the **Gatsby CLI**. After that, you can send your changes to where your website is hosted.
+- **Using Gatsby Cloud**: If you use **Gatsby Cloud**, it has a special feature called **Gatsby Builds**. This helps you create builds easily.
+- **With Deployment Services**: You can also use services like **AWS Amplify** or **Netlify** to help you build and send your site online.
 
-Gatsby Cloud, for example, integrates with [GitHub](https://github.com/), and a number of hosted [content management systems](/docs/glossary#cms). Gatsby Cloud creates a new build after every commit or content change, although you can also trigger a build manually.
+For big teams or projects, using a **continuous deployment** approach is helpful. This means builds happen automatically when you make changes in a system called Git.
 
 ### Using Gatsby CLI
 
-For smaller teams and projects, use `gatsby build`. The `gatsby build` command is part of the Gatsby command line interface (or CLI). You'll need to install the CLI interface to create a site with Gatsby. Install it globally using [npm](/docs/glossary/#npm).
+If you have a small team or project, you can use the command `gatsby build`. This command is part of the **Gatsby CLI**. To use it, you need to install the Gatsby CLI on your computer with a tool called **npm**.
+
+To install it, open your terminal and type:
 
 ```shell
-npm install -g gatsby-cli
+  npm install -g gatsby-cli
 ```
 
-Installing `gatsby-cli` globally makes Gatsby commands available system-wide. You'll use `gatsby new` to [create a new site](/docs/tutorial/getting-started/part-0/#create-a-gatsby-site), and `gatsby develop` to start a development server on your local machine.
+Once you install the Gatsby CLI, you can use commands like `gatsby new` to create a new site and `gatsby develop` to see your site as you build it.
 
-When you're ready to publish your project, run the `gatsby build` command to create a production-ready version of your site. Once built, you can use an SFTP client, the [rsync](https://en.wikipedia.org/wiki/Rsync) utility, or similar tool to transfer these files to your host.
+When your site is ready to go live, run the `gatsby build` command. This makes your site ready for the internet! After that, you can use tools like SFTP or **rsync** to upload your files to your hosting provider.
 
-### Learn more about builds
+### Learn More About Builds
 
-- [Deploying and Hosting](/docs/deploying-and-hosting/) from the Gatsby docs
-- How to enable super fast [Distributed Builds](/docs/distributed-builds/) for Gatsby Cloud
+- Check out the **Deploying and Hosting** section in the Gatsby docs.
+- Learn how to enable super-fast **Distributed Builds** for Gatsby Cloud.
