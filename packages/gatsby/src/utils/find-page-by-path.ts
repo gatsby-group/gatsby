@@ -1,5 +1,5 @@
 import { IGatsbyPage, IGatsbyState } from "../redux/types"
-import { pick } from "@gatsbyjs/reach-router"
+import { pick } from "@reach/router"
 
 // Ranks and picks the best page to match. Each segment gets the highest
 // amount of points, then the type of segment gets an additional amount of
