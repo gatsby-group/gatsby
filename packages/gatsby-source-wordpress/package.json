@@ -18,7 +18,7 @@
     "cache-manager": "^3.6.3",
     "cache-manager-fs-hash": "^0.0.9",
     "chalk": "^4.1.2",
-    "cheerio": "1.0.0-rc.12",
+    "cheerio": "1.0.0",
     "clipboardy": "^4.0.0",
     "diff": "^5.1.0",
     "dumper.js": "^1.3.1",

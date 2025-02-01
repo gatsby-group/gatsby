@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "cheerio": "1.0.0-rc.12",
+    "cheerio": "1.0.0",
     "unist-util-visit": "^2.0.3",
     "viz.js": "^2.1.2"
   },

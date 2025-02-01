@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.13",
-    "cheerio": "1.0.0-rc.12",
+    "cheerio": "1.0.0",
     "gatsby-core-utils": "^4.15.0-next.0",
     "glob": "^7.2.3",
     "idb-keyval": "^3.2.0",
