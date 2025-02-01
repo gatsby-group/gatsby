@@ -59,7 +59,7 @@
     "chokidar": "^3.6.0",
     "common-tags": "^1.8.2",
     "compression": "^1.7.4",
-    "cookie": "^0.5.0",
+    "cookie": "^0.7.0",
     "core-js": "^3.31.0",
     "cors": "^2.8.5",
     "css-loader": "^5.2.7",
