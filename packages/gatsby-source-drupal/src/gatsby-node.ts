@@ -526,24 +526,24 @@ ${JSON.stringify(webhookBody, null, 4)}`
           if (typeof url === `object`) {
             // url can be string or object containing href field
             url = url.href
+          }
 
-            // Apply any filters configured in gatsby-config.js. Filters
-            // can be any valid JSON API filter query string.
-            // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
-            if (typeof filters === `object`) {
-              if (filters.hasOwnProperty(type)) {
-                url = new URL(url)
-                const filterParams = new URLSearchParams(filters[type])
-                const filterKeys = Array.from(filterParams.keys())
-                filterKeys.forEach(filterKey => {
-                  // Only add filter params to url if it has not already been
-                  // added.
-                  if (!url.searchParams.has(filterKey)) {
-                    url.searchParams.set(filterKey, filterParams.get(filterKey))
-                  }
-                })
-                url = url.toString()
-              }
+          // Apply any filters configured in gatsby-config.js. Filters
+          // can be any valid JSON API filter query string.
+          // See https://www.drupal.org/docs/8/modules/jsonapi/filtering
+          if (typeof filters === `object`) {
+            if (filters.hasOwnProperty(type)) {
+              url = new URL(url)
+              const filterParams = new URLSearchParams(filters[type])
+              const filterKeys = Array.from(filterParams.keys())
+              filterKeys.forEach(filterKey => {
+                // Only add filter params to url if it has not already been
+                // added.
+                if (!url.searchParams.has(filterKey)) {
+                  url.searchParams.set(filterKey, filterParams.get(filterKey))
+                }
+              })
+              url = url.toString()
             }
           }
 
