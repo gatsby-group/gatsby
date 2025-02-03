@@ -10,20 +10,20 @@
   "dependencies": {
     "@fontsource/merriweather": "^5.0.8",
     "@fontsource-variable/montserrat": "^5.0.17",
-    "@wordpress/block-library": "^8.28.1",
+    "@wordpress/block-library": "^9.17.0",
     "gatsby": "^5.14.1",
     "gatsby-plugin-image": "^3.14.0",
     "gatsby-plugin-manifest": "^5.14.0",
     "gatsby-plugin-sharp": "^5.14.0",
     "gatsby-source-wordpress": "^7.14.0",
     "gatsby-transformer-sharp": "^5.14.0",
-    "html-react-parser": "^4.2.10",
+    "html-react-parser": "^5.2.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "prettier": "2.8.8"
+    "prettier": "3.4.2"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-wordpress-blog#readme",
   "keywords": [
