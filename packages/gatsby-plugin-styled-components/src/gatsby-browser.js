@@ -5,6 +5,7 @@ import { StyleSheetManager } from "styled-components"
 exports.wrapRootElement = ({ element }, pluginOptions) => (
   <StyleSheetManager
     disableVendorPrefixes={pluginOptions?.disableVendorPrefixes === true}
+    enableVendorPrefixes={pluginOptions?.disableVendorPrefixes === false}
   >
     {element}
   </StyleSheetManager>

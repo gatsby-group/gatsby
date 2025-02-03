@@ -11,6 +11,7 @@ exports.wrapRootElement = ({ element, pathname }, pluginOptions) => {
     <StyleSheetManager
       sheet={sheet.instance}
       disableVendorPrefixes={pluginOptions?.disableVendorPrefixes}
+      enableVendorPrefixes={!pluginOptions?.disableVendorPrefixes}
     >
       {element}
     </StyleSheetManager>
