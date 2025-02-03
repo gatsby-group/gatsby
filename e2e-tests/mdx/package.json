@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@emotion/react": "^11.11.3",
-    "@mdx-js/react": "^2.3.0",
+    "@mdx-js/react": "^3.1.0",
     "@sindresorhus/slugify": "^2.2.1",
     "cypress": "^12.16.0",
     "fs-extra": "^11.2.0",
@@ -17,8 +17,8 @@
     "gatsby-source-filesystem": "next",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rehype-slug": "^5.1.0",
-    "remark-gfm": "^3.0.1",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.0",
     "theme-ui": "^0.16.0"
   },
   "keywords": [
@@ -46,8 +46,8 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "gatsby-cypress": "next",
-    "is-ci": "^3.0.1",
-    "prettier": "^2.8.8",
+    "is-ci": "^4.1.0",
+    "prettier": "^3.4.2",
     "start-server-and-test": "^2.0.3",
     "typescript": "^5.3.3"
   }
