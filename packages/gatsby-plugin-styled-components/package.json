@@ -28,7 +28,7 @@
     "gatsby": "^5.0.0-next",
     "react": "^18.0.0 || ^0.0.0",
     "react-dom": "^18.0.0 || ^0.0.0",
-    "styled-components": ">=2.0.0"
+    "styled-components": ">=6.0.0"
   },
   "repository": {
     "type": "git",
