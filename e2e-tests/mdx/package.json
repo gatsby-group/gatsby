@@ -6,7 +6,7 @@
     "@emotion/react": "^11.11.3",
     "@mdx-js/react": "^2.3.0",
     "@sindresorhus/slugify": "^2.2.1",
-    "cypress": "^12.16.0",
+    "cypress": "^14.0.1",
     "fs-extra": "^11.2.0",
     "gatsby": "next",
     "gatsby-plugin-mdx": "next",

@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "cypress": "^12.14.0",
+    "cypress": "^14.0.1",
     "dotenv": "^8.6.0",
     "execa": "^6.1.0",
     "gatsby-cypress": "^3.13.1",
