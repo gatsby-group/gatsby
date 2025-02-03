@@ -60,8 +60,8 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.35.1",
-    "@simonsmith/cypress-image-snapshot": "^6.1.1",
-    "@testing-library/cypress": "^9.0.0",
+    "@simonsmith/cypress-image-snapshot": "^9.1.0",
+    "@testing-library/cypress": "^10.0.3",
     "@types/simonsmith__cypress-image-snapshot": "npm:@types/cypress-image-snapshot",
     "cross-env": "^7.0.3",
     "cypress": "^12.16.0",
@@ -69,8 +69,8 @@
     "fs-extra": "^11.2.0",
     "gatsby-core-utils": "next",
     "gatsby-cypress": "next",
-    "is-ci": "^3.0.1",
-    "prettier": "^2.8.8",
+    "is-ci": "^4.1.0",
+    "prettier": "^3.4.2",
     "start-server-and-test": "^2.0.3",
     "typescript": "^5.3.3",
     "yargs": "^17.7.2"
